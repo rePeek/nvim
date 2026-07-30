@@ -21,7 +21,7 @@ nixvim/
 ├── README.md
 └── config/
     ├── default.nix        # 模块入口，import 所有子模块
-    ├── options.nix        # 编辑器基础设置、leader、自动命令
+    ├── options.nix        # 共享选项（theme）、编辑器设置、自动命令
     ├── plugins.nix        # 插件配置 + 键位映射
     ├── lsp.nix            # Language Server Protocol
     ├── treesitter.nix     # 语法高亮 & 解析
@@ -30,11 +30,27 @@ nixvim/
     └── ui.nix             # 界面：状态栏、标签栏、缩进线等
 ```
 
+## 主题
+
+默认使用 **catppuccin** (mocha) 配色方案。
+
+所有 UI 插件（lualine、bufferline、telescope、noice 等）自动跟随 colorscheme，无需单独配置。
+
+### 外部覆盖
+
+```nix
+# 切换到其他 colorscheme（catppuccin 用了 mkDefault，普通赋值即可关闭）
+{
+  colorschemes.catppuccin.enable = false;
+  colorschemes.tokyonight.enable = true;
+}
+```
+
 ## 插件一览
 
 | 类别 | 插件 | 说明 |
 |------|------|------|
-| **主题** | catppuccin (mocha) | 配色方案 |
+| **主题** | catppuccin (mocha) | 配色方案，`mkDefault` 可被外部关闭 |
 | **文件浏览** | oil.nvim | 目录即 buffer，编辑即操作 |
 | **模糊搜索** | telescope.nvim | 文件、grep、buffer、命令面板 |
 | **补全** | nvim-cmp + LuaSnip | LSP / buffer / path / snippet |
@@ -48,7 +64,7 @@ nixvim/
 | **调试** | nvim-dap + dap-ui + codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记 |
 | **Git 终端** | lazygit | 浮动 Git TUI |
-| **状态栏** | lualine | catppuccin-mocha 主题 |
+| **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
 | **标签栏** | bufferline | LSP 诊断显示 |
 | **命令行 UI** | noice | 更好的 cmdline & 消息 |
 | **缩进线** | indent-blankline | 作用域高亮 |
@@ -228,6 +244,66 @@ devShell 提供：
 nixfmt **/*.nix
 ```
 
+## 外部 Flake 覆盖
+
+本配置可作为 flake input 被其他项目导入，所有 nixvim 选项均可覆盖。
+
+### 切换 colorscheme
+
+```nix
+modules = [
+  nixvim-config
+  {
+    colorschemes.catppuccin.enable = false;
+    colorschemes.tokyonight.enable = true;
+  }
+];
+```
+
+### 禁用/覆盖插件
+
+```nix
+modules = [
+  nixvim-config
+  {
+    plugins.oil.enable = nixvim.lib.mkForce false;
+  }
+];
+```
+
+### 与 Stylix 集成
+
+当 NixOS 配置使用 Stylix 管理主题时，关掉本配置自带的 catppuccin，让 Stylix 接管：
+
+```nix
+# NixOS configuration.nix
+{
+  imports = [
+    stylix.nixosModules.stylix
+  ];
+
+  stylix = {
+    enable = true;
+    image = ./wallpaper.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  };
+
+  programs.nixvim = {
+    enable = true;
+
+    # 关掉本配置自带的 catppuccin（mkDefault 使得普通赋值即可覆盖）
+    colorschemes.catppuccin.enable = false;
+
+    # 导入本配置的其他设置（键位、插件、LSP 等全部保留）
+    imports = [ nixvim-config ];
+  };
+};
+```
+
+> 因为 `colorschemes.catppuccin.enable` 使用了 `lib.mkDefault true`，
+> 外部普通赋值 `= false` 即可覆盖，不需要 `mkForce`。
+> Stylix 会自动生成 Neovim 配色方案。
+> lualine 默认 `theme = "auto"`，bufferline 无显式 theme，两者都会自动跟随 Stylix 的 colorscheme。
 ## 自定义
 
 1. 新增配置文件 → 在 `config/` 下创建 `.nix`
