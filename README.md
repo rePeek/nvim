@@ -6,16 +6,19 @@
 ## 快速开始
 
 ```bash
-nix run .
+nix run .            # 构建并启动
+nix develop          # 进入开发环境（nil + nixfmt）
 ```
 
 ## 项目结构
 
 ```
 nixvim/
-├── flake.nix              # Flake 入口
+├── flake.nix              # Flake 入口 + devShell
 ├── flake.lock
 ├── .gitignore
+├── AGENTS.md              # AI Agent 开发规范
+├── README.md
 └── config/
     ├── default.nix        # 模块入口，import 所有子模块
     ├── options.nix        # 编辑器基础设置、leader、自动命令
@@ -36,18 +39,21 @@ nixvim/
 | **模糊搜索** | telescope.nvim | 文件、grep、buffer、命令面板 |
 | **补全** | nvim-cmp + LuaSnip | LSP / buffer / path / snippet |
 | **键位提示** | which-key.nvim | 按 Space 弹出菜单 |
-| **多光标** | vim-visual-multi | Ctrl+n 选中下一个匹配 |
-| **LSP** | clangd / rust-analyzer / nil / pyright | 四语言 LSP |
+| **多光标** | multicursors.nvim | 内置多光标编辑 |
+| **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
+| **LSP** | clangd / rust-analyzer / nil / pyright / marksman | 五语言 LSP |
 | **格式化** | lsp-format | LSP 自动格式化 |
 | **语法高亮** | nvim-treesitter | C/C++/Rust/Nix/Python/Markdown 等 |
 | **语法上下文** | treesitter-context | 粘性作用域提示 |
 | **调试** | nvim-dap + dap-ui + codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记 |
 | **Git 终端** | lazygit | 浮动 Git TUI |
-| **状态栏** | lualine | Catppuccin 主题 |
+| **状态栏** | lualine | catppuccin-mocha 主题 |
 | **标签栏** | bufferline | LSP 诊断显示 |
 | **命令行 UI** | noice | 更好的 cmdline & 消息 |
 | **缩进线** | indent-blankline | 作用域高亮 |
+
+> 所有插件均使用 nixvim 原生 nix 模块，零 `extraPlugins`。
 
 ## 键位映射
 
@@ -168,7 +174,7 @@ Leader 键为 `Space`。
 | `<` / `>` | 缩进后重新选中 |
 | `J` / `K` | 移动选区下/上 |
 
-### 多光标 (vim-visual-multi)
+### 多光标 (multicursors.nvim)
 
 | 键位 | 动作 |
 |------|------|
@@ -182,9 +188,12 @@ Leader 键为 `Space`。
 | 语言 | Server | 配置 |
 |------|--------|------|
 | **C/C++** | clangd | `--background-index` `--clang-tidy` `--header-insertion=never` |
-| **Rust** | rust-analyzer | 自动安装 Cargo + Rustc |
+| **Rust** | rust-analyzer | 依赖系统 PATH |
 | **Nix** | nil | 默认配置 |
 | **Python** | pyright | 默认配置 |
+| **Markdown** | marksman | 链接跳转、诊断、补全、大纲 |
+
+> LSP server 均不自动安装，依赖系统 PATH。找不到时 Neovim 跳过该 server，不影响使用。
 
 ## Debug 配置
 
@@ -203,13 +212,30 @@ C, C++, Rust, Nix, Bash, Python, Lua,
 Markdown, Markdown Inline, Vim, Vimdoc, Query
 ```
 
+## 开发环境
+
+```bash
+nix develop          # 进入 devShell
+```
+
+devShell 提供：
+- **nil** — Nix LSP server
+- **nixfmt** — Nix 代码格式化器
+
+格式化提交前必须执行：
+
+```bash
+nixfmt **/*.nix
+```
+
 ## 自定义
 
 1. 新增配置文件 → 在 `config/` 下创建 `.nix`
 2. 在 `config/default.nix` 的 `imports` 中添加引用
 3. `git add .`（flake 要求文件被 git 跟踪）
 4. `nix build .` 验证
-5. `nix run .` 启动
+5. `nixfmt **/*.nix` 格式化
+6. `nix run .` 启动
 
 ## 参考
 
