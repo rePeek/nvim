@@ -1,14 +1,8 @@
-{ pkgs, ... }:
 {
   # ── Leader ──
   globals = {
     mapleader = " ";
     maplocalleader = " ";
-
-  # ── Extra Packages (make tools available in Neovim's PATH) ──
-  extraPackages = with pkgs; [
-    clang-tools   # clangd
-  ];
   };
 
   # ── Editor Options ──
