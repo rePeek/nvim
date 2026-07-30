@@ -6,7 +6,7 @@
     enable = true;
     settings = {
       options = {
-        theme = "catppuccin-mocha";
+        theme = "auto";
         globalstatus = true;
         component_separators = {
           left = "";

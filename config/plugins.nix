@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ lib, ... }:
 {
   # ══════════════════════════════════════════════
   #  Colorscheme
   # ══════════════════════════════════════════════
   colorschemes.catppuccin = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings = {
       flavour = "mocha";
       integrations = {
@@ -552,5 +552,4 @@
       };
     }
   ];
-
 }
