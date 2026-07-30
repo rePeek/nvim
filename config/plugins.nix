@@ -12,9 +12,15 @@
         gitsigns = true;
         nvimtree = false;
         treesitter = true;
-        telescope = { enabled = true; };
-        dap = { enabled = true; };
-        dap_ui = { enabled = true; };
+        telescope = {
+          enabled = true;
+        };
+        dap = {
+          enabled = true;
+        };
+        dap_ui = {
+          enabled = true;
+        };
         which_key = true;
       };
     };
@@ -112,13 +118,41 @@
     enable = true;
     settings = {
       spec = [
-        { __unkeyed-1 = "<leader>f"; group = "Find (Telescope)"; mode = "n"; }
-        { __unkeyed-1 = "<leader>g"; group = "Git"; mode = "n"; }
-        { __unkeyed-1 = "<leader>d"; group = "Debug (DAP)"; mode = "n"; }
-        { __unkeyed-1 = "<leader>e"; group = "Explorer"; mode = "n"; }
-        { __unkeyed-1 = "<leader>b"; group = "Buffer"; mode = "n"; }
-        { __unkeyed-1 = "<leader>l"; group = "LSP"; mode = "n"; }
-        { __unkeyed-1 = "<leader>s"; group = "Selection"; mode = "n"; }
+        {
+          __unkeyed-1 = "<leader>f";
+          group = "Find (Telescope)";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>g";
+          group = "Git";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>d";
+          group = "Debug (DAP)";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>e";
+          group = "Explorer";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>b";
+          group = "Buffer";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>l";
+          group = "LSP";
+          mode = "n";
+        }
+        {
+          __unkeyed-1 = "<leader>s";
+          group = "Selection";
+          mode = "n";
+        }
       ];
     };
   };
@@ -134,13 +168,17 @@
       key = "<leader>/";
       mode = "n";
       action = "<cmd>Telescope live_grep<CR>";
-      options = { desc = "Live grep (Helix space+/)"; };
+      options = {
+        desc = "Live grep (Helix space+/)";
+      };
     }
     {
       key = "<leader> ";
       mode = "n";
       action = "<cmd>Telescope find_files<CR>";
-      options = { desc = "Find files (Helix space+space)"; };
+      options = {
+        desc = "Find files (Helix space+space)";
+      };
     }
 
     # ══════════════════════════════════════════════
@@ -150,7 +188,9 @@
       key = "<leader>,";
       mode = "n";
       action = "<cmd>Telescope commands<CR>";
-      options = { desc = "Command palette"; };
+      options = {
+        desc = "Command palette";
+      };
     }
 
     # ── Telescope (also Helix-style space+f prefix) ──
@@ -158,49 +198,65 @@
       key = "<leader>ff";
       mode = "n";
       action = "<cmd>Telescope find_files<CR>";
-      options = { desc = "Find files"; };
+      options = {
+        desc = "Find files";
+      };
     }
     {
       key = "<leader>fg";
       mode = "n";
       action = "<cmd>Telescope live_grep<CR>";
-      options = { desc = "Live grep"; };
+      options = {
+        desc = "Live grep";
+      };
     }
     {
       key = "<leader>fb";
       mode = "n";
       action = "<cmd>Telescope buffers<CR>";
-      options = { desc = "Buffers"; };
+      options = {
+        desc = "Buffers";
+      };
     }
     {
       key = "<leader>fh";
       mode = "n";
       action = "<cmd>Telescope help_tags<CR>";
-      options = { desc = "Help tags"; };
+      options = {
+        desc = "Help tags";
+      };
     }
     {
       key = "<leader>fr";
       mode = "n";
       action = "<cmd>Telescope oldfiles<CR>";
-      options = { desc = "Recent files"; };
+      options = {
+        desc = "Recent files";
+      };
     }
     {
       key = "<leader>fs";
       mode = "n";
       action = "<cmd>Telescope grep_string<CR>";
-      options = { desc = "Grep string under cursor"; };
+      options = {
+        desc = "Grep string under cursor";
+      };
     }
     {
       key = "<leader>fd";
       mode = "n";
       action = "<cmd>Telescope diagnostics<CR>";
-      options = { desc = "Diagnostics"; };
+      options = {
+        desc = "Diagnostics";
+      };
     }
     {
       key = "<leader>fk";
       mode = "n";
       action = "<cmd>Telescope keymaps<CR>";
-      options = { desc = "Keymaps"; };
+      options = {
+        desc = "Keymaps";
+      };
     }
 
     # ── Oil File Explorer ──
@@ -208,13 +264,17 @@
       key = "<leader>e";
       mode = "n";
       action = "<cmd>Oil<CR>";
-      options = { desc = "Oil file explorer"; };
+      options = {
+        desc = "Oil file explorer";
+      };
     }
     {
       key = "-";
       mode = "n";
       action = "<cmd>Oil<CR>";
-      options = { desc = "Oil (Helix-style dash)"; };
+      options = {
+        desc = "Oil (Helix-style dash)";
+      };
     }
 
     # ══════════════════════════════════════════════
@@ -224,43 +284,57 @@
       key = "<S-h>";
       mode = "n";
       action = "<cmd>bprevious<CR>";
-      options = { desc = "Previous buffer"; };
+      options = {
+        desc = "Previous buffer";
+      };
     }
     {
       key = "<S-l>";
       mode = "n";
       action = "<cmd>bnext<CR>";
-      options = { desc = "Next buffer"; };
+      options = {
+        desc = "Next buffer";
+      };
     }
     {
       key = "<leader>bc";
       mode = "n";
       action = "<cmd>bdelete<CR>";
-      options = { desc = "Close buffer (Helix space+x)"; };
+      options = {
+        desc = "Close buffer (Helix space+x)";
+      };
     }
     {
       key = "<leader>bx";
       mode = "n";
       action = "<cmd>bdelete!<CR>";
-      options = { desc = "Force close buffer"; };
+      options = {
+        desc = "Force close buffer";
+      };
     }
     {
       key = "<leader>bo";
       mode = "n";
       action = "<cmd>%bdelete|e#<CR>";
-      options = { desc = "Close all other buffers"; };
+      options = {
+        desc = "Close all other buffers";
+      };
     }
     {
       key = "<leader>bl";
       mode = "n";
       action = "<cmd>Telescope buffers<CR>";
-      options = { desc = "List buffers"; };
+      options = {
+        desc = "List buffers";
+      };
     }
     {
       key = "<leader>bn";
       mode = "n";
       action = "<cmd>enew<CR>";
-      options = { desc = "New buffer"; };
+      options = {
+        desc = "New buffer";
+      };
     }
 
     # ── Window Navigation ──
@@ -268,25 +342,33 @@
       key = "<C-h>";
       mode = "n";
       action = "<C-w>h";
-      options = { desc = "Window left"; };
+      options = {
+        desc = "Window left";
+      };
     }
     {
       key = "<C-j>";
       mode = "n";
       action = "<C-w>j";
-      options = { desc = "Window down"; };
+      options = {
+        desc = "Window down";
+      };
     }
     {
       key = "<C-k>";
       mode = "n";
       action = "<C-w>k";
-      options = { desc = "Window up"; };
+      options = {
+        desc = "Window up";
+      };
     }
     {
       key = "<C-l>";
       mode = "n";
       action = "<C-w>l";
-      options = { desc = "Window right"; };
+      options = {
+        desc = "Window right";
+      };
     }
 
     # ── Quick Save & Quit ──
@@ -294,33 +376,49 @@
       key = "<leader>w";
       mode = "n";
       action = "<cmd>w<CR>";
-      options = { desc = "Save"; };
+      options = {
+        desc = "Save";
+      };
     }
     {
       key = "<leader>q";
       mode = "n";
       action = "<cmd>q<CR>";
-      options = { desc = "Quit"; };
+      options = {
+        desc = "Quit";
+      };
     }
     {
       key = "<leader>Q";
       mode = "n";
       action = "<cmd>qall<CR>";
-      options = { desc = "Quit all"; };
+      options = {
+        desc = "Quit all";
+      };
     }
 
     # ── Move Lines (Helix-style) ──
     {
       key = "<A-j>";
-      mode = [ "n" "v" ];
+      mode = [
+        "n"
+        "v"
+      ];
       action = "<cmd>m .+1<CR>==";
-      options = { desc = "Move line down"; };
+      options = {
+        desc = "Move line down";
+      };
     }
     {
       key = "<A-k>";
-      mode = [ "n" "v" ];
+      mode = [
+        "n"
+        "v"
+      ];
       action = "<cmd>m .-2<CR>==";
-      options = { desc = "Move line up"; };
+      options = {
+        desc = "Move line up";
+      };
     }
 
     # ══════════════════════════════════════════════
@@ -331,37 +429,49 @@
       key = "<leader>ss";
       mode = "n";
       action = "viw";
-      options = { desc = "Select word"; };
+      options = {
+        desc = "Select word";
+      };
     }
     {
       key = "<leader>sl";
       mode = "n";
       action = "V";
-      options = { desc = "Select line"; };
+      options = {
+        desc = "Select line";
+      };
     }
     {
       key = "<leader>s%";
       mode = "n";
       action = "ggVG";
-      options = { desc = "Select all"; };
+      options = {
+        desc = "Select all";
+      };
     }
     {
       key = "<leader>si";
       mode = "n";
       action = "vi(";
-      options = { desc = "Select inside parens"; };
+      options = {
+        desc = "Select inside parens";
+      };
     }
     {
       key = "<leader>sa";
       mode = "n";
       action = "va(";
-      options = { desc = "Select around parens"; };
+      options = {
+        desc = "Select around parens";
+      };
     }
     {
       key = "<leader>si\"";
       mode = "n";
       action = "vi\"";
-      options = { desc = "Select inside quotes"; };
+      options = {
+        desc = "Select inside quotes";
+      };
     }
 
     # ══════════════════════════════════════════════
@@ -371,19 +481,25 @@
       key = "<leader>gf";
       mode = "n";
       action = "<cmd>Telescope git_files<CR>";
-      options = { desc = "Git files"; };
+      options = {
+        desc = "Git files";
+      };
     }
     {
       key = "<leader>gj";
       mode = "n";
       action = "<cmd>Telescope jumplist<CR>";
-      options = { desc = "Jumplist"; };
+      options = {
+        desc = "Jumplist";
+      };
     }
     {
       key = "<leader>gm";
       mode = "n";
       action = "<cmd>Telescope marks<CR>";
-      options = { desc = "Marks"; };
+      options = {
+        desc = "Marks";
+      };
     }
 
     # ── Clear Search Highlight ──
@@ -391,7 +507,9 @@
       key = "<Esc>";
       mode = "n";
       action = "<cmd>nohlsearch<CR>";
-      options = { desc = "Clear search highlight"; };
+      options = {
+        desc = "Clear search highlight";
+      };
     }
 
     # ══════════════════════════════════════════════
@@ -401,25 +519,33 @@
       key = "<";
       mode = "v";
       action = "<gv";
-      options = { desc = "Indent left & reselect"; };
+      options = {
+        desc = "Indent left & reselect";
+      };
     }
     {
       key = ">";
       mode = "v";
       action = ">gv";
-      options = { desc = "Indent right & reselect"; };
+      options = {
+        desc = "Indent right & reselect";
+      };
     }
     {
       key = "J";
       mode = "v";
       action = ":m '>+1<CR>gv=gv";
-      options = { desc = "Move selection down"; };
+      options = {
+        desc = "Move selection down";
+      };
     }
     {
       key = "K";
       mode = "v";
       action = ":m '<-2<CR>gv=gv";
-      options = { desc = "Move selection up"; };
+      options = {
+        desc = "Move selection up";
+      };
     }
   ];
 

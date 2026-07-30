@@ -8,7 +8,7 @@
         "gD" = "references";
         "gt" = "type_definition";
         "gi" = "implementation";
-        "K"  = "hover";
+        "K" = "hover";
         "<leader>ca" = "code_action";
         "<leader>rn" = "rename";
       };

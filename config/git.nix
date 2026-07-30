@@ -26,7 +26,9 @@
       key = "<leader>gg";
       mode = "n";
       action = "<cmd>LazyGit<CR>";
-      options = { desc = "LazyGit"; };
+      options = {
+        desc = "LazyGit";
+      };
     }
     {
       key = "<leader>gh";
@@ -34,7 +36,9 @@
       action = {
         __raw = "function() require('gitsigns').preview_hunk() end";
       };
-      options = { desc = "Preview hunk"; };
+      options = {
+        desc = "Preview hunk";
+      };
     }
     {
       key = "<leader>gd";
@@ -42,7 +46,9 @@
       action = {
         __raw = "function() require('gitsigns').diffthis() end";
       };
-      options = { desc = "Diff this"; };
+      options = {
+        desc = "Diff this";
+      };
     }
     {
       key = "<leader>gb";
@@ -50,7 +56,9 @@
       action = {
         __raw = "function() require('gitsigns').blame_line() end";
       };
-      options = { desc = "Blame line"; };
+      options = {
+        desc = "Blame line";
+      };
     }
     {
       key = "]c";
@@ -58,7 +66,9 @@
       action = {
         __raw = "function() require('gitsigns').next_hunk() end";
       };
-      options = { desc = "Next hunk"; };
+      options = {
+        desc = "Next hunk";
+      };
     }
     {
       key = "[c";
@@ -66,7 +76,9 @@
       action = {
         __raw = "function() require('gitsigns').prev_hunk() end";
       };
-      options = { desc = "Previous hunk"; };
+      options = {
+        desc = "Previous hunk";
+      };
     }
   ];
 }

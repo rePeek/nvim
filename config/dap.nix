@@ -56,7 +56,9 @@
       action = {
         __raw = "function() require('dap').toggle_breakpoint() end";
       };
-      options = { desc = "Toggle breakpoint"; };
+      options = {
+        desc = "Toggle breakpoint";
+      };
     }
     {
       key = "<leader>dc";
@@ -64,7 +66,9 @@
       action = {
         __raw = "function() require('dap').continue() end";
       };
-      options = { desc = "Continue"; };
+      options = {
+        desc = "Continue";
+      };
     }
     {
       key = "<leader>dn";
@@ -72,7 +76,9 @@
       action = {
         __raw = "function() require('dap').step_over() end";
       };
-      options = { desc = "Step over"; };
+      options = {
+        desc = "Step over";
+      };
     }
     {
       key = "<leader>ds";
@@ -80,7 +86,9 @@
       action = {
         __raw = "function() require('dap').step_into() end";
       };
-      options = { desc = "Step into"; };
+      options = {
+        desc = "Step into";
+      };
     }
     {
       key = "<leader>do";
@@ -88,7 +96,9 @@
       action = {
         __raw = "function() require('dap').step_out() end";
       };
-      options = { desc = "Step out"; };
+      options = {
+        desc = "Step out";
+      };
     }
     {
       key = "<leader>dr";
@@ -96,7 +106,9 @@
       action = {
         __raw = "function() require('dap').restart() end";
       };
-      options = { desc = "Restart"; };
+      options = {
+        desc = "Restart";
+      };
     }
     {
       key = "<leader>dt";
@@ -104,7 +116,9 @@
       action = {
         __raw = "function() require('dap').terminate() end";
       };
-      options = { desc = "Terminate"; };
+      options = {
+        desc = "Terminate";
+      };
     }
     {
       key = "<leader>du";
@@ -112,7 +126,9 @@
       action = {
         __raw = "function() require('dapui').toggle() end";
       };
-      options = { desc = "Toggle DAP UI"; };
+      options = {
+        desc = "Toggle DAP UI";
+      };
     }
   ];
 

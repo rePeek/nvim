@@ -17,17 +17,14 @@
       ];
 
       perSystem =
-        { system, ... }:
+        { system, pkgs, ... }:
         let
           configuration = nixvim.lib.evalNixvim {
-            # Specify the target system.
-            # Alternatively configure `nixpkgs` options in your modules.
             inherit system;
 
             # Import your Nixvim modules
             modules = [ ./config ];
 
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
             extraSpecialArgs = {
               # inherit (inputs) foo;
             };
@@ -39,6 +36,14 @@
 
           # Lets you run `nix run .` to start nixvim
           packages.default = configuration.config.build.package;
+
+          # Dev shell for Nix development
+          devShells.default = pkgs.mkShell {
+            packages = with pkgs; [
+              nil # Nix LSP server
+              nixfmt # Nix formatter
+            ];
+          };
         };
     };
 }
