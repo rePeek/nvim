@@ -21,7 +21,8 @@ nixvim/
 ├── README.md
 └── config/
     ├── default.nix        # 模块入口，import 所有子模块
-    ├── options.nix        # 共享选项（theme）、编辑器设置、自动命令
+    ├── options.nix        # 编辑器基础设置、leader、自动命令
+    ├── theme.nix          # 配色方案（tokyonight (storm)）
     ├── plugins.nix        # 插件配置 + 键位映射
     ├── lsp.nix            # Language Server Protocol
     ├── treesitter.nix     # 语法高亮 & 解析
@@ -32,17 +33,17 @@ nixvim/
 
 ## 主题
 
-默认使用 **catppuccin** (mocha) 配色方案。
+默认使用 **tokyonight-storm** 配色方案。
 
 所有 UI 插件（lualine、bufferline、telescope、noice 等）自动跟随 colorscheme，无需单独配置。
 
 ### 外部覆盖
 
 ```nix
-# 切换到其他 colorscheme（catppuccin 用了 mkDefault，普通赋值即可关闭）
+# 切换到其他 colorscheme（mkDefault 使得普通赋值即可覆盖）
 {
-  colorschemes.catppuccin.enable = false;
-  colorschemes.tokyonight.enable = true;
+  colorschemes.tokyonight.enable = false;
+  colorschemes.catppuccin.enable = true;
 }
 ```
 
@@ -50,7 +51,7 @@ nixvim/
 
 | 类别 | 插件 | 说明 |
 |------|------|------|
-| **主题** | catppuccin (mocha) | 配色方案，`mkDefault` 可被外部关闭 |
+| **主题** | tokyonight (storm) | nixvim 内置模块，`mkDefault` 可被外部覆盖 |
 | **文件浏览** | oil.nvim | 目录即 buffer，编辑即操作 |
 | **模糊搜索** | telescope.nvim | 文件、grep、buffer、命令面板 |
 | **补全** | nvim-cmp + LuaSnip | LSP / buffer / path / snippet |
@@ -254,8 +255,7 @@ nixfmt **/*.nix
 modules = [
   nixvim-config
   {
-    colorschemes.catppuccin.enable = false;
-    colorschemes.tokyonight.enable = true;
+    colorschemes.tokyonight.enable = false;
   }
 ];
 ```
@@ -273,7 +273,7 @@ modules = [
 
 ### 与 Stylix 集成
 
-当 NixOS 配置使用 Stylix 管理主题时，关掉本配置自带的 catppuccin，让 Stylix 接管：
+当 NixOS 配置使用 Stylix 管理主题时，关掉本配置自带的 tokyonight，让 Stylix 接管：
 
 ```nix
 # NixOS configuration.nix
@@ -285,14 +285,15 @@ modules = [
   stylix = {
     enable = true;
     image = ./wallpaper.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
   };
 
   programs.nixvim = {
     enable = true;
 
-    # 关掉本配置自带的 catppuccin（mkDefault 使得普通赋值即可覆盖）
-    colorschemes.catppuccin.enable = false;
+    # 关掉本配置自带的 tokyonight（mkDefault 使得普通赋值即可覆盖）
+    colorschemes.tokyonight.enable = false;
+
 
     # 导入本配置的其他设置（键位、插件、LSP 等全部保留）
     imports = [ nixvim-config ];
@@ -300,8 +301,8 @@ modules = [
 };
 ```
 
-> 因为 `colorschemes.catppuccin.enable` 使用了 `lib.mkDefault true`，
-> 外部普通赋值 `= false` 即可覆盖，不需要 `mkForce`。
+> `colorschemes.tokyonight.enable` 使用了 `lib.mkDefault true`，外部普通赋值即可覆盖。
+
 > Stylix 会自动生成 Neovim 配色方案。
 > lualine 默认 `theme = "auto"`，bufferline 无显式 theme，两者都会自动跟随 Stylix 的 colorscheme。
 ## 自定义

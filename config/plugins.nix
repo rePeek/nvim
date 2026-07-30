@@ -1,31 +1,4 @@
-{ lib, ... }:
 {
-  # ══════════════════════════════════════════════
-  #  Colorscheme
-  # ══════════════════════════════════════════════
-  colorschemes.catppuccin = {
-    enable = lib.mkDefault true;
-    settings = {
-      flavour = "mocha";
-      integrations = {
-        cmp = true;
-        gitsigns = true;
-        nvimtree = false;
-        treesitter = true;
-        telescope = {
-          enabled = true;
-        };
-        dap = {
-          enabled = true;
-        };
-        dap_ui = {
-          enabled = true;
-        };
-        which_key = true;
-      };
-    };
-  };
-
   # ══════════════════════════════════════════════
   #  File Explorer — Oil.nvim
   # ══════════════════════════════════════════════
