@@ -89,6 +89,7 @@
   # ══════════════════════════════════════════════
   extraPlugins = with pkgs.vimPlugins; [
     vim-visual-multi
+    render-markdown-nvim
   ];
 
   # ══════════════════════════════════════════════
@@ -408,4 +409,11 @@
       options = { desc = "Move selection up"; };
     }
   ];
+
+  # ── render-markdown setup ──
+  extraConfigLua = ''
+    require('render-markdown').setup({
+      render_modes = { 'n', 'c', 't' },
+    })
+  '';
 }

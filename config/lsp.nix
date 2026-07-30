@@ -47,6 +47,11 @@
       pyright = {
         enable = true;
       };
+
+      # ── Markdown ──
+      marksman = {
+        enable = true;
+      };
     };
   };
 
