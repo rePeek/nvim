@@ -85,11 +85,11 @@
   plugins.luasnip.enable = true;
 
   # ══════════════════════════════════════════════
-  #  Multi-cursor — vim-visual-multi (Helix-style)
+  #  Multi-cursor — multicursors.nvim (Helix-style)
   # ══════════════════════════════════════════════
-  extraPlugins = with pkgs.vimPlugins; [
-    vim-visual-multi
-  ];
+  plugins.multicursors = {
+    enable = true;
+  };
 
   # ══════════════════════════════════════════════
   #  render-markdown.nvim — Markdown 渲染
