@@ -1,4 +1,11 @@
 {
-  # Import all your configuration modules here
-  imports = [ ./bufferline.nix ];
+  imports = [
+    ./options.nix
+    ./plugins.nix
+    ./lsp.nix
+    ./treesitter.nix
+    ./dap.nix
+    ./git.nix
+    ./ui.nix
+  ];
 }
