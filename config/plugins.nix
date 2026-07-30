@@ -354,7 +354,7 @@
     #  Helix-style: Go-to shortcuts (via Telescope)
     # ══════════════════════════════════════════════
     {
-      key = "<leader>gg";
+      key = "<leader>gf";
       mode = "n";
       action = "<cmd>Telescope git_files<CR>";
       options = { desc = "Git files"; };
