@@ -89,8 +89,21 @@
   # ══════════════════════════════════════════════
   extraPlugins = with pkgs.vimPlugins; [
     vim-visual-multi
-    render-markdown-nvim
   ];
+
+  # ══════════════════════════════════════════════
+  #  render-markdown.nvim — Markdown 渲染
+  # ══════════════════════════════════════════════
+  plugins.render-markdown = {
+    enable = true;
+    settings = {
+      render_modes = [
+        "n"
+        "c"
+        "t"
+      ];
+    };
+  };
 
   # ══════════════════════════════════════════════
   #  Which-Key (discoverable keymaps)
@@ -410,10 +423,4 @@
     }
   ];
 
-  # ── render-markdown setup ──
-  extraConfigLua = ''
-    require('render-markdown').setup({
-      render_modes = { 'n', 'c', 't' },
-    })
-  '';
 }
