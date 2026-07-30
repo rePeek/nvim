@@ -108,6 +108,10 @@
         "c"
         "t"
       ];
+
+      anti_conceal = {
+        enabled = false;
+      };
     };
   };
 
