@@ -8,5 +8,6 @@
     ./dap.nix
     ./git.nix
     ./ui.nix
+    ./keymap.nix
   ];
 }

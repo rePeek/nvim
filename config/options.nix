@@ -19,6 +19,10 @@
     clipboard = "unnamedplus";
     signcolumn = "yes";
     cursorline = true;
+
+    # Insert mode: bar cursor (Helix-style)
+    guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20";
+
     scrolloff = 8;
 
     mouse = "a";
@@ -36,6 +40,40 @@
 
     termguicolors = true;
   };
+
+  # ── Extra Lua Config (Helix-style) ──
+  extraConfigLua = ''
+    -- OSC 52 clipboard for remote/SSH sessions
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+      },
+      paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+      },
+    }
+
+    -- Diagnostic Styling (Helix-style)
+    -- end-of-line hints, cursor-line warnings+
+    vim.diagnostic.config({
+      virtual_text = {
+        spacing = 4,
+        prefix = '●',
+        severity = { min = vim.diagnostic.severity.HINT },
+      },
+      virtual_lines = {
+        current_line = true,
+        severity = { min = vim.diagnostic.severity.WARN },
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+    })
+  '';
 
   # ── Auto Commands ──
   autoCmd = [
@@ -60,6 +98,17 @@
             end
           end
         '';
+      };
+    }
+    # Auto-save after delay (CursorHold = updatetime, default 4s)
+    {
+      event = [
+        "CursorHold"
+        "CursorHoldI"
+      ];
+      pattern = "*";
+      callback = {
+        __raw = "function() if vim.bo.buftype == '' then vim.cmd('silent! update') end end";
       };
     }
   ];
