@@ -18,7 +18,7 @@
     };
   };
 
-  # ── Multicursors (Helix-style multi-cursor) ──
+  # ── Multicursors ──
   plugins.multicursors = {
     enable = true;
   };

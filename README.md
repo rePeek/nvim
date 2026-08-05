@@ -1,7 +1,7 @@
 # Nixvim Configuration
 
 基于 [LazyVim](https://github.com/LazyVim/LazyVim) 理念的 Nixvim 配置，针对 **C/C++、Rust、Nix、Python、Lua、Markdown、Web** 开发优化。
-采用 **LazyVim 键位习惯 + Helix 风格选择** 的混合方案。
+采用 **LazyVim 键位习惯**。
 
 ## 快速开始
 
@@ -98,8 +98,8 @@ nixvim/
 | **文件浏览器** | oil.nvim | 目录即 buffer，编辑即操作（备用） |
 | **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
 | **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
-| **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | Helix preset，按 Space 弹出分组菜单 |
-| **多光标** | multicursors.nvim | Helix 风格多光标编辑 |
+| **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | 按 Space 弹出分组菜单 |
+| **多光标** | multicursors.nvim | 多光标编辑 |
 | **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
 | **调试** | nvim-dap + dap-ui + codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
@@ -147,9 +147,7 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 键位 | 动作 | 说明 |
 |------|------|------|
-| `<leader>e` | Snacks Explorer | 文件浏览器（主） |
-| `-` | Snacks Explorer | 文件浏览器（Helix 风格） |
-| `<leader>E` | Oil | 文件浏览器（备用） |
+| `<leader>e` | Snacks Explorer | 文件浏览器 |
 
 ### Buffer
 
@@ -195,14 +193,6 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `S` | Normal / Visual / Operator | Flash Treesitter |
 | `r` | Operator-pending | Remote Flash |
 | `R` | Operator-pending / Visual | Treesitter Search |
-
-### 选择 (Helix 风格)
-
-| 键位 | 动作 |
-|------|------|
-| `<leader>ss` | 选中单词 |
-| `<leader>sl` | 选中整行 |
-| `<leader>s%` | 全选 |
 
 ### Git (Gitsigns)
 

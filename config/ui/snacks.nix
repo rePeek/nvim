@@ -269,16 +269,6 @@
         desc = "Explorer";
       };
     }
-    {
-      key = "-";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.explorer.open() end";
-      };
-      options = {
-        desc = "Explorer (Helix-style dash)";
-      };
-    }
 
     # ── Floating Terminal ──
     {

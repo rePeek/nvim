@@ -1,6 +1,6 @@
 {
   # ══════════════════════════════════════════════
-  #  Which-Key — Keymap Discovery (LazyVim-style)
+  #  Which-Key — Keymap Discovery
   # ══════════════════════════════════════════════
   plugins.which-key = {
     enable = true;
