@@ -234,7 +234,6 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `Ctrl+K` (insert) | Signature Help |
 | `<leader>ca` | Code Action |
 | `<leader>cA` | Source Action |
-| `<leader>rn` | Rename |
 | `<leader>cr` | Rename |
 | `<leader>cf` | 格式化 |
 | `<leader>cF` | 格式化注入语言 |

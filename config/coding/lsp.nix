@@ -16,7 +16,6 @@
         "gD" = "declaration";
         "K" = "hover";
         "<leader>ca" = "code_action";
-        "<leader>rn" = "rename";
       };
       diagnostic = {
         "<leader>cd" = "open_float";
@@ -57,6 +56,16 @@
       };
       options = {
         desc = "Signature Help (insert)";
+      };
+    }
+    {
+      key = "<leader>cr";
+      mode = "n";
+      action = {
+        __raw = "function() vim.lsp.buf.rename() end";
+      };
+      options = {
+        desc = "Rename";
       };
     }
     {
