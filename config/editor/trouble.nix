@@ -33,7 +33,7 @@
       };
     }
     {
-      key = "<leader>cs";
+      key = "<leader>xs";
       mode = "n";
       action = "<cmd>Trouble symbols toggle<CR>";
       options = {
@@ -41,7 +41,7 @@
       };
     }
     {
-      key = "<leader>cS";
+      key = "<leader>xS";
       mode = "n";
       action = "<cmd>Trouble lsp toggle<CR>";
       options = {
