@@ -16,8 +16,4 @@
     enable = false; # snacks.indent handles this now
   };
 
-  # ── NUI (required by noice/dap-ui) ──
-  plugins.nui = {
-    enable = true;
-  };
 }
