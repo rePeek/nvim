@@ -15,6 +15,21 @@
     markdown = [ "prettierd" ];
   };
 
+
+  # ── render-markdown.nvim — Markdown Rendering ──
+  plugins.render-markdown = {
+    enable = true;
+    settings = {
+      render_modes = [
+        "n"
+        "c"
+        "t"
+      ];
+      anti_conceal = {
+        enabled = false;
+      };
+    };
+  };
   # ── Treesitter Grammar ──
   plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
     markdown

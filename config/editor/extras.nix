@@ -3,21 +3,6 @@
   #  Extra Plugins (LazyVim util.lua + misc)
   # ══════════════════════════════════════════════
 
-  # ── render-markdown.nvim — Markdown Rendering ──
-  plugins.render-markdown = {
-    enable = true;
-    settings = {
-      render_modes = [
-        "n"
-        "c"
-        "t"
-      ];
-      anti_conceal = {
-        enabled = false;
-      };
-    };
-  };
-
   # ── Multicursors ──
   plugins.multicursors = {
     enable = true;
