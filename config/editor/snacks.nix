@@ -258,7 +258,7 @@
       };
     }
 
-    # ── Snacks Explorer (replaces Oil / Neo-tree) ──
+    # ── Snacks Explorer ──
     {
       key = "<leader>e";
       mode = "n";

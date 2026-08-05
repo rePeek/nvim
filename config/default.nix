@@ -3,8 +3,8 @@
 #
 #  Structure:
 #    core/        — options, keymaps, autocmds
-#    ui/          — snacks, colorscheme, lualine, bufferline, noice
-#    editor/      — oil, flash, trouble, todo-comments, grug-far, which-key
+#    ui/          — colorscheme, lualine, bufferline, noice
+#    editor/      — snacks, flash, trouble, todo-comments, grug-far, which-key
 #    coding/      — treesitter, lsp, completion, conform, dap
 #    git/         — gitsigns, lazygit
 #    languages/   — cpp, rust

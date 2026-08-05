@@ -12,12 +12,6 @@
           {
             filetype = "snacks_layout_box";
           }
-          {
-            filetype = "oil";
-            text = "File Explorer";
-            highlight = "Directory";
-            separator = true;
-          }
         ];
       };
     };

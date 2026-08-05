@@ -1,6 +1,6 @@
 {
   imports = [
-    ./oil.nix
+    ./snacks.nix
     ./flash.nix
     ./trouble.nix
     ./todo-comments.nix

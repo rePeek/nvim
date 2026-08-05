@@ -34,9 +34,9 @@ nixvim/
     │   └── treesitter.nix     # 语法高亮 & 解析
     ├── editor/                # 编辑器增强
     │   ├── default.nix
+    │   ├── snacks.nix         # snacks.nvim (picker/explorer/terminal/通知等)
     │   ├── flash.nix          # 跳转 (flash.nvim)
     │   ├── grug-far.nix       # 批量替换
-    │   ├── oil.nix            # 文件浏览器
     │   ├── todo-comments.nix  # TODO 注释高亮
     │   ├── trouble.nix        # 诊断面板
     │   ├── which-key.nix      # 键位提示
@@ -59,7 +59,6 @@ nixvim/
         ├── bufferline.nix     # 标签栏
         ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
         ├── noice.nix          # cmdline & 消息 UI
-        ├── snacks.nix         # snacks.nvim 增强
         └── statusline.nix     # 状态栏 (lualine)
 ```
 
@@ -95,7 +94,6 @@ nixvim/
 | **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
 | **跳转** | [flash.nvim](https://github.com/folke/snacks.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
 | **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换（LazyVim 风格） |
-| **文件浏览器** | oil.nvim | 目录即 buffer，编辑即操作（备用） |
 | **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
 | **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
 | **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | 按 Space 弹出分组菜单 |
@@ -405,7 +403,7 @@ modules = [
 modules = [
   nixvim-config
   {
-    plugins.oil.enable = nixvim.lib.mkForce false;
+    plugins.flash.enable = nixvim.lib.mkForce false;
   }
 ];
 ```
