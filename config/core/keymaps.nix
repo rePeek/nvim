@@ -209,47 +209,13 @@
       };
     }
     {
-      key = "<leader>bb";
-      mode = "n";
-      action = "<cmd>e #<CR>";
-      options = {
-        desc = "Switch to Other Buffer";
-      };
-    }
-    {
-      key = "<leader>`";
-      mode = "n";
-      action = "<cmd>e #<CR>";
-      options = {
-        desc = "Switch to Other Buffer";
-      };
-    }
-    {
-      key = "<leader>bd";
+      key = "<leader>b";
       mode = "n";
       action = {
-        __raw = "function() require('snacks').bufdelete() end";
+        __raw = "function() Snacks.picker.buffers() end";
       };
       options = {
-        desc = "Delete Buffer";
-      };
-    }
-    {
-      key = "<leader>bo";
-      mode = "n";
-      action = {
-        __raw = "function() require('snacks').bufdelete.other() end";
-      };
-      options = {
-        desc = "Delete Other Buffers";
-      };
-    }
-    {
-      key = "<leader>bn";
-      mode = "n";
-      action = "<cmd>enew<CR>";
-      options = {
-        desc = "New Buffer";
+        desc = "Buffer Picker";
       };
     }
 
@@ -378,6 +344,34 @@
     }
 
     # ── Commenting ──
+    {
+      key = "<leader>cc";
+      mode = [
+        "n"
+        "x"
+      ];
+      action = "gcc";
+      options = {
+        desc = "Toggle Comment";
+        remap = true;
+      };
+    }
+    {
+      key = "<leader>co";
+      mode = "n";
+      action = "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
+      options = {
+        desc = "Add Comment Below";
+      };
+    }
+    {
+      key = "<leader>cO";
+      mode = "n";
+      action = "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
+      options = {
+        desc = "Add Comment Above";
+      };
+    }
     {
       key = "gco";
       mode = "n";

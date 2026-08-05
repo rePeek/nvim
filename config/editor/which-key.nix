@@ -16,14 +16,6 @@
           ];
         }
         {
-          __unkeyed-1 = "<leader>b";
-          group = "buffer";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>c";
           group = "code";
           mode = [
