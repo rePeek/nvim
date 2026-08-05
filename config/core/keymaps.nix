@@ -73,9 +73,9 @@
       };
     }
 
-    # ── Resize Window with Ctrl+Arrows ──
+    # ── Resize Window with Shift+Ctrl+Arrows ──
     {
-      key = "<C-Up>";
+      key = "<C-S-Up>";
       mode = "n";
       action = "<cmd>resize +2<CR>";
       options = {
@@ -83,7 +83,7 @@
       };
     }
     {
-      key = "<C-Down>";
+      key = "<C-S-Down>";
       mode = "n";
       action = "<cmd>resize -2<CR>";
       options = {
@@ -91,7 +91,7 @@
       };
     }
     {
-      key = "<C-Left>";
+      key = "<C-S-Left>";
       mode = "n";
       action = "<cmd>vertical resize -2<CR>";
       options = {
@@ -99,11 +99,29 @@
       };
     }
     {
-      key = "<C-Right>";
+      key = "<C-S-Right>";
       mode = "n";
       action = "<cmd>vertical resize +2<CR>";
       options = {
         desc = "Increase Window Width";
+      };
+    }
+
+    # ── Jumplist Navigation ──
+    {
+      key = "<C-Left>";
+      mode = "n";
+      action = "<C-o>";
+      options = {
+        desc = "Jump Back";
+      };
+    }
+    {
+      key = "<C-Right>";
+      mode = "n";
+      action = "<C-i>";
+      options = {
+        desc = "Jump Forward";
       };
     }
 
