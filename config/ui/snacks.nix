@@ -52,63 +52,9 @@
         enabled = false;
       };
 
-      # ── Dashboard ──
+      # ── Dashboard (disabled) ──
       dashboard = {
-        enabled = true;
-        preset = {
-          header = ''
-            ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
-            ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z    
-            ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z       
-            ██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║ z         
-            ███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║           
-            ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝           
-          '';
-          keys = [
-            {
-              icon = " ";
-              key = "f";
-              desc = "Find File";
-              action = ":lua Snacks.dashboard.pick('files')";
-            }
-            {
-              icon = " ";
-              key = "n";
-              desc = "New File";
-              action = ":ene | startinsert";
-            }
-            {
-              icon = " ";
-              key = "g";
-              desc = "Find Text";
-              action = ":lua Snacks.dashboard.pick('live_grep')";
-            }
-            {
-              icon = " ";
-              key = "r";
-              desc = "Recent Files";
-              action = ":lua Snacks.dashboard.pick('oldfiles')";
-            }
-            {
-              icon = " ";
-              key = "c";
-              desc = "Config";
-              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})";
-            }
-            {
-              icon = " ";
-              key = "s";
-              desc = "Restore Session";
-              __unkeyed-1 = "session";
-            }
-            {
-              icon = " ";
-              key = "q";
-              desc = "Quit";
-              action = ":qa";
-            }
-          ];
-        };
+        enabled = false;
       };
 
       # ── Picker (LazyVim uses snacks.picker, replacing telescope) ──
