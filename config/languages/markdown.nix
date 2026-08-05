@@ -5,6 +5,12 @@
   #  LSP: marksman  |  Formatter: prettierd
   # ══════════════════════════════════════════════
 
+  # ── System packages for Markdown tools ──
+  extraPackages = with pkgs; [
+    marksman
+    prettierd
+  ];
+
   # ── LSP Server ──
   plugins.lsp.servers.marksman = {
     enable = true;
