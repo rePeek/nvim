@@ -248,8 +248,8 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `[w` / `]w` | 上一条/下一条 Warning |
 | `<leader>xx` | Trouble Diagnostics |
 | `<leader>xX` | Trouble Buffer Diagnostics |
-| `<leader>cs` | Trouble Symbols |
-| `<leader>cS` | Trouble LSP References |
+| `<leader>xs` | Trouble Symbols |
+| `<leader>xS` | Trouble LSP References |
 | `<leader>xL` | Trouble Location List |
 | `<leader>xQ` | Trouble Quickfix |
 | `<leader>xt` | Todo (Trouble) |
@@ -301,8 +301,8 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>ft` | Normal | 浮动终端 |
 | `<leader>.` | Normal | Scratch Buffer |
 | `<leader>n` | Normal | 通知历史 |
-| `<leader>qq` | Normal | 全部退出 |
-| `<Esc>` | Insert / Normal | 清除搜索高亮 |
+| `<leader>q` | Normal | 全部退出 |
+| `<Esc>` | Insert / Normal / Visual | 清除高亮，回到 Normal |
 | `<leader>?` | Normal | Buffer 键位提示 (which-key) |
 | `<` / `>` | Visual | 缩进后重新选中 |
 | `gco` / `gcO` | Normal | 下方/上方插入注释 |
