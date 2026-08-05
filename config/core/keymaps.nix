@@ -125,9 +125,9 @@
       };
     }
 
-    # ── Move Lines (Alt+j/k) ──
+    # ── Move Lines (Alt+Up/Down) ──
     {
-      key = "<A-j>";
+      key = "<A-Down>";
       mode = "n";
       action = "<cmd>execute 'move .+' . v:count1<CR>==";
       options = {
@@ -135,7 +135,7 @@
       };
     }
     {
-      key = "<A-k>";
+      key = "<A-Up>";
       mode = "n";
       action = "<cmd>execute 'move .-' . (v:count1 + 1)<CR>==";
       options = {
@@ -143,7 +143,7 @@
       };
     }
     {
-      key = "<A-j>";
+      key = "<A-Down>";
       mode = "i";
       action = "<Esc><cmd>m .+1<CR>==gi";
       options = {
@@ -151,7 +151,7 @@
       };
     }
     {
-      key = "<A-k>";
+      key = "<A-Up>";
       mode = "i";
       action = "<Esc><cmd>m .-2<CR>==gi";
       options = {
@@ -159,7 +159,7 @@
       };
     }
     {
-      key = "<A-j>";
+      key = "<A-Down>";
       mode = "v";
       action = ":<C-u>execute \"'<,'>move '>+\" . v:count1<CR>gv=gv";
       options = {
@@ -167,7 +167,7 @@
       };
     }
     {
-      key = "<A-k>";
+      key = "<A-Up>";
       mode = "v";
       action = ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<CR>gv=gv";
       options = {
