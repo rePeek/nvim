@@ -105,26 +105,4 @@
     };
   };
 
-  # ── Mini.icons — Icons (from LazyVim ui.lua) ──
-  plugins.mini-icons = {
-    enable = true;
-    settings = {
-      file = {
-        ".keep" = {
-          glyph = "󰊢";
-          hl = "MiniIconsGrey";
-        };
-        "devcontainer.json" = {
-          glyph = "";
-          hl = "MiniIconsAzure";
-        };
-      };
-      filetype = {
-        dotenv = {
-          glyph = "";
-          hl = "MiniIconsYellow";
-        };
-      };
-    };
-  };
 }
