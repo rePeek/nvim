@@ -3,7 +3,7 @@
 #
 #  Structure:
 #    core/        — options, keymaps, autocmds
-#    ui/          — colorscheme, lualine, bufferline, noice
+#    ui/          — colorscheme, lualine, noice, icons, nui
 #    editor/      — snacks, flash, trouble, todo-comments, grug-far, which-key
 #    coding/      — treesitter, lsp, completion, conform, dap
 #    git/         — gitsigns, lazygit

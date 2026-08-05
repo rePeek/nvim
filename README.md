@@ -56,9 +56,10 @@ nixvim/
     │   └── web.nix            # HTML/CSS/JS/TS/JSON/YAML
     └── ui/                    # 界面
         ├── default.nix
-        ├── bufferline.nix     # 标签栏
         ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
+        ├── icons.nix          # mini.icons + web-devicons
         ├── noice.nix          # cmdline & 消息 UI
+        ├── nui.nix            # UI 库 (noice/dap-ui 依赖)
         └── statusline.nix     # 状态栏 (lualine)
 ```
 
@@ -66,7 +67,7 @@ nixvim/
 
 默认使用 **tokyonight-storm** 配色方案。
 
-所有 UI 插件（lualine、bufferline、noice 等）自动跟随 colorscheme，无需单独配置。
+所有 UI 插件（lualine、noice 等）自动跟随 colorscheme，无需单独配置。
 
 ### 外部覆盖
 
@@ -103,7 +104,6 @@ nixvim/
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
-| **标签栏** | bufferline | LSP 诊断显示、Pin/分组 |
 | **命令行 UI** | noice | 更好的 cmdline、消息、搜索 UI |
 | **图标** | mini.icons | 文件/目录/filetype 图标 |
 | **文本对象** | mini.ai | 增强型文本对象（500 行范围） |
@@ -159,12 +159,6 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>bd` | 删除当前 Buffer |
 | `<leader>bo` | 关闭其他所有 Buffer |
 | `<leader>bn` | 新建 Buffer |
-| `<leader>bp` | Toggle Pin |
-| `<leader>bP` | 关闭非 Pin 的 Buffer |
-| `<leader>br` | 关闭右侧 Buffer |
-| `<leader>bl` | 关闭左侧 Buffer |
-| `[B` / `]B` | 移动 Buffer 位置 |
-| `<leader>bj` | Pick Buffer |
 
 ### 窗口
 
@@ -440,7 +434,7 @@ modules = [
 > `colorschemes.tokyonight.enable` 使用了 `lib.mkDefault true`，外部普通赋值即可覆盖。
 
 > Stylix 会自动生成 Neovim 配色方案。
-> lualine 默认 `theme = "auto"`，bufferline 无显式 theme，两者都会自动跟随 Stylix 的 colorscheme。
+> Stylix 会自动生成 Neovim 配色方案。lualine 默认 `theme = "auto"`，自动跟随 colorscheme。
 
 ## 自定义
 
