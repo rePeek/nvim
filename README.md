@@ -37,10 +37,10 @@ nixvim/
     │   ├── snacks.nix         # snacks.nvim (picker/explorer/terminal/通知等)
     │   ├── flash.nix          # 跳转 (flash.nvim)
     │   ├── grug-far.nix       # 批量替换
+    │   ├── multicursors.nix   # 多光标编辑
     │   ├── todo-comments.nix  # TODO 注释高亮
     │   ├── trouble.nix        # 诊断面板
-    │   ├── which-key.nix      # 键位提示
-    │   └── extras.nix         # 其他小插件
+    │   └── which-key.nix      # 键位提示
     ├── git/                   # Git 集成
     │   ├── default.nix
     │   ├── gitsigns.nix       # 行内 blame & diff
@@ -83,18 +83,18 @@ nixvim/
 
 | 类别 | 插件 | 说明 |
 |------|------|------|
-| **瑞士军刀** | [snacks.nvim](https://github.com/folke/snacks.nvim) | 文件选择器、文件浏览器、终端、通知、缩进线、平滑滚动、Dashboard、大文件处理等 |
+| **瑞士军刀** | [snacks.nvim](https://github.com/folke/snacks.nvim) | 文件选择器、文件浏览器、终端、通知、缩进线、平滑滚动、大文件处理等 |
 | **主题** | tokyonight (storm) | nixvim 内置模块，`mkDefault` 可被外部覆盖 |
 | **补全** | nvim-cmp + LuaSnip + friendly-snippets | LSP / buffer / path / snippet 四源补全 |
 | **格式化** | [conform.nvim](https://github.com/stevearc/conform.nvim) | 统一格式化框架，per-language 配置 |
-| **LSP** | clangd / rust-analyzer / lua_ls / nil / pyright / marksman | 七语言 LSP |
+| **LSP** | clangd / rust-analyzer / lua_ls / nil / pyright / marksman | 六语言 LSP |
 | **语法高亮** | nvim-treesitter | 20+ 语言语法解析 |
 | **语法上下文** | treesitter-context | 粘性作用域提示（最多 3 行） |
 | **语法文本对象** | treesitter-textobjects | `]f`/`[f` 跳转函数/类/参数 |
 | **自动标签** | ts-autotag | 自动关闭 HTML/JSX 标签 |
 | **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
 | **跳转** | [flash.nvim](https://github.com/folke/snacks.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
-| **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换（LazyVim 风格） |
+| **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换 |
 | **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
 | **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
 | **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | 按 Space 弹出分组菜单 |
@@ -105,7 +105,7 @@ nixvim/
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
 | **命令行 UI** | noice | 更好的 cmdline、消息、搜索 UI |
-| **图标** | mini.icons | 文件/目录/filetype 图标 |
+| **图标** | mini.icons + web-devicons | 文件/目录/filetype 图标 |
 | **文本对象** | mini.ai | 增强型文本对象（500 行范围） |
 | **自动括号** | mini.pairs | 智能配对（insert/command 模式） |
 | **LSP 签名** | lsp-signature | 函数签名提示 |
@@ -125,7 +125,7 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>,` | Commands | 命令面板 |
 | `<leader>ff` | Find Files | 查找文件 |
 | `<leader>fg` | Live Grep | 实时搜索 |
-| `<leader>fb` | Buffers | 切换 Buffer |
+| `<leader>fb` | Buffers | Buffer 列表 |
 | `<leader>fh` | Help Tags | 帮助搜索 |
 | `<leader>fr` | Recent Files | 最近文件 |
 | `<leader>fs` | Grep Word | 搜索光标下的词 |
@@ -151,21 +151,23 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 键位 | 动作 |
 |------|------|
-| `Shift+H` | 上一个 Buffer |
-| `Shift+L` | 下一个 Buffer |
+| `<leader>b` | Buffer Picker（打开 buffer 列表） |
+| `Shift+Left` / `Shift+Right` | 上一个/下一个 Buffer |
 | `[b` / `]b` | 上一个/下一个 Buffer |
-| `<leader>bb` | 切换到另一个 Buffer |
-| `` <leader>` `` | 切换到另一个 Buffer |
-| `<leader>bd` | 删除当前 Buffer |
-| `<leader>bo` | 关闭其他所有 Buffer |
-| `<leader>bn` | 新建 Buffer |
+
+### Jumplist
+
+| 键位 | 动作 |
+|------|------|
+| `Ctrl+Left` | Jump Back |
+| `Ctrl+Right` | Jump Forward |
 
 ### 窗口
 
 | 键位 | 动作 |
 |------|------|
 | `Ctrl+H/J/K/L` | 左/下/上/右 窗口切换 |
-| `Ctrl+↑/↓/←/→` | 调整窗口大小 |
+| `Shift+Ctrl+↑/↓/←/→` | 调整窗口大小 |
 | `<leader>-` | 水平分割 |
 | `<leader>\|` | 垂直分割 |
 | `<leader>wd` | 关闭窗口 |
@@ -174,7 +176,7 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 键位 | 模式 | 动作 |
 |------|------|------|
-| `Alt+J` / `Alt+K` | Normal / Insert / Visual | 上/下移动行 |
+| `Alt+Up` / `Alt+Down` | Normal / Insert / Visual | 上/下移动行 |
 | `J` / `K` | Visual | 移动选区下/上 |
 
 ### Flash 跳转
@@ -237,6 +239,9 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>cr` | Rename |
 | `<leader>cf` | 格式化 |
 | `<leader>cF` | 格式化注入语言 |
+| `<leader>cc` | 切换注释（行/选区） |
+| `<leader>co` | 下方插入注释 |
+| `<leader>cO` | 上方插入注释 |
 
 ### 诊断 & Trouble
 
@@ -306,6 +311,8 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>?` | Normal | Buffer 键位提示 (which-key) |
 | `<` / `>` | Visual | 缩进后重新选中 |
 | `gco` / `gcO` | Normal | 下方/上方插入注释 |
+| `gcc` | Normal | 切换当前行注释 |
+| `gc` + 文本对象 | Normal / Visual | 注释选区（如 `gcip` `gciw` `gca(`） |
 
 ### 多光标 (multicursors.nvim)
 
@@ -432,7 +439,6 @@ modules = [
 
 > `colorschemes.tokyonight.enable` 使用了 `lib.mkDefault true`，外部普通赋值即可覆盖。
 
-> Stylix 会自动生成 Neovim 配色方案。
 > Stylix 会自动生成 Neovim 配色方案。lualine 默认 `theme = "auto"`，自动跟随 colorscheme。
 
 ## 自定义
