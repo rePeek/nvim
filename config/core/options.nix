@@ -96,7 +96,6 @@
       "folds"
     ];
     winminwidth = 5;
-    spelllang = [ "en" ];
 
     # ── Fill chars ──
     fillchars = {
