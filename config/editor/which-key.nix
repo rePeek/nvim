@@ -72,14 +72,6 @@
           ];
         }
         {
-          __unkeyed-1 = "<leader>q";
-          group = "quit/session";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>s";
           group = "search";
           mode = [

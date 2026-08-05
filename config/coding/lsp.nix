@@ -60,16 +60,6 @@
       };
     }
     {
-      key = "<leader>cr";
-      mode = "n";
-      action = {
-        __raw = "function() vim.lsp.buf.rename() end";
-      };
-      options = {
-        desc = "Rename";
-      };
-    }
-    {
       key = "<leader>cA";
       mode = "n";
       action = {

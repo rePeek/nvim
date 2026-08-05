@@ -242,6 +242,7 @@
         "i"
         "n"
         "s"
+        "x"
       ];
       action = {
         __raw = ''
@@ -253,7 +254,7 @@
       };
       options = {
         expr = true;
-        desc = "Escape and Clear hlsearch";
+        desc = "Clear highlights and return to normal mode";
       };
     }
 
@@ -378,7 +379,7 @@
 
     # ── Quit ──
     {
-      key = "<leader>qq";
+      key = "<leader>q";
       mode = "n";
       action = "<cmd>qa<CR>";
       options = {
