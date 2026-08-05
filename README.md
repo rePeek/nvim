@@ -1,7 +1,7 @@
 # Nixvim Configuration
 
-个人 Nixvim 配置，针对 **C/C++、Rust、Nix、Python、Markdown** 开发优化。
-采用 **Vim 编辑模型 + Helix 风格键位** 的混合方案。
+基于 [LazyVim](https://github.com/LazyVim/LazyVim) 理念的 Nixvim 配置，针对 **C/C++、Rust、Nix、Python、Lua、Markdown、Web** 开发优化。
+采用 **LazyVim 键位习惯 + Helix 风格选择** 的混合方案。
 
 ## 快速开始
 
@@ -14,21 +14,53 @@ nix develop          # 进入开发环境（nil + nixfmt）
 
 ```
 nixvim/
-├── flake.nix              # Flake 入口 + devShell
+├── flake.nix                  # Flake 入口 + devShell
 ├── flake.lock
-├── .gitignore
-├── AGENTS.md              # AI Agent 开发规范
+├── AGENTS.md                  # AI Agent 开发规范
 ├── README.md
 └── config/
-    ├── default.nix        # 模块入口，import 所有子模块
-    ├── options.nix        # 编辑器基础设置、leader、自动命令
-    ├── theme.nix          # 配色方案（tokyonight (storm)）
-    ├── plugins.nix        # 插件配置 + 键位映射
-    ├── lsp.nix            # Language Server Protocol
-    ├── treesitter.nix     # 语法高亮 & 解析
-    ├── dap.nix            # Debug Adapter Protocol
-    ├── git.nix            # Git 集成
-    └── ui.nix             # 界面：状态栏、标签栏、缩进线等
+    ├── default.nix            # 模块入口，import 所有子模块
+    ├── core/                  # 核心设置
+    │   ├── default.nix
+    │   ├── options.nix        # 编辑器基础设置、leader
+    │   ├── keymaps.nix        # 全局键位映射
+    │   └── autocmd.nix        # 自动命令
+    ├── coding/                # 编码能力
+    │   ├── default.nix
+    │   ├── completion.nix     # nvim-cmp 补全
+    │   ├── conform.nix        # 格式化 (conform.nvim)
+    │   ├── dap.nix            # Debug Adapter Protocol
+    │   ├── lsp.nix            # Language Server Protocol
+    │   └── treesitter.nix     # 语法高亮 & 解析
+    ├── editor/                # 编辑器增强
+    │   ├── default.nix
+    │   ├── flash.nix          # 跳转 (flash.nvim)
+    │   ├── grug-far.nix       # 批量替换
+    │   ├── oil.nix            # 文件浏览器
+    │   ├── todo-comments.nix  # TODO 注释高亮
+    │   ├── trouble.nix        # 诊断面板
+    │   ├── which-key.nix      # 键位提示
+    │   └── extras.nix         # 其他小插件
+    ├── git/                   # Git 集成
+    │   ├── default.nix
+    │   ├── gitsigns.nix       # 行内 blame & diff
+    │   └── lazygit.nix        # 浮动 Git TUI
+    ├── languages/             # 语言专属配置
+    │   ├── default.nix
+    │   ├── cpp.nix
+    │   ├── lua.nix
+    │   ├── markdown.nix
+    │   ├── nix.nix
+    │   ├── python.nix
+    │   ├── rust.nix
+    │   └── web.nix            # HTML/CSS/JS/TS
+    └── ui/                    # 界面
+        ├── default.nix
+        ├── bufferline.nix     # 标签栏
+        ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
+        ├── noice.nix          # cmdline & 消息 UI
+        ├── snacks.nix         # snacks.nvim 增强
+        └── statusline.nix     # 状态栏 (lualine)
 ```
 
 ## 主题
@@ -316,5 +348,6 @@ modules = [
 
 ## 参考
 
+- [LazyVim](https://github.com/LazyVim/LazyVim) — 本配置的键位习惯与插件选型灵感来源
 - [Nixvim Documentation](https://nix-community.github.io/nixvim/)
 - [Nixvim GitHub](https://github.com/nix-community/nixvim)
