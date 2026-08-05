@@ -53,7 +53,7 @@ nixvim/
     │   ├── nix.nix
     │   ├── python.nix
     │   ├── rust.nix
-    │   └── web.nix            # HTML/CSS/JS/TS
+    │   └── web.nix            # HTML/CSS/JS/TS/JSON/YAML
     └── ui/                    # 界面
         ├── default.nix
         ├── bufferline.nix     # 标签栏
@@ -67,7 +67,7 @@ nixvim/
 
 默认使用 **tokyonight-storm** 配色方案。
 
-所有 UI 插件（lualine、bufferline、telescope、noice 等）自动跟随 colorscheme，无需单独配置。
+所有 UI 插件（lualine、bufferline、noice 等）自动跟随 colorscheme，无需单独配置。
 
 ### 外部覆盖
 
@@ -83,62 +83,73 @@ nixvim/
 
 | 类别 | 插件 | 说明 |
 |------|------|------|
+| **瑞士军刀** | [snacks.nvim](https://github.com/folke/snacks.nvim) | 文件选择器、文件浏览器、终端、通知、缩进线、平滑滚动、Dashboard、大文件处理等 |
 | **主题** | tokyonight (storm) | nixvim 内置模块，`mkDefault` 可被外部覆盖 |
-| **文件浏览** | oil.nvim | 目录即 buffer，编辑即操作 |
-| **模糊搜索** | telescope.nvim | 文件、grep、buffer、命令面板 |
-| **补全** | nvim-cmp + LuaSnip | LSP / buffer / path / snippet |
-| **键位提示** | which-key.nvim | 按 Space 弹出菜单 |
-| **多光标** | multicursors.nvim | 内置多光标编辑 |
+| **补全** | nvim-cmp + LuaSnip + friendly-snippets | LSP / buffer / path / snippet 四源补全 |
+| **格式化** | [conform.nvim](https://github.com/stevearc/conform.nvim) | 统一格式化框架，per-language 配置 |
+| **LSP** | clangd / rust-analyzer / lua_ls / nil / pyright / marksman | 七语言 LSP |
+| **语法高亮** | nvim-treesitter | 20+ 语言语法解析 |
+| **语法上下文** | treesitter-context | 粘性作用域提示（最多 3 行） |
+| **语法文本对象** | treesitter-textobjects | `]f`/`[f` 跳转函数/类/参数 |
+| **自动标签** | ts-autotag | 自动关闭 HTML/JSX 标签 |
+| **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
+| **跳转** | [flash.nvim](https://github.com/folke/snacks.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
+| **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换（LazyVim 风格） |
+| **文件浏览器** | oil.nvim | 目录即 buffer，编辑即操作（备用） |
+| **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
+| **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
+| **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | Helix preset，按 Space 弹出分组菜单 |
+| **多光标** | multicursors.nvim | Helix 风格多光标编辑 |
 | **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
-| **LSP** | clangd / rust-analyzer / nil / pyright / marksman | 五语言 LSP |
-| **格式化** | lsp-format | LSP 自动格式化 |
-| **语法高亮** | nvim-treesitter | C/C++/Rust/Nix/Python/Markdown 等 |
-| **语法上下文** | treesitter-context | 粘性作用域提示 |
 | **调试** | nvim-dap + dap-ui + codelldb | 断点、单步、变量面板 |
-| **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记 |
-| **Git 终端** | lazygit | 浮动 Git TUI |
+| **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
+| **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
-| **标签栏** | bufferline | LSP 诊断显示 |
-| **命令行 UI** | noice | 更好的 cmdline & 消息 |
-| **缩进线** | indent-blankline | 作用域高亮 |
+| **标签栏** | bufferline | LSP 诊断显示、Pin/分组 |
+| **命令行 UI** | noice | 更好的 cmdline、消息、搜索 UI |
+| **图标** | mini.icons | 文件/目录/filetype 图标 |
+| **文本对象** | mini.ai | 增强型文本对象（500 行范围） |
+| **自动括号** | mini.pairs | 智能配对（insert/command 模式） |
+| **LSP 签名** | lsp-signature | 函数签名提示 |
 
 > 所有插件均使用 nixvim 原生 nix 模块，零 `extraPlugins`。
 
 ## 键位映射
 
-Leader 键为 `Space`。
+Leader 键为 `Space`。键位风格来自 LazyVim。
 
-### Helix 风格快捷键
+### 文件搜索 (Snacks Picker)
 
 | 键位 | 动作 | 说明 |
 |------|------|------|
-| `Space+Space` | Telescope find_files | 打开文件 (Helix `space+f`) |
-| `Space+/` | Telescope live_grep | 实时搜索 (Helix `space+/`) |
-| `Space+,` | Telescope commands | 命令面板 (Helix `space+?`) |
-| `-` | Oil | 文件浏览器 (Helix 风格) |
+| `<leader><Space>` | Find Files | 查找文件 |
+| `<leader>/` | Live Grep | 实时搜索 |
+| `<leader>,` | Commands | 命令面板 |
+| `<leader>ff` | Find Files | 查找文件 |
+| `<leader>fg` | Live Grep | 实时搜索 |
+| `<leader>fb` | Buffers | 切换 Buffer |
+| `<leader>fh` | Help Tags | 帮助搜索 |
+| `<leader>fr` | Recent Files | 最近文件 |
+| `<leader>fs` | Grep Word | 搜索光标下的词 |
+| `<leader>fd` | Diagnostics | 诊断信息 |
+| `<leader>fk` | Keymaps | 键位列表 |
+| `<leader>fl` | Lines | 当前文件行搜索 |
 
-### Telescope 搜索
+### Git 搜索
 
 | 键位 | 动作 |
 |------|------|
-| `<leader>ff` | 查找文件 |
-| `<leader>fg` | 实时 Grep |
-| `<leader>fb` | Buffers |
-| `<leader>fh` | 帮助标签 |
-| `<leader>fr` | 最近文件 |
-| `<leader>fs` | 搜索光标下的字符串 |
-| `<leader>fd` | 诊断信息 |
-| `<leader>fk` | 键位列表 |
 | `<leader>gf` | Git 文件 |
-| `<leader>gj` | Jump list |
-| `<leader>gm` | Marks |
+| `<leader>gL` | Git Log (cwd) |
+| `<leader>gl` | Git Log |
 
-### 文件浏览器
+### 文件浏览
 
-| 键位 | 动作 |
-|------|------|
-| `<leader>e` | Oil 文件浏览器 |
-| `-` | Oil (快捷) |
+| 键位 | 动作 | 说明 |
+|------|------|------|
+| `<leader>e` | Snacks Explorer | 文件浏览器（主） |
+| `-` | Snacks Explorer | 文件浏览器（Helix 风格） |
+| `<leader>E` | Oil | 文件浏览器（备用） |
 
 ### Buffer
 
@@ -146,17 +157,44 @@ Leader 键为 `Space`。
 |------|------|
 | `Shift+H` | 上一个 Buffer |
 | `Shift+L` | 下一个 Buffer |
-| `<leader>bc` | 关闭 Buffer |
-| `<leader>bx` | 强制关闭 |
+| `[b` / `]b` | 上一个/下一个 Buffer |
+| `<leader>bb` | 切换到另一个 Buffer |
+| `` <leader>` `` | 切换到另一个 Buffer |
+| `<leader>bd` | 删除当前 Buffer |
 | `<leader>bo` | 关闭其他所有 Buffer |
-| `<leader>bl` | Buffer 列表 |
 | `<leader>bn` | 新建 Buffer |
+| `<leader>bp` | Toggle Pin |
+| `<leader>bP` | 关闭非 Pin 的 Buffer |
+| `<leader>br` | 关闭右侧 Buffer |
+| `<leader>bl` | 关闭左侧 Buffer |
+| `[B` / `]B` | 移动 Buffer 位置 |
+| `<leader>bj` | Pick Buffer |
 
-### 窗口导航
+### 窗口
 
 | 键位 | 动作 |
 |------|------|
 | `Ctrl+H/J/K/L` | 左/下/上/右 窗口切换 |
+| `Ctrl+↑/↓/←/→` | 调整窗口大小 |
+| `<leader>-` | 水平分割 |
+| `<leader>\|` | 垂直分割 |
+| `<leader>wd` | 关闭窗口 |
+
+### 行移动
+
+| 键位 | 模式 | 动作 |
+|------|------|------|
+| `Alt+J` / `Alt+K` | Normal / Insert / Visual | 上/下移动行 |
+| `J` / `K` | Visual | 移动选区下/上 |
+
+### Flash 跳转
+
+| 键位 | 模式 | 动作 |
+|------|------|------|
+| `s` | Normal / Visual / Operator | Flash 跳转 |
+| `S` | Normal / Visual / Operator | Flash Treesitter |
+| `r` | Operator-pending | Remote Flash |
+| `R` | Operator-pending / Visual | Treesitter Search |
 
 ### 选择 (Helix 风格)
 
@@ -165,19 +203,27 @@ Leader 键为 `Space`。
 | `<leader>ss` | 选中单词 |
 | `<leader>sl` | 选中整行 |
 | `<leader>s%` | 全选 |
-| `<leader>si` | 选中括号内 |
-| `<leader>sa` | 选中括号外 |
-| `<leader>si"` | 选中引号内 |
 
-### Git
+### Git (Gitsigns)
 
 | 键位 | 动作 |
 |------|------|
-| `<leader>gg` | LazyGit |
-| `<leader>gh` | 预览 Hunk |
-| `<leader>gd` | Diff this |
-| `<leader>gb` | Blame line |
-| `]c` / `[c` | 下一个/上一个 Hunk |
+| `<leader>gg` | Lazygit |
+| `<leader>gB` | Git Browse (浏览器打开) |
+| `]h` / `[h` | 下一个/上一个 Hunk |
+| `]H` / `[H` | 最后一个/第一个 Hunk |
+| `<leader>ghs` | Stage Hunk |
+| `<leader>ghr` | Reset Hunk |
+| `<leader>ghS` | Stage Buffer |
+| `<leader>ghu` | Undo Stage Hunk |
+| `<leader>ghR` | Reset Buffer |
+| `<leader>ghp` | Preview Hunk Inline |
+| `<leader>ghb` | Blame Line (full) |
+| `<leader>ghB` | Blame Buffer |
+| `<leader>ghd` | Diff This |
+| `<leader>ghD` | Diff This ~ |
+| `ih` | 文本对象：选中 Hunk |
+| `<leader>uG` | Toggle Git Signs |
 
 ### Debug (DAP)
 
@@ -192,36 +238,93 @@ Leader 键为 `Space`。
 | `<leader>dt` | Terminate |
 | `<leader>du` | Toggle DAP UI |
 
-### LSP (按 Buffer 生效)
+### LSP
 
 | 键位 | 动作 |
 |------|------|
-| `gd` | Go to definition |
-| `gD` | Go to references |
-| `gt` | Go to type definition |
-| `gi` | Go to implementation |
+| `gd` | Go to Definition |
+| `gr` | Go to References |
+| `gD` | Go to Declaration |
+| `gt` | Go to Type Definition |
+| `gi` | Go to Implementation |
 | `K` | Hover 文档 |
-| `<leader>ca` | Code action |
+| `gK` | Signature Help |
+| `Ctrl+K` (insert) | Signature Help |
+| `<leader>ca` | Code Action |
+| `<leader>cA` | Source Action |
 | `<leader>rn` | Rename |
-| `<leader>cd` | 打开诊断浮窗 |
+| `<leader>cr` | Rename |
+| `<leader>cf` | 格式化 |
+| `<leader>cF` | 格式化注入语言 |
+
+### 诊断 & Trouble
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>cd` | 当前行诊断浮窗 |
 | `[d` / `]d` | 上一条/下一条诊断 |
+| `[e` / `]e` | 上一条/下一条 Error |
+| `[w` / `]w` | 上一条/下一条 Warning |
+| `<leader>xx` | Trouble Diagnostics |
+| `<leader>xX` | Trouble Buffer Diagnostics |
+| `<leader>cs` | Trouble Symbols |
+| `<leader>cS` | Trouble LSP References |
+| `<leader>xL` | Trouble Location List |
+| `<leader>xQ` | Trouble Quickfix |
+| `<leader>xt` | Todo (Trouble) |
+| `<leader>xT` | Todo/Fix/Fixme (Trouble) |
+| `<leader>xq` | Toggle Quickfix |
+| `<leader>xl` | Toggle Location List |
+| `[q` / `]q` | 上一个/下一个 Quickfix |
+| `[t` / `]t` | 上一个/下一个 Todo Comment |
+| `[f` / `]f` | 下一个/上一个函数 (treesitter) |
+| `[c` / `]c` | 下一个/上一个类 (treesitter) |
+| `[a` / `]a` | 下一个/上一个参数 (treesitter) |
+
+### UI 切换 (`<leader>u*`)
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>uf` | Toggle Auto Format |
+| `<leader>us` | Toggle Spelling |
+| `<leader>uw` | Toggle Wrap |
+| `<leader>ul` | Toggle Line Numbers |
+| `<leader>uL` | Toggle Relative Numbers |
+| `<leader>ud` | Toggle Diagnostics |
+| `<leader>uc` | Toggle Conceal Level |
+| `<leader>ub` | Toggle Dark Background |
+| `<leader>ug` | Toggle Indent Guides |
+| `<leader>ua` | Toggle Animations |
+| `<leader>uz` | Toggle Zen Mode |
+| `<leader>uZ` | Toggle Zoom |
+| `<leader>uh` | Toggle Inlay Hints |
+| `<leader>ui` | Inspect Pos |
+| `<leader>ur` | Redraw / Clear hlsearch |
+| `<leader>un` | Dismiss All Notifications |
+
+### Noice 消息
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>snl` | Noice Last Message |
+| `<leader>snh` | Noice History |
+| `<leader>sna` | Noice All |
+| `<leader>snd` | Dismiss All |
 
 ### 通用
 
-| 键位 | 动作 |
-|------|------|
-| `<leader>w` | 保存 |
-| `<leader>q` | 退出 |
-| `<leader>Q` | 全部退出 |
-| `<Esc>` | 清除搜索高亮 |
-| `Alt+J` / `Alt+K` | 上/下移动行 (Normal & Visual) |
-
-### Visual 模式增强
-
-| 键位 | 动作 |
-|------|------|
-| `<` / `>` | 缩进后重新选中 |
-| `J` / `K` | 移动选区下/上 |
+| 键位 | 模式 | 动作 |
+|------|------|------|
+| `<C-s>` | 全部 | 保存 |
+| `<C-/>` | Normal / Terminal | 浮动终端 |
+| `<leader>ft` | Normal | 浮动终端 |
+| `<leader>.` | Normal | Scratch Buffer |
+| `<leader>n` | Normal | 通知历史 |
+| `<leader>qq` | Normal | 全部退出 |
+| `<Esc>` | Insert / Normal | 清除搜索高亮 |
+| `<leader>?` | Normal | Buffer 键位提示 (which-key) |
+| `<` / `>` | Visual | 缩进后重新选中 |
+| `gco` / `gcO` | Normal | 下方/上方插入注释 |
 
 ### 多光标 (multicursors.nvim)
 
@@ -230,17 +333,27 @@ Leader 键为 `Space`。
 | `Ctrl+N` | 选中光标下的下一个匹配 |
 | `n` / `N` | 跳到下一个/上一个匹配 |
 
+### 其他增强
+
+| 键位 | 模式 | 说明 |
+|------|------|------|
+| `j` / `k` | Normal / Visual | 尊重 wrap 的行移动（无 count 时用 `gj`/`gk`） |
+| `n` / `N` | Normal / Visual / Operator | 搜索结果导航时自动展开 fold |
+| `,` / `.` / `;` | Insert | Undo break-point（输入标点时自动断点） |
+
 > Vim 肌肉记忆全部保留：`ci"` `di(` `%` `daw` `ciw` `yap` 等不受影响。
 
 ## Language Server 配置
 
-| 语言 | Server | 配置 |
-|------|--------|------|
-| **C/C++** | clangd | `--background-index` `--clang-tidy` `--header-insertion=never` |
-| **Rust** | rust-analyzer | 依赖系统 PATH |
-| **Nix** | nil | 默认配置 |
-| **Python** | pyright | 默认配置 |
-| **Markdown** | marksman | 链接跳转、诊断、补全、大纲 |
+| 语言 | Server | Formatter | DAP |
+|------|--------|-----------|-----|
+| **C/C++** | clangd (`--background-index --clang-tidy --header-insertion=never`) | clang-format | codelldb |
+| **Rust** | rust-analyzer | rustfmt | codelldb |
+| **Lua** | lua_ls (inlay hints, codeLens) | stylua | — |
+| **Nix** | nil | nixfmt-rfc-style | — |
+| **Python** | pyright | — | — |
+| **Markdown** | marksman | prettierd | — |
+| **Web (JS/TS/JSON/YAML/HTML)** | — | prettierd / shfmt | — |
 
 > LSP server 均不自动安装，依赖系统 PATH。找不到时 Neovim 跳过该 server，不影响使用。
 
@@ -250,15 +363,19 @@ Leader 键为 `Space`。
 
 - C/C++：编译后启动，`program = ${fileDirname}/${fileBasenameNoExtension}`
 - Rust：同上
-- Python：`program = ${file}`，自动附加
 
 DAP UI 会在调试开始时自动打开，结束时自动关闭。
 
 ## Treesitter 语法支持
 
 ```
-C, C++, Rust, Nix, Bash, Python, Lua,
-Markdown, Markdown Inline, Vim, Vimdoc, Query
+Core:    Bash, Diff, Lua, Luadoc, Luap, Query, Regex, Vim, Vimdoc
+C/C++:   C, C++
+Rust:    Rust
+Nix:     Nix
+Python:  Python
+Web:     HTML, JavaScript, JSDoc, JSON, TypeScript, TSX, YAML, XML, TOML
+Docs:    Markdown, Markdown Inline
 ```
 
 ## 开发环境
@@ -326,7 +443,6 @@ modules = [
     # 关掉本配置自带的 tokyonight（mkDefault 使得普通赋值即可覆盖）
     colorschemes.tokyonight.enable = false;
 
-
     # 导入本配置的其他设置（键位、插件、LSP 等全部保留）
     imports = [ nixvim-config ];
   };
@@ -337,6 +453,7 @@ modules = [
 
 > Stylix 会自动生成 Neovim 配色方案。
 > lualine 默认 `theme = "auto"`，bufferline 无显式 theme，两者都会自动跟随 Stylix 的 colorscheme。
+
 ## 自定义
 
 1. 新增配置文件 → 在 `config/` 下创建 `.nix`
