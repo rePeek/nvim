@@ -177,7 +177,7 @@
 
     # ── Buffer Navigation ──
     {
-      key = "<S-h>";
+      key = "<S-Left>";
       mode = "n";
       action = "<cmd>bprevious<CR>";
       options = {
@@ -185,7 +185,7 @@
       };
     }
     {
-      key = "<S-l>";
+      key = "<S-Right>";
       mode = "n";
       action = "<cmd>bnext<CR>";
       options = {
