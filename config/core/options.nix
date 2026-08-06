@@ -85,6 +85,7 @@
     # ── Misc ──
     autowrite = true;
     confirm = true;
+    exrc = true;
     sessionoptions = [
       "buffers"
       "curdir"
