@@ -15,7 +15,11 @@
   # ── Formatter ──
   plugins.conform-nvim.settings.formatters_by_ft.rust = [ "rustfmt" ];
 
-  # ── DAP Configuration ──
+  # ── DAP Adapter & Configuration ──
+  plugins.dap.adapters.executables.codelldb = {
+    command = "codelldb";
+  };
+
   plugins.dap.configurations.rust = [
     {
       name = "Rust: Launch file";

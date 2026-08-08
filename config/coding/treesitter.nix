@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   # ══════════════════════════════════════════════
   #  Treesitter — Base Framework
@@ -16,18 +15,6 @@
       };
     };
 
-    # ── Core grammars (editor / meta languages) ──
-    grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-      bash
-      diff
-      lua
-      luadoc
-      luap
-      query
-      regex
-      vim
-      vimdoc
-    ];
   };
 
   # ── Treesitter Context (sticky scope) ──
@@ -69,11 +56,6 @@
         };
       };
     };
-  };
-
-  # ── Auto-close HTML/JSX tags ──
-  plugins.ts-autotag = {
-    enable = true;
   };
 
   # ── Better comment syntax (from LazyVim coding.lua) ──

@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   # ══════════════════════════════════════════════
   #  Lua Language Module
@@ -33,4 +34,11 @@
 
   # ── Formatter ──
   plugins.conform-nvim.settings.formatters_by_ft.lua = [ "stylua" ];
+
+  # ── Treesitter Grammars ──
+  plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    lua
+    luadoc
+    luap
+  ];
 }

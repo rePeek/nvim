@@ -2,7 +2,7 @@
 {
   # ══════════════════════════════════════════════
   #  C/C++ Language Module
-  #  LSP: clangd  |  Formatter: clang-format  |  DAP: codelldb
+  #  LSP: clangd  |  Formatter: clang-format  |  DAP: lldb-dap
   # ══════════════════════════════════════════════
 
   # ── LSP Server ──
@@ -13,7 +13,7 @@
         "clangd"
         "--background-index"
         "--clang-tidy"
-        "--header-insertion=never"
+        "--header-insertion=iwyu"
       ];
     };
   };
@@ -24,11 +24,15 @@
     cpp = [ "clang_format" ];
   };
 
-  # ── DAP Configuration ──
+  # ── DAP Adapter & Configuration ──
+  plugins.dap.adapters.executables.lldb-dap = {
+    command = "lldb-dap";
+  };
+
   plugins.dap.configurations.cpp = [
     {
       name = "C/C++: Launch file";
-      type = "codelldb";
+      type = "lldb-dap";
       request = "launch";
       program = "\${fileDirname}/\${fileBasenameNoExtension}";
       cwd = "\${workspaceFolder}";

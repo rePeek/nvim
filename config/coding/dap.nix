@@ -5,15 +5,6 @@
   # ══════════════════════════════════════════════
   plugins.dap = {
     enable = true;
-
-    # ── Adapters (shared, used by cpp/rust) ──
-    adapters = {
-      executables = {
-        codelldb = {
-          command = "codelldb";
-        };
-      };
-    };
   };
 
   # ── DAP UI ──

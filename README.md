@@ -1,6 +1,6 @@
 # Nixvim Configuration
 
-基于 [LazyVim](https://github.com/LazyVim/LazyVim) 理念的 Nixvim 配置，针对 **C/C++、Rust、Nix、Python、Lua、Markdown、Web** 开发优化。
+基于 [LazyVim](https://github.com/LazyVim/LazyVim) 理念的 Nixvim 配置，针对 **C/C++、Rust、Nix、Python、Lua、Markdown、Web、Shell** 开发优化。
 采用 **LazyVim 键位习惯**。
 
 ## 快速开始
@@ -49,11 +49,13 @@ nixvim/
     │   ├── default.nix
     │   ├── cpp.nix
     │   ├── lua.nix
+    │   ├── vim.nix             # Vim / Query 语言
+    │   ├── shell.nix           # Bash / Fish
     │   ├── markdown.nix
     │   ├── nix.nix
     │   ├── python.nix
     │   ├── rust.nix
-    │   └── web.nix            # HTML/CSS/JS/TS/JSON/YAML
+    │   └── web.nix            # HTML/JS/TS/JSON/YAML
     └── ui/                    # 界面
         ├── default.nix
         ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
@@ -93,14 +95,14 @@ nixvim/
 | **语法文本对象** | treesitter-textobjects | `]f`/`[f` 跳转函数/类/参数 |
 | **自动标签** | ts-autotag | 自动关闭 HTML/JSX 标签 |
 | **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
-| **跳转** | [flash.nvim](https://github.com/folke/snacks.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
+| **跳转** | [flash.nvim](https://github.com/folke/flash.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
 | **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换 |
 | **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
 | **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
-| **键位提示** | [which-key.nvim](https://github.com/folke/snacks.nvim) | 按 Space 弹出分组菜单 |
+| **键位提示** | [which-key.nvim](https://github.com/folke/which-key.nvim) | 按 Space 弹出分组菜单 |
 | **多光标** | multicursors.nvim | 多光标编辑 |
 | **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
-| **调试** | nvim-dap + dap-ui + codelldb | 断点、单步、变量面板 |
+| **调试** | nvim-dap + dap-ui + lldb-dap / codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
@@ -336,29 +338,34 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 语言 | Server | Formatter | DAP |
 |------|--------|-----------|-----|
-| **C/C++** | clangd (`--background-index --clang-tidy --header-insertion=never`) | clang-format | codelldb |
+| **C/C++** | clangd (`--background-index --clang-tidy --header-insertion=never`) | clang-format | lldb-dap |
 | **Rust** | rust-analyzer | rustfmt | codelldb |
 | **Lua** | lua_ls (inlay hints, codeLens) | stylua | — |
 | **Nix** | nil | nixfmt-rfc-style | — |
 | **Python** | pyright | — | — |
 | **Markdown** | marksman | prettierd | — |
-| **Web (JS/TS/JSON/YAML/HTML)** | — | prettierd / shfmt | — |
+| **Web (JS/TS/JSON/YAML/HTML)** | — | prettierd | — |
+| **Shell (Bash/Fish)** | — | shfmt / fish_indent | — |
 
 > LSP server 均不自动安装，依赖系统 PATH。找不到时 Neovim 跳过该 server，不影响使用。
 
 ## Debug 配置
 
-使用 **nvim-dap** + **codelldb** (基于 LLDB)：
+使用 **nvim-dap** + **dap-ui**，调试 adapter 由语言模块选择：
 
-- C/C++：编译后启动，`program = ${fileDirname}/${fileBasenameNoExtension}`
-- Rust：同上
+- C/C++：`lldb-dap`，编译后启动，`program = ${fileDirname}/${fileBasenameNoExtension}`
+- Rust：`codelldb`，同上
+
+两个 adapter 均依赖系统 PATH，不由配置自动安装。
 
 DAP UI 会在调试开始时自动打开，结束时自动关闭。
 
 ## Treesitter 语法支持
 
 ```
-Core:    Bash, Diff, Lua, Luadoc, Luap, Query, Regex, Vim, Vimdoc
+Shell:   Bash
+Vim:     Diff, Query, Regex, Vim, Vimdoc
+Lua:     Lua, Luadoc, Luap
 C/C++:   C, C++
 Rust:    Rust
 Nix:     Nix
