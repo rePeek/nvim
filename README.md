@@ -145,7 +145,8 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 键位 | 动作 | 说明 |
 |------|------|------|
-| `<leader>e` | Snacks Explorer | 文件浏览器 |
+| `<leader>e` | Snacks Explorer | 已打开时聚焦，否则打开文件浏览器 |
+| `<Esc>`（文件浏览器中） | Close Explorer | 关闭文件浏览器 |
 
 ### Buffer
 

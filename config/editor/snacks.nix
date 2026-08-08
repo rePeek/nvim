@@ -60,6 +60,14 @@
       # ── Picker (LazyVim uses snacks.picker, replacing telescope) ──
       picker = {
         enabled = true;
+        sources = {
+          explorer = {
+            win = {
+              input.keys."<Esc>" = "close";
+              list.keys."<Esc>" = "close";
+            };
+          };
+        };
       };
 
       # ── Explorer (LazyVim uses snacks.explorer, replacing neo-tree) ──
@@ -263,10 +271,19 @@
       key = "<leader>e";
       mode = "n";
       action = {
-        __raw = "function() Snacks.explorer.open() end";
+        __raw = ''
+          function()
+            local explorer = Snacks.picker.get({ source = "explorer" })[1]
+            if explorer then
+              explorer:focus()
+            else
+              Snacks.explorer.open()
+            end
+          end
+        '';
       };
       options = {
-        desc = "Explorer";
+        desc = "Focus Explorer";
       };
     }
 
