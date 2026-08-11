@@ -1,4 +1,23 @@
+{ ... }:
+
 {
+  # nvim-dap upstream moved to Codeberg, but Codeberg may block
+  # some IPs. Use the synchronized GitHub mirror instead.
+  nixpkgs.overlays = [
+    (final: prev: {
+      vimPlugins = prev.vimPlugins.extend (_vfinal: vprev: {
+        nvim-dap = vprev.nvim-dap.overrideAttrs (old: {
+          src = final.fetchgit {
+            url = "https://github.com/mfussenegger/nvim-dap.git";
+
+            inherit (old.src) rev;
+            hash = old.src.outputHash;
+          };
+        });
+      });
+    })
+  ];
+
   # ══════════════════════════════════════════════
   #  DAP — Debug Adapter Protocol Framework
   #  Language-specific debug configs go in languages/*.nix
