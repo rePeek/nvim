@@ -15,7 +15,7 @@
   opts = {
     # ── Line Numbers ──
     number = true;
-    relativenumber = true;
+    relativenumber = false;
 
     # ── Indentation ──
     shiftwidth = 2;
