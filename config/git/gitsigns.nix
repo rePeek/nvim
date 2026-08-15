@@ -5,12 +5,14 @@
   plugins.gitsigns = {
     enable = true;
     settings = {
+      numhl = true;
+      linehl = true;
       signs = {
         add = {
-          text = "▎";
+          text = "█";
         };
         change = {
-          text = "▎";
+          text = "█";
         };
         delete = {
           text = "";
@@ -19,18 +21,18 @@
           text = "";
         };
         changedelete = {
-          text = "▎";
+          text = "█";
         };
         untracked = {
-          text = "▎";
+          text = "█";
         };
       };
       signs_staged = {
         add = {
-          text = "▎";
+          text = "█";
         };
         change = {
-          text = "▎";
+          text = "█";
         };
         delete = {
           text = "";
@@ -39,7 +41,7 @@
           text = "";
         };
         changedelete = {
-          text = "▎";
+          text = "█";
         };
       };
       current_line_blame = true;
