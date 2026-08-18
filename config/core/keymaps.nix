@@ -232,6 +232,11 @@
         __raw = ''
           function()
             vim.cmd("noh")
+            -- Close Snacks explorer if open
+            local explorer = Snacks.picker and Snacks.picker.get({ source = "explorer" })[1]
+            if explorer then
+              explorer:close()
+            end
             return "<esc>"
           end
         '';
