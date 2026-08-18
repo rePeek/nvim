@@ -401,7 +401,7 @@
 
     # ── Windows / Splits ──
     {
-      key = "<leader>-";
+      key = "<leader>ws";
       mode = "n";
       action = "<C-W>s";
       options = {
@@ -410,7 +410,7 @@
       };
     }
     {
-      key = "<leader>|";
+      key = "<leader>wv";
       mode = "n";
       action = "<C-W>v";
       options = {
@@ -424,6 +424,42 @@
       action = "<C-W>c";
       options = {
         desc = "Delete Window";
+        remap = true;
+      };
+    }
+    {
+      key = "<leader>w<Left>";
+      mode = "n";
+      action = "<C-W>h";
+      options = {
+        desc = "Go to Left Window";
+        remap = true;
+      };
+    }
+    {
+      key = "<leader>w<Down>";
+      mode = "n";
+      action = "<C-W>j";
+      options = {
+        desc = "Go to Lower Window";
+        remap = true;
+      };
+    }
+    {
+      key = "<leader>w<Up>";
+      mode = "n";
+      action = "<C-W>k";
+      options = {
+        desc = "Go to Upper Window";
+        remap = true;
+      };
+    }
+    {
+      key = "<leader>w<Right>";
+      mode = "n";
+      action = "<C-W>l";
+      options = {
+        desc = "Go to Right Window";
         remap = true;
       };
     }
@@ -524,20 +560,13 @@
       };
     }
 
-    # ── Quickfix List ──
+    # ── Quickfix List (Trouble) ──
     {
       key = "<leader>xq";
       mode = "n";
-      action = {
-        __raw = ''
-          function()
-            local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-            if not success and err then vim.notify(err, vim.log.levels.ERROR) end
-          end
-        '';
-      };
+      action = "<cmd>Trouble qflist toggle<CR>";
       options = {
-        desc = "Quickfix List";
+        desc = "Quickfix List (Trouble)";
       };
     }
     {
@@ -557,20 +586,13 @@
       };
     }
 
-    # ── Location List ──
+    # ── Location List (Trouble) ──
     {
       key = "<leader>xl";
       mode = "n";
-      action = {
-        __raw = ''
-          function()
-            local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-            if not success and err then vim.notify(err, vim.log.levels.ERROR) end
-          end
-        '';
-      };
+      action = "<cmd>Trouble loclist toggle<CR>";
       options = {
-        desc = "Location List";
+        desc = "Location List (Trouble)";
       };
     }
 
