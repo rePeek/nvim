@@ -565,15 +565,6 @@
       };
     }
 
-    # ── Quickfix List (Trouble) ──
-    {
-      key = "<leader>xq";
-      mode = "n";
-      action = "<cmd>Trouble qflist toggle<CR>";
-      options = {
-        desc = "Quickfix List (Trouble)";
-      };
-    }
     {
       key = "[q";
       mode = "n";
@@ -591,15 +582,6 @@
       };
     }
 
-    # ── Location List (Trouble) ──
-    {
-      key = "<leader>xl";
-      mode = "n";
-      action = "<cmd>Trouble loclist toggle<CR>";
-      options = {
-        desc = "Location List (Trouble)";
-      };
-    }
 
     # ── Snacks Toggle Keymaps ──
     {
