@@ -1,9 +1,10 @@
+{ pkgs, ... }:
 {
   # ══════════════════════════════════════════════
-  #  Lazygit — Floating Git Terminal
-  #  (keymap handled via snacks.lazygit in ui/snacks.nix)
+  #  Lazygit — Binary for Snacks.lazygit()
+  #  (keymap handled via snacks.lazygit in editor/snacks.nix)
   # ══════════════════════════════════════════════
-  plugins.lazygit = {
-    enable = true;
-  };
+  extraPackages = with pkgs; [
+    lazygit
+  ];
 }

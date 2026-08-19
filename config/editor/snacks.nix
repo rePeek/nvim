@@ -234,6 +234,118 @@
       };
     }
 
+    # ── LSP Symbols & Navigation (replaced Trouble) ──
+    {
+      key = "<leader>ss";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_symbols() end";
+      };
+      options = {
+        desc = "LSP Symbols";
+      };
+    }
+    {
+      key = "<leader>sS";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_workspace_symbols() end";
+      };
+      options = {
+        desc = "LSP Workspace Symbols";
+      };
+    }
+    {
+      key = "<leader>xx";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.diagnostics() end";
+      };
+      options = {
+        desc = "Diagnostics";
+      };
+    }
+    {
+      key = "<leader>xX";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.diagnostics_buffer() end";
+      };
+      options = {
+        desc = "Buffer Diagnostics";
+      };
+    }
+    {
+      key = "<leader>gr";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_references() end";
+      };
+      options = {
+        desc = "LSP References";
+      };
+    }
+    {
+      key = "<leader>gd";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_definitions() end";
+      };
+      options = {
+        desc = "LSP Definitions";
+      };
+    }
+    {
+      key = "<leader>gi";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_implementations() end";
+      };
+      options = {
+        desc = "LSP Implementations";
+      };
+    }
+    {
+      key = "<leader>gy";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_type_definitions() end";
+      };
+      options = {
+        desc = "LSP Type Definitions";
+      };
+    }
+    {
+      key = "<leader>xL";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.loclist() end";
+      };
+      options = {
+        desc = "Location List";
+      };
+    }
+    {
+      key = "<leader>xQ";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.qflist() end";
+      };
+      options = {
+        desc = "Quickfix List";
+      };
+    }
+    {
+      key = "<leader>st";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.treesitter() end";
+      };
+      options = {
+        desc = "Treesitter Symbols";
+      };
+    }
+
     # ── Git Pickers ──
     {
       key = "<leader>gf";

@@ -31,45 +31,16 @@
       };
     }
 
-    # ── Resize splits & Trouble float on VimResized ──
+    # ── Rebalance splits on VimResized ──
     {
       event = "VimResized";
       pattern = "*";
       callback = {
         __raw = ''
           function()
-            -- Rebalance split windows
             local current_tab = vim.fn.tabpagenr()
             vim.cmd("tabdo wincmd =")
             vim.cmd("tabnext " .. current_tab)
-
-            -- Reposition Trouble float windows (responsive layout)
-            local cols = vim.o.columns
-            local lines = vim.o.lines
-            local wide = cols >= 160
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              if vim.api.nvim_win_is_valid(win) then
-                local buf = vim.api.nvim_win_get_buf(win)
-                if vim.bo[buf].filetype == "trouble" then
-                  local cfg = vim.api.nvim_win_get_config(win)
-                  if cfg.relative ~= "" then
-                    local width, height
-                    if wide then
-                      width = math.floor(cols * 0.35)
-                      height = math.floor(lines * 0.9)
-                    else
-                      width = math.floor(cols * 0.95)
-                      height = math.floor(lines * 0.32)
-                    end
-                    cfg.width = width
-                    cfg.height = height
-                    cfg.row = math.floor((lines - height) * (wide and 0.5 or 1.0))
-                    cfg.col = math.floor((cols - width) * (wide and 1.0 or 0.5))
-                    vim.api.nvim_win_set_config(win, cfg)
-                  end
-                end
-              end
-            end
           end
         '';
       };
