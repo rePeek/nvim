@@ -23,14 +23,6 @@
     inlayHints = true;
   };
 
-  # ── LSP Format (auto-format with LSP as fallback) ──
-  plugins.lsp-format.enable = true;
-
-  # ── LSP Signature ──
-  plugins.lsp-signature = {
-    enable = true;
-  };
-
   # ── Additional LSP Keymaps ──
   keymaps = [
     {
