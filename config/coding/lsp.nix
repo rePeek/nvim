@@ -9,11 +9,6 @@
     # ── LSP Keymaps (LazyVim-style) ──
     keymaps = {
       lspBuf = {
-        "gd" = "definition";
-        "gr" = "references";
-        "gt" = "type_definition";
-        "gi" = "implementation";
-        "gD" = "declaration";
         "K" = "hover";
         "<leader>ca" = "code_action";
       };

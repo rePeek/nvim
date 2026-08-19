@@ -234,7 +234,57 @@
       };
     }
 
-    # ── LSP Symbols & Navigation (replaced Trouble) ──
+    # ── Goto (all via Snacks picker) ──
+    {
+      key = "gd";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_definitions() end";
+      };
+      options = {
+        desc = "Goto Definition";
+      };
+    }
+    {
+      key = "gr";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_references() end";
+      };
+      options = {
+        desc = "Goto References";
+      };
+    }
+    {
+      key = "gi";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_implementations() end";
+      };
+      options = {
+        desc = "Goto Implementation";
+      };
+    }
+    {
+      key = "gt";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_type_definitions() end";
+      };
+      options = {
+        desc = "Goto Type Definition";
+      };
+    }
+    {
+      key = "gD";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.lsp_declarations() end";
+      };
+      options = {
+        desc = "Goto Declaration";
+      };
+    }
     {
       key = "<leader>ss";
       mode = "n";
@@ -253,6 +303,16 @@
       };
       options = {
         desc = "LSP Workspace Symbols";
+      };
+    }
+    {
+      key = "<leader>st";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.treesitter() end";
+      };
+      options = {
+        desc = "Treesitter Symbols";
       };
     }
     {
@@ -276,46 +336,6 @@
       };
     }
     {
-      key = "<leader>gr";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.lsp_references() end";
-      };
-      options = {
-        desc = "LSP References";
-      };
-    }
-    {
-      key = "<leader>gd";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.lsp_definitions() end";
-      };
-      options = {
-        desc = "LSP Definitions";
-      };
-    }
-    {
-      key = "<leader>gi";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.lsp_implementations() end";
-      };
-      options = {
-        desc = "LSP Implementations";
-      };
-    }
-    {
-      key = "<leader>gy";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.lsp_type_definitions() end";
-      };
-      options = {
-        desc = "LSP Type Definitions";
-      };
-    }
-    {
       key = "<leader>xL";
       mode = "n";
       action = {
@@ -333,16 +353,6 @@
       };
       options = {
         desc = "Quickfix List";
-      };
-    }
-    {
-      key = "<leader>st";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.treesitter() end";
-      };
-      options = {
-        desc = "Treesitter Symbols";
       };
     }
 
