@@ -47,6 +47,7 @@
       current_line_blame = true;
       current_line_blame_opts = {
         virt_text = true;
+        virt_text_fmt = "  <abbrev_sha> <author>, <author_time:%Y-%m-%d> · <summary>";
         delay = 500;
       };
     };
