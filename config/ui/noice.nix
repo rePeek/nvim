@@ -33,48 +33,4 @@
       };
     };
   };
-
-  # ── Noice Keymaps ──
-  keymaps = [
-    {
-      key = "<leader>snl";
-      mode = "n";
-      action = {
-        __raw = "function() require('noice').cmd('last') end";
-      };
-      options = {
-        desc = "Noice Last Message";
-      };
-    }
-    {
-      key = "<leader>snh";
-      mode = "n";
-      action = {
-        __raw = "function() require('noice').cmd('history') end";
-      };
-      options = {
-        desc = "Noice History";
-      };
-    }
-    {
-      key = "<leader>sna";
-      mode = "n";
-      action = {
-        __raw = "function() require('noice').cmd('all') end";
-      };
-      options = {
-        desc = "Noice All";
-      };
-    }
-    {
-      key = "<leader>snd";
-      mode = "n";
-      action = {
-        __raw = "function() require('noice').cmd('dismiss') end";
-      };
-      options = {
-        desc = "Dismiss All";
-      };
-    }
-  ];
 }

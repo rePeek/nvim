@@ -6,6 +6,7 @@
     enable = true;
     settings = {
       preset = "helix";
+      icons = { enabled = false; };
       spec = [
         {
           __unkeyed-1 = "<leader>c";
@@ -42,14 +43,6 @@
         {
           __unkeyed-1 = "<leader>s";
           group = "symbols";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
-          __unkeyed-1 = "<leader>sn";
-          group = "noice";
           mode = [
             "n"
             "x"

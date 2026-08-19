@@ -308,16 +308,6 @@
       };
     }
     {
-      key = "<leader>gb";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.git_branches() end";
-      };
-      options = {
-        desc = "Git Branches";
-      };
-    }
-    {
       key = "<leader>gH";
       mode = "n";
       action = {
@@ -397,7 +387,7 @@
 
     # ── Git Browse ──
     {
-      key = "<leader>gB";
+      key = "<leader>go";
       mode = [
         "n"
         "x"

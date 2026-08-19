@@ -174,17 +174,7 @@
       };
     }
     {
-      key = "<leader>gbl";
-      mode = "n";
-      action = {
-        __raw = "function() require('gitsigns').blame_line({ full = true }) end";
-      };
-      options = {
-        desc = "Blame Line";
-      };
-    }
-    {
-      key = "<leader>gbb";
+      key = "<leader>gb";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').blame() end";
