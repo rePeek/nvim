@@ -348,9 +348,9 @@
       };
     }
 
-    # ── Commenting ──
+    # ── Commenting (Ctrl+/ — like VSCode) ──
     {
-      key = "<leader>cc";
+      key = "<C-/>";
       mode = [
         "n"
         "x"
@@ -359,38 +359,6 @@
       options = {
         desc = "Toggle Comment";
         remap = true;
-      };
-    }
-    {
-      key = "<leader>co";
-      mode = "n";
-      action = "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
-      options = {
-        desc = "Add Comment Below";
-      };
-    }
-    {
-      key = "<leader>cO";
-      mode = "n";
-      action = "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
-      options = {
-        desc = "Add Comment Above";
-      };
-    }
-    {
-      key = "gco";
-      mode = "n";
-      action = "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
-      options = {
-        desc = "Add Comment Below";
-      };
-    }
-    {
-      key = "gcO";
-      mode = "n";
-      action = "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>";
-      options = {
-        desc = "Add Comment Above";
       };
     }
 
@@ -771,31 +739,6 @@
       };
     }
 
-    # ── Selection Keymaps (keep from original) ──
-    {
-      key = "<leader>ss";
-      mode = "n";
-      action = "viw";
-      options = {
-        desc = "Select word";
-      };
-    }
-    {
-      key = "<leader>sl";
-      mode = "n";
-      action = "V";
-      options = {
-        desc = "Select line";
-      };
-    }
-    {
-      key = "<leader>s%";
-      mode = "n";
-      action = "ggVG";
-      options = {
-        desc = "Select all";
-      };
-    }
 
     # ── Visual Mode: Move Lines ──
     {

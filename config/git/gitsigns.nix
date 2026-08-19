@@ -111,7 +111,7 @@
       };
     }
     {
-      key = "<leader>ghs";
+      key = "<leader>gs";
       mode = [
         "n"
         "x"
@@ -122,7 +122,7 @@
       };
     }
     {
-      key = "<leader>ghr";
+      key = "<leader>gr";
       mode = [
         "n"
         "x"
@@ -133,7 +133,7 @@
       };
     }
     {
-      key = "<leader>ghS";
+      key = "<leader>gS";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').stage_buffer() end";
@@ -143,7 +143,7 @@
       };
     }
     {
-      key = "<leader>ghu";
+      key = "<leader>gu";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').undo_stage_hunk() end";
@@ -153,7 +153,7 @@
       };
     }
     {
-      key = "<leader>ghR";
+      key = "<leader>gR";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').reset_buffer() end";
@@ -163,7 +163,7 @@
       };
     }
     {
-      key = "<leader>ghp";
+      key = "<leader>gp";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').preview_hunk_inline() end";
@@ -173,7 +173,7 @@
       };
     }
     {
-      key = "<leader>ghb";
+      key = "<leader>gbl";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').blame_line({ full = true }) end";
@@ -183,7 +183,7 @@
       };
     }
     {
-      key = "<leader>ghB";
+      key = "<leader>gbb";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').blame() end";
@@ -193,7 +193,7 @@
       };
     }
     {
-      key = "<leader>ghd";
+      key = "<leader>gd";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').diffthis() end";
@@ -203,7 +203,7 @@
       };
     }
     {
-      key = "<leader>ghD";
+      key = "<leader>gD";
       mode = "n";
       action = {
         __raw = "function() require('gitsigns').diffthis('~') end";

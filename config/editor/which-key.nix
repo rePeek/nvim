@@ -8,14 +8,6 @@
       preset = "helix";
       spec = [
         {
-          __unkeyed-1 = "<leader><tab>";
-          group = "tabs";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>c";
           group = "code";
           mode = [
@@ -25,7 +17,7 @@
         }
         {
           __unkeyed-1 = "<leader>d";
-          group = "debug";
+          group = "diagnostics";
           mode = [
             "n"
             "x"
@@ -40,14 +32,6 @@
           ];
         }
         {
-          __unkeyed-1 = "<leader>f";
-          group = "file/find";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>g";
           group = "git";
           mode = [
@@ -56,16 +40,8 @@
           ];
         }
         {
-          __unkeyed-1 = "<leader>gh";
-          group = "hunks";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>s";
-          group = "search";
+          group = "symbols";
           mode = [
             "n"
             "x"
@@ -90,14 +66,6 @@
         {
           __unkeyed-1 = "<leader>w";
           group = "windows";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
-          __unkeyed-1 = "<leader>x";
-          group = "diagnostics/quickfix";
           mode = [
             "n"
             "x"

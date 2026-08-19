@@ -144,93 +144,23 @@
       };
     }
     {
-      key = "<leader>ff";
+      key = "<leader>j";
       mode = "n";
       action = {
-        __raw = "function() Snacks.picker.files() end";
+        __raw = "function() Snacks.picker.jumps() end";
       };
       options = {
-        desc = "Find files";
+        desc = "Jumplist";
       };
     }
     {
-      key = "<leader>fg";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.grep() end";
-      };
-      options = {
-        desc = "Live grep";
-      };
-    }
-    {
-      key = "<leader>fb";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.buffers() end";
-      };
-      options = {
-        desc = "Buffers";
-      };
-    }
-    {
-      key = "<leader>fh";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.help() end";
-      };
-      options = {
-        desc = "Help tags";
-      };
-    }
-    {
-      key = "<leader>fr";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.recent() end";
-      };
-      options = {
-        desc = "Recent files";
-      };
-    }
-    {
-      key = "<leader>fs";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.grep_word() end";
-      };
-      options = {
-        desc = "Grep string under cursor";
-      };
-    }
-    {
-      key = "<leader>fd";
+      key = "<leader>d";
       mode = "n";
       action = {
         __raw = "function() Snacks.picker.diagnostics() end";
       };
       options = {
         desc = "Diagnostics";
-      };
-    }
-    {
-      key = "<leader>fk";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.keymaps() end";
-      };
-      options = {
-        desc = "Keymaps";
-      };
-    }
-    {
-      key = "<leader>fl";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.lines() end";
-      };
-      options = {
-        desc = "Lines";
       };
     }
 
@@ -316,17 +246,7 @@
       };
     }
     {
-      key = "<leader>xx";
-      mode = "n";
-      action = {
-        __raw = "function() Snacks.picker.diagnostics() end";
-      };
-      options = {
-        desc = "Diagnostics";
-      };
-    }
-    {
-      key = "<leader>xX";
+      key = "<leader>D";
       mode = "n";
       action = {
         __raw = "function() Snacks.picker.diagnostics_buffer() end";
@@ -336,7 +256,7 @@
       };
     }
     {
-      key = "<leader>xL";
+      key = "<leader>l";
       mode = "n";
       action = {
         __raw = "function() Snacks.picker.loclist() end";
@@ -346,7 +266,7 @@
       };
     }
     {
-      key = "<leader>xQ";
+      key = "<leader>x";
       mode = "n";
       action = {
         __raw = "function() Snacks.picker.qflist() end";
@@ -387,7 +307,36 @@
         desc = "Git Log";
       };
     }
-
+    {
+      key = "<leader>gb";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.git_branches() end";
+      };
+      options = {
+        desc = "Git Branches";
+      };
+    }
+    {
+      key = "<leader>gH";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.git_stash() end";
+      };
+      options = {
+        desc = "Git Stash";
+      };
+    }
+    {
+      key = "<leader>gA";
+      mode = "n";
+      action = {
+        __raw = "function() Snacks.picker.git_status() end";
+      };
+      options = {
+        desc = "Git Status";
+      };
+    }
     # ── Snacks Explorer ──
     {
       key = "<leader>e";
