@@ -6,7 +6,9 @@
     enable = true;
     settings = {
       preset = "helix";
-      icons = { enabled = false; };
+      icons = {
+        mappings = false;
+      };
       spec = [
         {
           __unkeyed-1 = "<leader>c";
