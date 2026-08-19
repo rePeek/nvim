@@ -34,23 +34,21 @@ nixvim/
     │   └── treesitter.nix     # 语法高亮 & 解析
     ├── editor/                # 编辑器增强
     │   ├── default.nix
-    │   ├── snacks.nix         # snacks.nvim (picker/explorer/terminal/通知等)
+    │   ├── snacks.nix         # snacks.nvim (picker/explorer/terminal/通知/goto 等)
     │   ├── flash.nix          # 跳转 (flash.nvim)
     │   ├── grug-far.nix       # 批量替换
     │   ├── multicursors.nix   # 多光标编辑
-    │   ├── todo-comments.nix  # TODO 注释高亮
-    │   ├── trouble.nix        # 诊断面板
     │   └── which-key.nix      # 键位提示
     ├── git/                   # Git 集成
     │   ├── default.nix
     │   ├── gitsigns.nix       # 行内 blame & diff
-    │   └── lazygit.nix        # 浮动 Git TUI
+    │   └── lazygit.nix        # lazygit 二进制包
     ├── languages/             # 语言专属配置
     │   ├── default.nix
     │   ├── cpp.nix
     │   ├── lua.nix
-    │   ├── vim.nix             # Vim / Query 语言
-    │   ├── shell.nix           # Bash / Fish
+    │   ├── vim.nix            # Vim / Query 语言
+    │   ├── shell.nix          # Bash / Fish
     │   ├── markdown.nix
     │   ├── nix.nix
     │   ├── python.nix
@@ -85,7 +83,7 @@ nixvim/
 
 | 类别 | 插件 | 说明 |
 |------|------|------|
-| **瑞士军刀** | [snacks.nvim](https://github.com/folke/snacks.nvim) | 文件选择器、文件浏览器、终端、通知、缩进线、平滑滚动、大文件处理等 |
+| **瑞士军刀** | [snacks.nvim](https://github.com/folke/snacks.nvim) | picker、explorer、终端、goto、通知、toggle、scratch 等 |
 | **主题** | tokyonight (storm) | nixvim 内置模块，`mkDefault` 可被外部覆盖 |
 | **补全** | nvim-cmp + LuaSnip + friendly-snippets | LSP / buffer / path / snippet 四源补全 |
 | **格式化** | [conform.nvim](https://github.com/stevearc/conform.nvim) | 统一格式化框架，per-language 配置 |
@@ -97,16 +95,14 @@ nixvim/
 | **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
 | **跳转** | [flash.nvim](https://github.com/folke/flash.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
 | **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换 |
-| **诊断面板** | [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断、符号、LSP 引用、Quickfix 面板 |
-| **TODO 注释** | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME/HACK 高亮 & 跳转 |
-| **键位提示** | [which-key.nvim](https://github.com/folke/which-key.nvim) | 按 Space 弹出分组菜单 |
+| **键位提示** | [which-key.nvim](https://github.com/folke/which-key.nvim) | 按键分组菜单 |
 | **多光标** | multicursors.nvim | 多光标编辑 |
 | **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
 | **调试** | nvim-dap + dap-ui + lldb-dap / codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
-| **命令行 UI** | noice | 更好的 cmdline、消息、搜索 UI |
+| **命令行 UI** | noice | cmdline、消息路由、搜索 UI |
 | **图标** | mini.icons + web-devicons | 文件/目录/filetype 图标 |
 | **文本对象** | mini.ai | 增强型文本对象（500 行范围） |
 | **自动括号** | mini.pairs | 智能配对（insert/command 模式） |
@@ -116,32 +112,102 @@ nixvim/
 
 ## 键位映射
 
-Leader 键为 `Space`。键位风格来自 LazyVim。
+Leader 键为 `Space`。
 
-### 文件搜索 (Snacks Picker)
+### 常用入口
 
 | 键位 | 动作 | 说明 |
 |------|------|------|
-| `<leader><Space>` | Find Files | 查找文件 |
+| `<leader><space>` | Find Files | 查找文件 |
 | `<leader>/` | Live Grep | 实时搜索 |
 | `<leader>,` | Commands | 命令面板 |
-| `<leader>ff` | Find Files | 查找文件 |
-| `<leader>fg` | Live Grep | 实时搜索 |
-| `<leader>fb` | Buffers | Buffer 列表 |
-| `<leader>fh` | Help Tags | 帮助搜索 |
-| `<leader>fr` | Recent Files | 最近文件 |
-| `<leader>fs` | Grep Word | 搜索光标下的词 |
-| `<leader>fd` | Diagnostics | 诊断信息 |
-| `<leader>fk` | Keymaps | 键位列表 |
-| `<leader>fl` | Lines | 当前文件行搜索 |
+| `<leader>b` | Buffers | Buffer 列表 |
+| `<leader>j` | Jumplist | 跳转历史 |
+| `<leader>d` | Diagnostics | 诊断信息 |
+| `<leader>D` | Buffer Diagnostics | 当前 buffer 诊断 |
+| `<leader>l` | Location List | Location 列表 |
+| `<leader>x` | Quickfix List | Quickfix 列表 |
+| `<leader>e` | Explorer | 文件浏览器 |
+| `<leader>q` | Quit All | 全部退出 |
+| `<leader>n` | Notifications | 通知历史 (Snacks picker) |
+| `<leader>.` | Scratch Buffer | 持久化临时笔记 |
+| `<leader>ft` | Floating Terminal | 浮动终端 |
+| `<c-/>` | Terminal (toggle) | 浮动终端切换 |
 
-### Git 搜索
+### Goto (`g*`)
+
+所有 goto 操作均通过 Snacks picker 实现（支持模糊搜索和预览）。
 
 | 键位 | 动作 |
 |------|------|
-| `<leader>gf` | Git 文件 |
-| `<leader>gL` | Git Log (cwd) |
+| `gd` | Goto Definition |
+| `gr` | Goto References |
+| `gi` | Goto Implementation |
+| `gt` | Goto Type Definition |
+| `gD` | Goto Declaration |
+| `gk` | Signature Help |
+| `K` | Hover 文档 |
+| `<C-k>` (insert) | Signature Help |
+
+### Code (`<leader>c*`)
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>ca` | Code Action |
+| `<leader>cA` | Source Action |
+| `<leader>cr` | Rename |
+| `<leader>cd` | 当前行诊断浮窗 |
+| `<leader>cf` | 格式化 |
+| `<leader>cF` | 格式化注入语言 |
+
+### 注释 (`Ctrl+/`)
+
+| 键位 | 模式 | 动作 |
+|------|------|------|
+| `<C-/>` | Normal | 切换当前行注释 |
+| `<C-/>` | Visual | 切换选中行注释 |
+
+> 也支持 vim 原生注释文本对象：`gc` + 文本对象（如 `gcip` `gciw` `gca(`）
+
+### Symbols (`<leader>s*`)
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>ss` | LSP Symbols（文档符号） |
+| `<leader>sS` | LSP Workspace Symbols（工作区符号） |
+| `<leader>st` | Treesitter Symbols |
+
+### Git (`<leader>g*`)
+
+**Picker / 工具：**
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>gg` | Lazygit |
+| `<leader>gf` | Git Files |
 | `<leader>gl` | Git Log |
+| `<leader>gL` | Git Log (cwd) |
+| `<leader>gH` | Git Stash |
+| `<leader>gA` | Git Status |
+| `<leader>go` | Git Browse（浏览器打开） |
+
+**Hunk 操作（gitsigns）：**
+
+| 键位 | 动作 |
+|------|------|
+| `]h` / `[h` | 下一个/上一个 Hunk |
+| `]H` / `[H` | 最后一个/第一个 Hunk |
+| `<leader>gs` | Stage Hunk |
+| `<leader>gr` | Reset Hunk |
+| `<leader>gS` | Stage Buffer |
+| `<leader>gu` | Undo Stage Hunk |
+| `<leader>gR` | Reset Buffer |
+| `<leader>gp` | Preview Hunk Inline |
+| `<leader>gb` | Blame Buffer |
+| `<leader>gd` | Diff This |
+| `<leader>gD` | Diff This ~ |
+| `ih` | 文本对象：选中 Hunk |
+| `<leader>uG` | Toggle Git Signs |
 
 ### 文件浏览
 
@@ -154,33 +220,36 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 
 | 键位 | 动作 |
 |------|------|
-| `<leader>b` | Buffer Picker（打开 buffer 列表） |
+| `<leader>b` | Buffer Picker |
 | `Shift+Left` / `Shift+Right` | 上一个/下一个 Buffer |
 | `[b` / `]b` | 上一个/下一个 Buffer |
 
-### Jumplist
-
-| 键位 | 动作 |
-|------|------|
-| `Ctrl+Left` | Jump Back |
-| `Ctrl+Right` | Jump Forward |
-
 ### 窗口
+
+**导航（裸键）：**
 
 | 键位 | 动作 |
 |------|------|
 | `Ctrl+H/J/K/L` | 左/下/上/右 窗口切换 |
 | `Shift+Ctrl+↑/↓/←/→` | 调整窗口大小 |
-| `<leader>-` | 水平分割 |
-| `<leader>\|` | 垂直分割 |
-| `<leader>wd` | 关闭窗口 |
 
-### 行移动
+**操作（`<leader>w*`）：**
 
-| 键位 | 模式 | 动作 |
-|------|------|------|
-| `Alt+Up` / `Alt+Down` | Normal / Insert / Visual | 上/下移动行 |
-| `J` / `K` | Visual | 移动选区下/上 |
+| 键位 | 动作 |
+|------|------|
+| `<leader>ws` | Split Below |
+| `<leader>wv` | Split Right |
+| `<leader>wd` | Close Window |
+| `<leader>w←/↓/↑/→` | Go to Left/Lower/Upper/Right Window |
+
+### 诊断导航 (`[d` / `]d` 系列)
+
+| 键位 | 动作 |
+|------|------|
+| `[d` / `]d` | 上一条/下一条诊断 |
+| `[e` / `]e` | 上一条/下一条 Error |
+| `[w` / `]w` | 上一条/下一条 Warning |
+| `[q` / `]q` | 上一个/下一个 Quickfix |
 
 ### Flash 跳转
 
@@ -190,85 +259,6 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `S` | Normal / Visual / Operator | Flash Treesitter |
 | `r` | Operator-pending | Remote Flash |
 | `R` | Operator-pending / Visual | Treesitter Search |
-
-### Git (Gitsigns)
-
-| 键位 | 动作 |
-|------|------|
-| `<leader>gg` | Lazygit |
-| `<leader>gB` | Git Browse (浏览器打开) |
-| `]h` / `[h` | 下一个/上一个 Hunk |
-| `]H` / `[H` | 最后一个/第一个 Hunk |
-| `<leader>ghs` | Stage Hunk |
-| `<leader>ghr` | Reset Hunk |
-| `<leader>ghS` | Stage Buffer |
-| `<leader>ghu` | Undo Stage Hunk |
-| `<leader>ghR` | Reset Buffer |
-| `<leader>ghp` | Preview Hunk Inline |
-| `<leader>ghb` | Blame Line (full) |
-| `<leader>ghB` | Blame Buffer |
-| `<leader>ghd` | Diff This |
-| `<leader>ghD` | Diff This ~ |
-| `ih` | 文本对象：选中 Hunk |
-| `<leader>uG` | Toggle Git Signs |
-
-### Debug (DAP)
-
-| 键位 | 动作 |
-|------|------|
-| `<leader>db` | Toggle 断点 |
-| `<leader>dc` | Continue |
-| `<leader>dn` | Step over |
-| `<leader>ds` | Step into |
-| `<leader>do` | Step out |
-| `<leader>dr` | Restart |
-| `<leader>dt` | Terminate |
-| `<leader>du` | Toggle DAP UI |
-
-### LSP
-
-| 键位 | 动作 |
-|------|------|
-| `gd` | Go to Definition |
-| `gr` | Go to References |
-| `gD` | Go to Declaration |
-| `gt` | Go to Type Definition |
-| `gi` | Go to Implementation |
-| `K` | Hover 文档 |
-| `gK` | Signature Help |
-| `Ctrl+K` (insert) | Signature Help |
-| `<leader>ca` | Code Action |
-| `<leader>cA` | Source Action |
-| `<leader>cr` | Rename |
-| `<leader>cf` | 格式化 |
-| `<leader>cF` | 格式化注入语言 |
-| `<leader>cc` | 切换注释（行/选区） |
-| `<leader>co` | 下方插入注释 |
-| `<leader>cO` | 上方插入注释 |
-
-### 诊断 & Trouble
-
-| 键位 | 动作 |
-|------|------|
-| `<leader>cd` | 当前行诊断浮窗 |
-| `[d` / `]d` | 上一条/下一条诊断 |
-| `[e` / `]e` | 上一条/下一条 Error |
-| `[w` / `]w` | 上一条/下一条 Warning |
-| `<leader>xx` | Trouble Diagnostics |
-| `<leader>xX` | Trouble Buffer Diagnostics |
-| `<leader>xs` | Trouble Symbols |
-| `<leader>xS` | Trouble LSP References |
-| `<leader>xL` | Trouble Location List |
-| `<leader>xQ` | Trouble Quickfix |
-| `<leader>xt` | Todo (Trouble) |
-| `<leader>xT` | Todo/Fix/Fixme (Trouble) |
-| `<leader>xq` | Toggle Quickfix |
-| `<leader>xl` | Toggle Location List |
-| `[q` / `]q` | 上一个/下一个 Quickfix |
-| `[t` / `]t` | 上一个/下一个 Todo Comment |
-| `[f` / `]f` | 下一个/上一个函数 (treesitter) |
-| `[c` / `]c` | 下一个/上一个类 (treesitter) |
-| `[a` / `]a` | 下一个/上一个参数 (treesitter) |
 
 ### UI 切换 (`<leader>u*`)
 
@@ -291,31 +281,26 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `<leader>ur` | Redraw / Clear hlsearch |
 | `<leader>un` | Dismiss All Notifications |
 
-### Noice 消息
+### 行移动
 
-| 键位 | 动作 |
-|------|------|
-| `<leader>snl` | Noice Last Message |
-| `<leader>snh` | Noice History |
-| `<leader>sna` | Noice All |
-| `<leader>snd` | Dismiss All |
+| 键位 | 模式 | 动作 |
+|------|------|------|
+| `Alt+Up` / `Alt+Down` | Normal / Insert / Visual | 上/下移动行 |
+| `J` / `K` | Visual | 移动选区下/上 |
 
 ### 通用
 
 | 键位 | 模式 | 动作 |
 |------|------|------|
 | `<C-s>` | 全部 | 保存 |
-| `<C-/>` | Normal / Terminal | 浮动终端 |
-| `<leader>ft` | Normal | 浮动终端 |
-| `<leader>.` | Normal | Scratch Buffer |
-| `<leader>n` | Normal | 通知历史 |
-| `<leader>q` | Normal | 全部退出 |
 | `<Esc>` | Insert / Normal / Visual | 清除高亮，回到 Normal |
 | `<leader>?` | Normal | Buffer 键位提示 (which-key) |
 | `<` / `>` | Visual | 缩进后重新选中 |
-| `gco` / `gcO` | Normal | 下方/上方插入注释 |
 | `gcc` | Normal | 切换当前行注释 |
-| `gc` + 文本对象 | Normal / Visual | 注释选区（如 `gcip` `gciw` `gca(`） |
+| `gc` + 文本对象 | Normal / Visual | 注释选区 |
+| `j` / `k` | Normal / Visual | 尊重 wrap 的行移动 |
+| `n` / `N` | Normal / Visual / Operator | 搜索结果导航时自动展开 fold |
+| `,` / `.` / `;` | Insert | Undo break-point |
 
 ### 多光标 (multicursors.nvim)
 
@@ -324,13 +309,12 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 | `Ctrl+N` | 选中光标下的下一个匹配 |
 | `n` / `N` | 跳到下一个/上一个匹配 |
 
-### 其他增强
+### 其他
 
-| 键位 | 模式 | 说明 |
-|------|------|------|
-| `j` / `k` | Normal / Visual | 尊重 wrap 的行移动（无 count 时用 `gj`/`gk`） |
-| `n` / `N` | Normal / Visual / Operator | 搜索结果导航时自动展开 fold |
-| `,` / `.` / `;` | Insert | Undo break-point（输入标点时自动断点） |
+| 键位 | 动作 |
+|------|------|
+| `<leader>sr` | 批量搜索替换 (grug-far) |
+| `<leader>m` | 多光标模式 (multicursors) |
 
 > Vim 肌肉记忆全部保留：`ci"` `di(` `%` `daw` `ciw` `yap` 等不受影响。
 
@@ -359,6 +343,19 @@ Leader 键为 `Space`。键位风格来自 LazyVim。
 两个 adapter 均依赖系统 PATH，不由配置自动安装。
 
 DAP UI 会在调试开始时自动打开，结束时自动关闭。
+
+### DAP 键位 (`<leader>d*`)
+
+| 键位 | 动作 |
+|------|------|
+| `<leader>db` | Toggle 断点 |
+| `<leader>dc` | Continue |
+| `<leader>dn` | Step over |
+| `<leader>ds` | Step into |
+| `<leader>do` | Step out |
+| `<leader>dr` | Restart |
+| `<leader>dt` | Terminate |
+| `<leader>du` | Toggle DAP UI |
 
 ## Treesitter 语法支持
 
@@ -442,7 +439,7 @@ modules = [
     # 导入本配置的其他设置（键位、插件、LSP 等全部保留）
     imports = [ nixvim-config ];
   };
-};
+}
 ```
 
 > `colorschemes.tokyonight.enable` 使用了 `lib.mkDefault true`，外部普通赋值即可覆盖。
