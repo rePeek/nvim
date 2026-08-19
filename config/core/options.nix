@@ -148,6 +148,13 @@
     -- Fix markdown indentation
     vim.g.markdown_recommended_style = 0
 
+    -- Disable built-in gr* global keymaps (Neovim 0.11+)
+    -- These are GLOBAL mappings created at startup, not buffer-local
+    for _, key in ipairs({ "gra", "gri", "grr", "grn", "grt", "grx" }) do
+      pcall(vim.keymap.del, "n", key)
+    end
+    pcall(vim.keymap.del, "x", "gra")
+
     -- Shortmess tweaks
     vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
   '';

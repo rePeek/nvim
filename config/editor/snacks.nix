@@ -216,6 +216,14 @@
       };
     }
     {
+      key = "ge";
+      mode = "n";
+      action = "G";
+      options = {
+        desc = "Goto End of File";
+      };
+    }
+    {
       key = "<leader>ss";
       mode = "n";
       action = {

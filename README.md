@@ -136,8 +136,6 @@ Leader 键为 `Space`。
 
 ### Goto (`g*`)
 
-所有 goto 操作均通过 Snacks picker 实现（支持模糊搜索和预览）。
-
 | 键位 | 动作 |
 |------|------|
 | `gd` | Goto Definition |
@@ -145,9 +143,7 @@ Leader 键为 `Space`。
 | `gi` | Goto Implementation |
 | `gt` | Goto Type Definition |
 | `gD` | Goto Declaration |
-| `gk` | Signature Help |
-| `K` | Hover 文档 |
-| `<C-k>` (insert) | Signature Help |
+| `ge` | Goto End of File |
 
 ### Code (`<leader>c*`)
 
@@ -156,6 +152,7 @@ Leader 键为 `Space`。
 | `<leader>ca` | Code Action |
 | `<leader>cA` | Source Action |
 | `<leader>cr` | Rename |
+| `<leader>ck` | Signature Help |
 | `<leader>cd` | 当前行诊断浮窗 |
 | `<leader>cf` | 格式化 |
 | `<leader>cF` | 格式化注入语言 |

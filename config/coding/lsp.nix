@@ -34,7 +34,7 @@
   # ── Additional LSP Keymaps ──
   keymaps = [
     {
-      key = "gk";
+      key = "<leader>ck";
       mode = "n";
       action = {
         __raw = "function() vim.lsp.buf.signature_help() end";
