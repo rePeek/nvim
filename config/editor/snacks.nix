@@ -6,6 +6,13 @@
     enable = true;
 
     settings = {
+      # ── Float Styles ──
+      styles = {
+        float = {
+          backdrop = false;
+        };
+      };
+
       # ── Notifier ──
       notifier = {
         enabled = true;

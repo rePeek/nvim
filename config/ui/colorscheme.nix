@@ -5,6 +5,17 @@
   # ══════════════════════════════════════════════
   colorschemes.nightfox = {
     enable = lib.mkDefault true;
-    settings.flavor = "carbonfox";
+    settings = {
+      flavor = "carbonfox";
+      options.transparent = true;
+    };
+  };
+
+  highlightOverride = {
+    NormalFloat.link = "Normal";
+    SnacksPickerNormal.link = "Normal";
+    SnacksPickerListNormal.link = "Normal";
+    SnacksPickerPreviewNormal.link = "Normal";
+    SnacksPickerInputNormal.link = "Normal";
   };
 }
