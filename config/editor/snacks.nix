@@ -358,7 +358,7 @@
 
     # ── Floating Terminal ──
     {
-      key = "<leader>ft";
+      key = "<leader>t";
       mode = "n";
       action = {
         __raw = "function() Snacks.terminal() end";
