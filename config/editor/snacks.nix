@@ -361,7 +361,7 @@
       key = "<leader>t";
       mode = "n";
       action = {
-        __raw = "function() Snacks.terminal() end";
+        __raw = "function() Snacks.terminal(nil, { win = { position = \"float\" } }) end";
       };
       options = {
         desc = "Terminal";
