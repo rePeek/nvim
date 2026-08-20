@@ -1,17 +1,10 @@
 { lib, ... }:
 {
   # ══════════════════════════════════════════════
-  #  Colorscheme — Tokyo Night (LazyVim default)
+  #  Colorscheme — Nightfox Carbonfox
   # ══════════════════════════════════════════════
-  colorschemes.tokyonight = {
+  colorschemes.nightfox = {
     enable = lib.mkDefault true;
-    settings = {
-      style = "storm";
-      transparent = false;
-      styles = {
-        sidebars = "dark";
-        floats = "dark";
-      };
-    };
+    settings.flavor = "carbonfox";
   };
 }
