@@ -9,14 +9,15 @@ local config = {
   key = "<leader>i",
   win = {
     relative = "editor",
-    border = "rounded",
+    border = true,
     title = " Info ",
     title_pos = "center",
     backdrop = false,
     focusable = false,
     enter = false,
     wo = {
-      winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+      winhighlight = "NormalFloat:SnacksInputNormal,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
+      cursorline = false,
     },
   },
 }
