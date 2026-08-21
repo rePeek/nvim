@@ -186,6 +186,11 @@ end
 function M.setup(opts)
   config = vim.tbl_deep_extend("force", config, opts or {})
 
+  -- this plugin owns the mode/status UI
+  vim.opt.laststatus = 0
+  vim.opt.showmode = false
+  vim.opt.ruler = false
+
   if not config.enabled then
     return
   end
