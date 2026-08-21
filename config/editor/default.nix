@@ -5,5 +5,6 @@
     ./which-key.nix
     ./multicursors.nix
     ./hud.nix
+    ./info.nix
   ];
 }

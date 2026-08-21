@@ -128,6 +128,7 @@ Leader 键为 `Space`。
 | `<leader>e` | Explorer | 文件浏览器 |
 | `<leader>q` | Quit All | 全部退出 |
 | `<leader>n` | Notifications | 通知历史 (Snacks picker) |
+| `<leader>i` | Buffer Info | 当前文件、Git、LSP 与 DAP 信息 |
 | `<leader>.` | Scratch Buffer | 持久化临时笔记 |
 | `<leader>t` | Floating Terminal | 浮动终端 |
 
