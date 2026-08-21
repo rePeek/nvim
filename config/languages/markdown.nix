@@ -21,7 +21,6 @@
     markdown = [ "prettierd" ];
   };
 
-
   # ── render-markdown.nvim — Markdown Rendering ──
   plugins.render-markdown = {
     enable = true;
@@ -33,6 +32,35 @@
       ];
       anti_conceal = {
         enabled = false;
+      };
+      heading = {
+        backgrounds = [ "Normal" ];
+      };
+      code = {
+        disable_background = true;
+        inline = false;
+        # 顶部显示语言
+        language = true;
+        language_icon = false;
+        language_name = true;
+        language_info = false;
+
+        # nix 放在横线中央
+        position = "center";
+
+        # 不要 sign column 里的语言图标
+        sign = false;
+
+        # 边框
+        border = "thin";
+        language_border = "─";
+        language_left = " ";
+        language_right = " ";
+        above = "─";
+        below = "─";
+
+        width = "block";
+        right_pad = 1;
       };
     };
   };

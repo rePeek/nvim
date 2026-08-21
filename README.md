@@ -354,7 +354,7 @@ DAP UI 会在调试开始时自动打开，结束时自动关闭。
 
 ## Treesitter 语法支持
 
-```
+```bash
 Shell:   Bash
 Vim:     Diff, Query, Regex, Vim, Vimdoc
 Lua:     Lua, Luadoc, Luap
