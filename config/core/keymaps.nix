@@ -325,6 +325,11 @@
             if explorer then
               explorer:close()
             end
+            -- Close the buffer info HUD if open
+            local info_ok, info = pcall(require, "repeek.info")
+            if info_ok then
+              info.close()
+            end
             return "<esc>"
           end
         '';
@@ -644,7 +649,6 @@
       };
     }
 
-
     # ── Snacks Toggle Keymaps ──
     {
       key = "<leader>uf";
@@ -832,7 +836,6 @@
         desc = "Inspect Pos";
       };
     }
-
 
     # ── Visual Mode: Move Lines ──
     {
