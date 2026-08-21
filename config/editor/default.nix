@@ -6,5 +6,6 @@
     ./multicursors.nix
     ./codediff.nix
     ./hud.nix
+    ./info.nix
   ];
 }
