@@ -12,7 +12,6 @@ local config = {
   win = {
     relative = "win",
     row = 0,
-    col = -1,
     height = 1,
     border = "none",
     backdrop = false,
@@ -76,6 +75,8 @@ local function render()
   local label, theme_mode = mode_info()
   local text = " " .. label .. " "
   local width = vim.api.nvim_strwidth(text)
+  local win_width = vim.api.nvim_win_get_width(parent)
+  local col = win_width - width
   local winhighlight = "Normal:lualine_a_" .. theme_mode
 
   -- create on first call
@@ -84,6 +85,7 @@ local function render()
 
     state.win = Snacks.win(vim.tbl_deep_extend("force", config.win, {
       win = parent,
+      col = col,
       width = width,
       text = text,
       wo = {
@@ -106,8 +108,7 @@ local function render()
 
   -- re-anchor to current window (relative="win")
   state.win.opts.win = parent
-
-  -- width may change between modes
+  state.win.opts.col = col
   state.win.opts.width = width
   state.win.opts.wo = vim.tbl_deep_extend("force", state.win.opts.wo or {}, {
     winhighlight = winhighlight,
