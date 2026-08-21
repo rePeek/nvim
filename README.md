@@ -35,7 +35,6 @@ nixvim/
     ├── editor/                # 编辑器增强
     │   ├── default.nix
     │   ├── snacks.nix         # snacks.nvim (picker/explorer/terminal/通知/goto 等)
-    │   ├── flash.nix          # 跳转 (flash.nvim)
     │   ├── grug-far.nix       # 批量替换
     │   ├── multicursors.nix   # 多光标编辑
     │   └── which-key.nix      # 键位提示
@@ -93,7 +92,6 @@ nixvim/
 | **语法文本对象** | treesitter-textobjects | `]f`/`[f` 跳转函数/类/参数 |
 | **自动标签** | ts-autotag | 自动关闭 HTML/JSX 标签 |
 | **注释增强** | ts-comments | 更好的注释语法（treesitter 感知） |
-| **跳转** | [flash.nvim](https://github.com/folke/flash.nvim) | 增强搜索、Treesitter 跳转、远程跳转 |
 | **批量替换** | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 实时搜索替换 |
 | **键位提示** | [which-key.nvim](https://github.com/folke/which-key.nvim) | 按键分组菜单 |
 | **多光标** | multicursors.nvim | 多光标编辑 |
@@ -256,14 +254,6 @@ Leader 键为 `Space`。
 | `[w` / `]w` | 上一条/下一条 Warning |
 | `[q` / `]q` | 上一个/下一个 Quickfix |
 
-### Flash 跳转
-
-| 键位 | 模式 | 动作 |
-|------|------|------|
-| `s` | Normal / Visual / Operator | Flash 跳转 |
-| `S` | Normal / Visual / Operator | Flash Treesitter |
-| `r` | Operator-pending | Remote Flash |
-| `R` | Operator-pending / Visual | Treesitter Search |
 
 ### UI 切换 (`<leader>u*`)
 
