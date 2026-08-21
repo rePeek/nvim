@@ -28,9 +28,11 @@ local config = {
 
 local state = {
   win = nil,
+  buf = nil,
 }
 
 local ns = vim.api.nvim_create_namespace("repeek.info")
+local git_cache = {}
 
 local function setup_highlights()
   local groups = {
@@ -58,70 +60,84 @@ local function setup_highlights()
   })
 end
 
-local function buffer_directory(buf)
-  local name = vim.api.nvim_buf_get_name(buf)
-  if name == "" then
-    return vim.fn.getcwd()
-  end
-  return vim.fs.dirname(name)
-end
-
-local function git_sync_status(directory)
-  local result = vim.system({
-    "git",
-    "-C",
-    directory,
-    "rev-list",
-    "--left-right",
-    "--count",
-    "HEAD...@{upstream}",
-  }, { text = true }):wait()
-
-  if result.code ~= 0 then
-    return 0, 0
-  end
-
-  local ahead, behind = (result.stdout or ""):match("^(%d+)%s+(%d+)")
-  return tonumber(ahead) or 0, tonumber(behind) or 0
-end
-
 local function git_status(buf)
+  local root = Snacks.git.get_root(buf)
   local head = vim.b[buf].gitsigns_head
   local status = vim.b[buf].gitsigns_status_dict
-  local directory = buffer_directory(buf)
+  local cached = root and git_cache[root] or nil
 
-  if type(head) ~= "string" or head == "" then
-    local result = vim.system({
-      "git",
-      "-C",
-      directory,
-      "branch",
-      "--show-current",
-    }, { text = true }):wait()
-
-    if result.code ~= 0 then
-      return nil
-    end
-
-    head = vim.trim(result.stdout or "")
-    head = head ~= "" and head or "detached HEAD"
+  head = type(head) == "string" and head ~= "" and head or cached and cached.branch
+  if not head then
+    return nil
   end
 
   status = type(status) == "table" and status or {}
   local ahead = tonumber(status.ahead)
   local behind = tonumber(status.behind)
-  if ahead == nil or behind == nil then
-    ahead, behind = git_sync_status(directory)
-  end
 
   return {
     branch = head,
     added = tonumber(status.added) or 0,
     changed = tonumber(status.changed) or 0,
     removed = tonumber(status.removed) or 0,
-    ahead = ahead,
-    behind = behind,
+    ahead = ahead or cached and cached.ahead or 0,
+    behind = behind or cached and cached.behind or 0,
   }
+end
+
+local function update_git_cache(buf, callback)
+  local root = Snacks.git.get_root(buf)
+  if not root then
+    return
+  end
+
+  local cached = git_cache[root] or {}
+  git_cache[root] = cached
+
+  local head = vim.b[buf].gitsigns_head
+  if (type(head) ~= "string" or head == "") and not cached.branch_pending then
+    cached.branch_pending = true
+    vim.system({
+      "git",
+      "-C",
+      root,
+      "branch",
+      "--show-current",
+    }, { text = true }, function(result)
+      cached.branch_pending = false
+      if result.code == 0 then
+        local branch = vim.trim(result.stdout or "")
+        cached.branch = branch ~= "" and branch or "detached HEAD"
+        vim.schedule(callback)
+      end
+    end)
+  end
+
+  local status = vim.b[buf].gitsigns_status_dict
+  local has_sync_status = type(status) == "table" and tonumber(status.ahead) ~= nil and tonumber(status.behind) ~= nil
+  if not has_sync_status and not cached.sync_pending then
+    cached.sync_pending = true
+    vim.system({
+      "git",
+      "-C",
+      root,
+      "rev-list",
+      "--left-right",
+      "--count",
+      "HEAD...@{upstream}",
+    }, { text = true }, function(result)
+      cached.sync_pending = false
+      if result.code == 0 then
+        local ahead, behind = (result.stdout or ""):match("^(%d+)%s+(%d+)")
+        cached.ahead = tonumber(ahead) or 0
+        cached.behind = tonumber(behind) or 0
+      else
+        cached.ahead = 0
+        cached.behind = 0
+      end
+      vim.schedule(callback)
+    end)
+  end
 end
 
 local function lsp_status(buf)
@@ -359,6 +375,17 @@ function M.close()
   end
 
   state.win = nil
+  state.buf = nil
+end
+
+local function refresh(buf)
+  if not state.win or not state.win:valid() or state.buf ~= buf or not vim.api.nvim_buf_is_valid(buf) then
+    return
+  end
+
+  local content, highlights = lines(buf, config.win.width)
+  vim.api.nvim_buf_set_lines(state.win.buf, 0, -1, false, content)
+  apply_highlights(state.win.buf, highlights)
 end
 
 function M.open()
@@ -370,15 +397,20 @@ function M.open()
   local width = config.win.width
   local content, highlights = lines(buf, width)
 
+  state.buf = buf
   state.win = Snacks.win(vim.tbl_deep_extend("force", {}, config.win, {
     height = #content,
     text = content,
     on_close = function()
       state.win = nil
+      state.buf = nil
     end,
   }))
 
   apply_highlights(state.win.buf, highlights)
+  update_git_cache(buf, function()
+    refresh(buf)
+  end)
 end
 
 function M.toggle()
