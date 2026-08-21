@@ -17,5 +17,7 @@
     SnacksPickerListNormal.link = "Normal";
     SnacksPickerPreviewNormal.link = "Normal";
     SnacksPickerInputNormal.link = "Normal";
+    SnacksIndentScope.link = "Comment";
+    SnacksIndentChunk.link = "Comment";
   };
 }

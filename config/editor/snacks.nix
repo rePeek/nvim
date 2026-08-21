@@ -38,15 +38,29 @@
       # ── Indent Guides ──
       indent = {
         enabled = true;
+        indent = {
+          enabled = false;
+        };
+        scope = {
+          enabled = true;
+          underline = false;
+          hl = "SnacksIndentScope";
+        };
+        chunk = {
+          enabled = true;
+          hl = "SnacksIndentChunk";
+          char = {
+            corner_top = "╭";
+            corner_bottom = "╰";
+            horizontal = "─";
+            vertical = "│";
+            arrow = "╴";
+          };
+        };
       };
 
       # ── Input Popups ──
       input = {
-        enabled = true;
-      };
-
-      # ── Scope Highlighting ──
-      scope = {
         enabled = true;
       };
 
