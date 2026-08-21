@@ -26,56 +26,32 @@ local state = {
   parent = nil,
 }
 
--- ── Mode name lookup ──
-local mode_names = {
-  n = "NORMAL",
-  no = "NORMAL",
-  nov = "NORMAL",
-  noV = "NORMAL",
-  ["no\22"] = "NORMAL",
-  niI = "NORMAL",
-  niR = "NORMAL",
-  niV = "NORMAL",
-  nt = "NORMAL",
-  ntT = "NORMAL",
-
-  i = "INSERT",
-  ic = "INSERT",
-  ix = "INSERT",
-
-  v = "VISUAL",
-  vs = "VISUAL",
-  V = "V-LINE",
-  Vs = "V-LINE",
-  ["\22"] = "V-BLOCK",
-  ["\22s"] = "V-BLOCK",
-
-  s = "SELECT",
-  S = "S-LINE",
-  ["\19"] = "S-BLOCK",
-
-  R = "REPLACE",
-  Rc = "REPLACE",
-  Rx = "REPLACE",
-  Rv = "V-REPLACE",
-  Rvc = "V-REPLACE",
-  Rvx = "V-REPLACE",
-
-  c = "COMMAND",
-  cv = "EX",
-  ce = "EX",
-
-  r = "PROMPT",
-  rm = "MORE",
-  ["r?"] = "CONFIRM",
-
-  ["!"] = "SHELL",
-  t = "TERMINAL",
-}
-
-local function mode_name()
+-- ── Mode info: label + lualine theme key ──
+local function mode_info()
   local mode = vim.api.nvim_get_mode().mode
-  return mode_names[mode] or mode:upper()
+
+  -- Normal (n, no, nov, noV, niI, niR, niV, nt, ntT, …)
+  if mode:sub(1, 1) == "n" then
+    return "NORMAL", "normal"
+  elseif mode:sub(1, 1) == "i" then
+    return "INSERT", "insert"
+  elseif mode == "v" or mode == "vs" then
+    return "VISUAL", "visual"
+  elseif mode == "V" or mode == "Vs" then
+    return "V-LINE", "visual"
+  elseif mode == "\22" or mode == "\22s" then
+    return "V-BLOCK", "visual"
+  elseif mode == "s" or mode == "S" or mode == "\19" then
+    return "SELECT", "visual"
+  elseif mode:sub(1, 1) == "R" then
+    return "REPLACE", "replace"
+  elseif mode:sub(1, 1) == "c" then
+    return "COMMAND", "command"
+  elseif mode:sub(1, 1) == "t" then
+    return "TERMINAL", "terminal"
+  end
+
+  return mode:upper(), "normal"
 end
 
 -- ── Parent window ──
@@ -97,8 +73,10 @@ local function render()
     return
   end
 
-  local text = " " .. mode_name() .. " "
+  local label, theme_mode = mode_info()
+  local text = " " .. label .. " "
   local width = vim.api.nvim_strwidth(text)
+  local winhighlight = "Normal:lualine_a_" .. theme_mode
 
   -- create on first call
   if not state.win then
@@ -108,6 +86,9 @@ local function render()
       win = parent,
       width = width,
       text = text,
+      wo = {
+        winhighlight = winhighlight,
+      },
     }))
 
     return
@@ -128,6 +109,9 @@ local function render()
 
   -- width may change between modes
   state.win.opts.width = width
+  state.win.opts.wo = vim.tbl_deep_extend("force", state.win.opts.wo or {}, {
+    winhighlight = winhighlight,
+  })
 
   vim.api.nvim_buf_set_lines(state.win.buf, 0, -1, false, { text })
 
