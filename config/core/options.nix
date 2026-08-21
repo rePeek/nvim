@@ -34,12 +34,9 @@
     guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20";
     scrolloff = 4;
     sidescrolloff = 8;
-    showmode = false;
-    ruler = false;
     pumblend = 10;
     pumheight = 10;
     termguicolors = true;
-    laststatus = 3; # global statusline
 
     # ── Splits ──
     splitright = true;

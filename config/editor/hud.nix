@@ -1,15 +1,16 @@
 {
   # ══════════════════════════════════════════════
-  #  repeek.mode — Floating Mode Indicator
-  #  Uses Snacks.win to display current Vim mode
-  #  as a small label in the active window.
+  #  repeek.hud — Head-Up Display
+  #  Mode indicator + editor UI policy.
+  #  Uses Snacks.win for floating badge,
+  #  manages split separators & statusline.
   # ══════════════════════════════════════════════
 
   # ── Register Lua module on runtimepath ──
-  extraFiles."lua/repeek/mode.lua".source = ../../lua/repeek/mode.lua;
+  extraFiles."lua/repeek/hud.lua".source = ../../lua/repeek/hud.lua;
 
   # ── Load on startup (after Snacks) ──
   extraConfigLua = ''
-    require("repeek.mode").setup()
+    require("repeek.hud").setup()
   '';
 }
