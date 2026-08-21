@@ -58,15 +58,14 @@ nixvim/
         ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
         ├── icons.nix          # mini.icons + web-devicons
         ├── noice.nix          # cmdline & 消息 UI
-        ├── nui.nix            # UI 库 (noice/dap-ui 依赖)
-        └── statusline.nix     # 状态栏 (lualine)
+        └── nui.nix            # UI 库 (noice/dap-ui 依赖)
 ```
 
 ## 主题
 
 默认使用 **tokyonight-storm** 配色方案。
 
-所有 UI 插件（lualine、noice 等）自动跟随 colorscheme，无需单独配置。
+所有 UI 插件（noice 等）自动跟随 colorscheme，无需单独配置。
 
 ### 外部覆盖
 
@@ -99,7 +98,6 @@ nixvim/
 | **调试** | nvim-dap + dap-ui + lldb-dap / codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
-| **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
 | **命令行 UI** | noice | cmdline、消息路由、搜索 UI |
 | **图标** | mini.icons + web-devicons | 文件/目录/filetype 图标 |
 | **文本对象** | mini.ai | 增强型文本对象（500 行范围） |
@@ -440,7 +438,7 @@ modules = [
 
 > `colorschemes.tokyonight.enable` 使用了 `lib.mkDefault true`，外部普通赋值即可覆盖。
 
-> Stylix 会自动生成 Neovim 配色方案。lualine 默认 `theme = "auto"`，自动跟随 colorscheme。
+> Stylix 会自动生成 Neovim 配色方案，界面插件会自动跟随 colorscheme。
 
 ## 自定义
 
