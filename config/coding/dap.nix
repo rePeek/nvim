@@ -1,20 +1,22 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # nvim-dap upstream moved to Codeberg, but Codeberg may block
   # some IPs. Use the synchronized GitHub mirror instead.
   nixpkgs.overlays = [
     (final: prev: {
-      vimPlugins = prev.vimPlugins.extend (_vfinal: vprev: {
-        nvim-dap = vprev.nvim-dap.overrideAttrs (old: {
-          src = final.fetchgit {
-            url = "https://github.com/mfussenegger/nvim-dap.git";
+      vimPlugins = prev.vimPlugins.extend (
+        _vfinal: vprev: {
+          nvim-dap = vprev.nvim-dap.overrideAttrs (old: {
+            src = final.fetchgit {
+              url = "https://github.com/mfussenegger/nvim-dap.git";
 
-            inherit (old.src) rev;
-            hash = old.src.outputHash;
-          };
-        });
-      });
+              inherit (old.src) rev;
+              hash = old.src.outputHash;
+            };
+          });
+        }
+      );
     })
   ];
 
@@ -25,6 +27,9 @@
   plugins.dap = {
     enable = true;
   };
+
+  # dap-ui requires nvim-nio, which has no dedicated nixvim module.
+  extraPlugins = [ pkgs.vimPlugins.nvim-nio ];
 
   # ── DAP UI ──
   plugins.dap-ui = {
