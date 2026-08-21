@@ -277,7 +277,12 @@ end
 
 local function lines(buf, width)
   local name = vim.api.nvim_buf_get_name(buf)
-  local path = name ~= "" and vim.fs.normalize(vim.fn.fnamemodify(name, ":p")) or "Untitled"
+  local path = "Untitled"
+  if name ~= "" then
+    local absolute = vim.fs.normalize(vim.fn.fnamemodify(name, ":p"))
+    local root = Snacks.git.get_root(absolute) or vim.fn.getcwd()
+    path = vim.fs.relpath(root, absolute) or absolute
+  end
   local git = git_status(buf)
   local lsp, lsp_active = lsp_status(buf)
   local dap, dap_active = dap_status()
