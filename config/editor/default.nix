@@ -5,5 +5,6 @@
     ./which-key.nix
     ./multicursors.nix
     ./codediff.nix
+    ./mode-indicator.nix
   ];
 }
