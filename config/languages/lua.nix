@@ -9,6 +9,17 @@
   plugins.lsp.servers.lua_ls = {
     enable = true;
     settings = {
+      runtime = {
+        version = "LuaJIT";
+      };
+
+      diagnostics = {
+        globals = [
+          "vim"
+          "Snacks"
+        ];
+      };
+
       workspace = {
         checkThirdParty = false;
       };
