@@ -131,36 +131,15 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "StatusLineNC", { link = "WinSeparator" })
 end
 
--- ── Mode badge highlights (from colorscheme lualine adapter) ──
+-- ── Mode badge highlights ──
 local function setup_mode_highlights()
-  local colorscheme = vim.g.colors_name
-
-  local theme_ok, theme = false, nil
-  if colorscheme then
-    theme_ok, theme = pcall(require, "lualine.themes." .. colorscheme)
-  end
-
   for mode_key, hl_name in pairs(hl_map) do
-    local color
-
-    if theme_ok and theme and theme[mode_key] and theme[mode_key].a then
-      color = theme[mode_key].a
-    end
-
-    if color then
-      vim.api.nvim_set_hl(0, hl_name, {
-        fg = color.fg,
-        bg = color.bg,
-        bold = color.gui == "bold",
-      })
-    else
-      local fb = fallback[mode_key]
-      vim.api.nvim_set_hl(0, hl_name, {
-        fg = fb.fg,
-        bg = fb.bg,
-        bold = true,
-      })
-    end
+    local color = fallback[mode_key]
+    vim.api.nvim_set_hl(0, hl_name, {
+      fg = color.fg,
+      bg = color.bg,
+      bold = true,
+    })
   end
 end
 
@@ -265,7 +244,7 @@ function M.setup(opts)
   })
 
   -- colorscheme resets StatusLine/StatusLineNC, re-link them
-  -- also rebuild mode badge colors from new lualine adapter
+  -- also rebuild mode badge highlights
   vim.api.nvim_create_autocmd("ColorScheme", {
     group = group,
     callback = function()
