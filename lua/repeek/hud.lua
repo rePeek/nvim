@@ -1,7 +1,11 @@
 -- ══════════════════════════════════════════════
---  repeek.mode — Minimal Mode Indicator (Snacks.win)
---  Shows current Vim mode as a floating label
---  anchored to the top-right of the active window.
+--  repeek.hud — Head-Up Display
+--  Mode indicator + editor UI policy.
+--
+--  Providers:
+--    • mode indicator (Snacks.win floating badge)
+--    • split separators (fillchars.vert / stl / stlnc)
+--    • statusline / showmode / ruler suppression
 -- ══════════════════════════════════════════════
 
 local M = {}
@@ -9,6 +13,13 @@ local M = {}
 -- ── Defaults ──
 local config = {
   enabled = true,
+
+  editor_ui = {
+    hide_statusline = true,
+    separator = "─",
+    vertical_separator = "│",
+  },
+
   win = {
     relative = "win",
     row = 0,
@@ -27,21 +38,21 @@ local state = {
 
 -- ── Highlight group map ──
 local hl_map = {
-  normal   = "RePeekModeNormal",
-  insert   = "RePeekModeInsert",
-  visual   = "RePeekModeVisual",
-  replace  = "RePeekModeReplace",
-  command  = "RePeekModeCommand",
+  normal = "RePeekModeNormal",
+  insert = "RePeekModeInsert",
+  visual = "RePeekModeVisual",
+  replace = "RePeekModeReplace",
+  command = "RePeekModeCommand",
   terminal = "RePeekModeTerminal",
 }
 
 -- ── Fallback palette ──
 local fallback = {
-  normal   = { fg = "#1e2030", bg = "#7cafc2" },
-  insert   = { fg = "#1e2030", bg = "#a3be8c" },
-  visual   = { fg = "#1e2030", bg = "#c4a7e7" },
-  replace  = { fg = "#1e2030", bg = "#ed8796" },
-  command  = { fg = "#1e2030", bg = "#e5c890" },
+  normal = { fg = "#1e2030", bg = "#7cafc2" },
+  insert = { fg = "#1e2030", bg = "#a3be8c" },
+  visual = { fg = "#1e2030", bg = "#c4a7e7" },
+  replace = { fg = "#1e2030", bg = "#ed8796" },
+  command = { fg = "#1e2030", bg = "#e5c890" },
   terminal = { fg = "#1e2030", bg = "#89b482" },
 }
 
@@ -49,7 +60,6 @@ local fallback = {
 local function mode_info()
   local mode = vim.api.nvim_get_mode().mode
 
-  -- Normal (n, no, nov, noV, niI, niR, niV, nt, ntT, …)
   if mode:sub(1, 1) == "n" then
     return "NORMAL", "normal"
   elseif mode:sub(1, 1) == "i" then
@@ -76,7 +86,6 @@ end
 -- ── Parent window ──
 local function parent_win()
   local win = vim.api.nvim_get_current_win()
-  -- skip floating windows
   local cfg = vim.api.nvim_win_get_config(win)
   if cfg.relative ~= "" then
     return nil
@@ -84,7 +93,45 @@ local function parent_win()
   return win
 end
 
--- ── Build RePeekMode* highlights from colorscheme lualine adapter ──
+-- ── Editor UI policy ──
+local function setup_editor_ui()
+  local ui = config.editor_ui
+
+  if ui.hide_statusline then
+    vim.o.laststatus = 0
+    vim.o.showmode = false
+    vim.o.ruler = false
+
+    -- space prevents Neovim from rendering filename in splits
+    vim.o.statusline = " "
+  end
+
+  -- merge into existing fillchars, never overwrite
+  local fillchars = vim.opt.fillchars:get()
+  fillchars.vert = ui.vertical_separator
+  fillchars.stl = ui.separator
+  fillchars.stlnc = ui.separator
+  vim.opt.fillchars = fillchars
+end
+
+-- ── Split separator highlights ──
+local function setup_highlights()
+  local normal = vim.api.nvim_get_hl(0, {
+    name = "Normal",
+    link = false,
+  })
+
+  -- use Normal fg so all dividers match the theme's text color
+  vim.api.nvim_set_hl(0, "WinSeparator", {
+    fg = normal.fg,
+    bg = normal.bg,
+  })
+
+  vim.api.nvim_set_hl(0, "StatusLine", { link = "WinSeparator" })
+  vim.api.nvim_set_hl(0, "StatusLineNC", { link = "WinSeparator" })
+end
+
+-- ── Mode badge highlights (from colorscheme lualine adapter) ──
 local function setup_mode_highlights()
   local colorscheme = vim.g.colors_name
 
@@ -96,7 +143,6 @@ local function setup_mode_highlights()
   for mode_key, hl_name in pairs(hl_map) do
     local color
 
-    -- try colorscheme's lualine adapter first
     if theme_ok and theme and theme[mode_key] and theme[mode_key].a then
       color = theme[mode_key].a
     end
@@ -108,7 +154,6 @@ local function setup_mode_highlights()
         bold = color.gui == "bold",
       })
     else
-      -- fallback
       local fb = fallback[mode_key]
       vim.api.nvim_set_hl(0, hl_name, {
         fg = fb.fg,
@@ -119,7 +164,7 @@ local function setup_mode_highlights()
   end
 end
 
--- ── Render ──
+-- ── Render mode badge ──
 local function render()
   local parent = parent_win()
 
@@ -183,23 +228,31 @@ function M.refresh()
   vim.schedule(render)
 end
 
+function M.close()
+  if state.win and state.win:valid() then
+    state.win:close()
+  end
+  state.win = nil
+  state.parent = nil
+
+  pcall(vim.api.nvim_del_augroup_by_name, "repeek_hud")
+end
+
 function M.setup(opts)
   config = vim.tbl_deep_extend("force", config, opts or {})
 
-  -- this plugin owns the mode/status UI
-  vim.opt.laststatus = 0
-  vim.opt.showmode = false
-  vim.opt.ruler = false
-
   if not config.enabled then
+    M.close()
     return
   end
 
+  setup_editor_ui()
+  setup_highlights()
   setup_mode_highlights()
 
-  local group = vim.api.nvim_create_augroup("repeek_mode_indicator", { clear = true })
+  local group = vim.api.nvim_create_augroup("repeek_hud", { clear = true })
 
-  -- refresh badge on mode/window/buffer changes
+  -- refresh badge on mode/window/buffer/resize changes
   vim.api.nvim_create_autocmd({
     "ModeChanged",
     "WinEnter",
@@ -211,10 +264,12 @@ function M.setup(opts)
     callback = M.refresh,
   })
 
-  -- rebuild highlights when colorscheme changes
+  -- colorscheme resets StatusLine/StatusLineNC, re-link them
+  -- also rebuild mode badge colors from new lualine adapter
   vim.api.nvim_create_autocmd("ColorScheme", {
     group = group,
     callback = function()
+      vim.schedule(setup_highlights)
       vim.schedule(setup_mode_highlights)
       vim.schedule(M.refresh)
     end,
