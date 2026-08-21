@@ -8,13 +8,17 @@ local config = {
   enabled = true,
   key = "<leader>i",
   win = {
+    position = "float",
     relative = "editor",
+    row = 2,
+    width = 60,
     border = true,
     title = " Info ",
     title_pos = "center",
     backdrop = false,
     focusable = false,
     enter = false,
+    noautocmd = true,
     wo = {
       winhighlight = "NormalFloat:SnacksInputNormal,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
       cursorline = false,
@@ -113,16 +117,6 @@ local function lines(buf)
   return content
 end
 
-local function content_width(content)
-  local width = 0
-
-  for _, line in ipairs(content) do
-    width = math.max(width, vim.api.nvim_strwidth(line))
-  end
-
-  return math.max(20, math.min(width + 2, 80))
-end
-
 function M.close()
   if state.win and state.win:valid() then
     state.win:close()
@@ -140,7 +134,6 @@ function M.open()
   local content = lines(buf)
 
   state.win = Snacks.win(vim.tbl_deep_extend("force", {}, config.win, {
-    width = content_width(content),
     height = #content,
     text = content,
     on_close = function()
