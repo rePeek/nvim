@@ -219,6 +219,94 @@
       };
     }
 
+    # ── Yank File Paths ──
+    {
+      key = "<leader>yd";
+      mode = "n";
+      action = {
+        __raw = ''
+          function()
+            local name = vim.api.nvim_buf_get_name(0)
+            if name == "" then
+              vim.notify("Buffer has no file path", vim.log.levels.WARN, { title = "Yank" })
+              return
+            end
+            local path = vim.fs.dirname(vim.fs.normalize(vim.fn.fnamemodify(name, ":p")))
+            vim.fn.setreg("+", path)
+            vim.notify(path, vim.log.levels.INFO, { title = "Directory Path Copied" })
+          end
+        '';
+      };
+      options = {
+        desc = "Directory Path";
+      };
+    }
+    {
+      key = "<leader>yn";
+      mode = "n";
+      action = {
+        __raw = ''
+          function()
+            local name = vim.api.nvim_buf_get_name(0)
+            if name == "" then
+              vim.notify("Buffer has no file name", vim.log.levels.WARN, { title = "Yank" })
+              return
+            end
+            local file = vim.fs.basename(name)
+            vim.fn.setreg("+", file)
+            vim.notify(file, vim.log.levels.INFO, { title = "File Name Copied" })
+          end
+        '';
+      };
+      options = {
+        desc = "File Name";
+      };
+    }
+    {
+      key = "<leader>yy";
+      mode = "n";
+      action = {
+        __raw = ''
+          function()
+            local name = vim.api.nvim_buf_get_name(0)
+            if name == "" then
+              vim.notify("Buffer has no file path", vim.log.levels.WARN, { title = "Yank" })
+              return
+            end
+            local path = vim.fs.normalize(vim.fn.fnamemodify(name, ":p"))
+            vim.fn.setreg("+", path)
+            vim.notify(path, vim.log.levels.INFO, { title = "Absolute Path Copied" })
+          end
+        '';
+      };
+      options = {
+        desc = "Absolute Path";
+      };
+    }
+    {
+      key = "<leader>yr";
+      mode = "n";
+      action = {
+        __raw = ''
+          function()
+            local name = vim.api.nvim_buf_get_name(0)
+            if name == "" then
+              vim.notify("Buffer has no file path", vim.log.levels.WARN, { title = "Yank" })
+              return
+            end
+            local path = vim.fs.normalize(vim.fn.fnamemodify(name, ":p"))
+            local root = Snacks.git.get_root(path) or vim.fn.getcwd()
+            local relative = vim.fs.relpath(root, path) or path
+            vim.fn.setreg("+", relative)
+            vim.notify(relative, vim.log.levels.INFO, { title = "Relative Path Copied" })
+          end
+        '';
+      };
+      options = {
+        desc = "Relative Path";
+      };
+    }
+
     # ── Clear Search & Snippet Stop on Escape ──
     {
       key = "<Esc>";

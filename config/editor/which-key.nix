@@ -67,6 +67,14 @@
           ];
         }
         {
+          __unkeyed-1 = "<leader>y";
+          group = "yank";
+          mode = [
+            "n"
+            "x"
+          ];
+        }
+        {
           __unkeyed-1 = "[";
           group = "prev";
           mode = [

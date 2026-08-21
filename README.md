@@ -131,8 +131,16 @@ Leader 键为 `Space`。
 | `<leader>q` | Quit All | 全部退出 |
 | `<leader>n` | Notifications | 通知历史 (Snacks picker) |
 | `<leader>.` | Scratch Buffer | 持久化临时笔记 |
-| `<leader>ft` | Floating Terminal | 浮动终端 |
-| `<c-/>` | Terminal (toggle) | 浮动终端切换 |
+| `<leader>t` | Floating Terminal | 浮动终端 |
+
+### Yank / 路径复制 (`<leader>y*`)
+
+| 键位 | 动作 | 说明 |
+|------|------|------|
+| `<leader>yd` | Directory Path | 复制当前文件所在目录 |
+| `<leader>yn` | File Name | 复制当前文件名 |
+| `<leader>yy` | Absolute Path | 复制当前文件绝对路径 |
+| `<leader>yr` | Relative Path | 复制项目相对路径 |
 
 ### Goto (`g*`)
 
