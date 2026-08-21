@@ -3,7 +3,7 @@
   #  Lualine — Status Line (LazyVim-inspired)
   # ══════════════════════════════════════════════
   plugins.lualine = {
-    enable = true;
+    enable = false;
     settings = {
       options = {
         theme = "auto";
