@@ -33,8 +33,8 @@ local config = {
 -- ── State ──
 local state = {
   win = nil,
-  parent = nil,
 }
+local pending = false
 
 -- ── Highlight group map ──
 local hl_map = {
@@ -143,11 +143,19 @@ local function setup_mode_highlights()
   end
 end
 
+local function close_badge()
+  if state.win and state.win:valid() then
+    state.win:close()
+  end
+  state.win = nil
+end
+
 -- ── Render mode badge ──
 local function render()
   local parent = parent_win()
 
   if not parent then
+    close_badge()
     return
   end
 
@@ -155,13 +163,22 @@ local function render()
   local text = " " .. label .. " "
   local width = vim.api.nvim_strwidth(text)
   local win_width = vim.api.nvim_win_get_width(parent)
+
+  if win_width < width then
+    close_badge()
+    return
+  end
+
   local col = win_width - width
   local winhighlight = "Normal:" .. hl_map[theme_mode]
 
+  -- discard an invalid handle before deciding whether to create
+  if state.win and not state.win:valid() then
+    state.win = nil
+  end
+
   -- create on first call
   if not state.win then
-    state.parent = parent
-
     state.win = Snacks.win(vim.tbl_deep_extend("force", config.win, {
       win = parent,
       col = col,
@@ -174,16 +191,6 @@ local function render()
 
     return
   end
-
-  -- window became invalid
-  if not state.win:valid() then
-    state.win = nil
-    state.parent = nil
-    render()
-    return
-  end
-
-  state.parent = parent
 
   -- re-anchor to current window (relative="win")
   state.win.opts.win = parent
@@ -201,18 +208,26 @@ end
 -- ── Public API ──
 
 function M.refresh()
-  if not config.enabled then
+  if pending or not config.enabled then
     return
   end
-  vim.schedule(render)
+
+  pending = true
+  vim.schedule(function()
+    if not pending then
+      return
+    end
+
+    pending = false
+    if config.enabled then
+      render()
+    end
+  end)
 end
 
 function M.close()
-  if state.win and state.win:valid() then
-    state.win:close()
-  end
-  state.win = nil
-  state.parent = nil
+  pending = false
+  close_badge()
 
   pcall(vim.api.nvim_del_augroup_by_name, "repeek_hud")
 end

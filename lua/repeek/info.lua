@@ -42,9 +42,9 @@ local function setup_highlights()
     RePeekInfoBranchIcon = "DiagnosticInfo",
     RePeekInfoActive = "DiagnosticOk",
     RePeekInfoInactive = "Comment",
-    RePeekInfoAdded = "GitSignsAdd",
-    RePeekInfoChanged = "GitSignsChange",
-    RePeekInfoRemoved = "GitSignsDelete",
+    RePeekInfoAdded = "DiffAdd",
+    RePeekInfoChanged = "DiffChange",
+    RePeekInfoRemoved = "DiffDelete",
     RePeekInfoAhead = "DiagnosticOk",
     RePeekInfoBehind = "DiagnosticWarn",
   }
@@ -275,6 +275,112 @@ local function centered_line(parts, width)
   return build_line(parts)
 end
 
+local function status(label, active, value, opts)
+  opts = opts or {}
+  return {
+    label = label,
+    active = active,
+    value = value,
+    priority = opts.priority or 0,
+    min_value_width = opts.min_value_width or 1,
+    max_value_width = opts.max_value_width,
+  }
+end
+
+local function prepare_status(item)
+  item.icon = item.active and "●" or "○"
+  item.display = item.max_value_width and truncate(item.value, item.max_value_width) or item.value
+  item.prefix_width = vim.api.nvim_strwidth(item.label .. " " .. item.icon .. " ")
+  item.value_width = vim.api.nvim_strwidth(item.display)
+  item.minimum_value_width = math.min(item.value_width, item.min_value_width)
+  return item
+end
+
+local function status_parts(item, width)
+  if width <= item.prefix_width then
+    return { { truncate(item.label, width), "RePeekInfoLabel" } }
+  end
+
+  local display = truncate(item.display, width - item.prefix_width)
+  return {
+    { item.label, "RePeekInfoLabel" },
+    { " " },
+    { item.icon, item.active and "RePeekInfoActive" or "RePeekInfoInactive" },
+    { " " },
+    { display, item.active and "RePeekInfoPrimary" or "RePeekInfoSecondary" },
+  }
+end
+
+local function status_line_width(items, minimum)
+  local total = math.max(0, #items - 1) * vim.api.nvim_strwidth("   ")
+  for _, item in ipairs(items) do
+    total = total + item.prefix_width + (minimum and item.minimum_value_width or item.value_width)
+  end
+  return total
+end
+
+local function render_statuses(items, width)
+  local gap = "   "
+  local selected = {}
+  for _, item in ipairs(items) do
+    selected[#selected + 1] = prepare_status(item)
+  end
+
+  while #selected > 2 and status_line_width(selected, true) > width do
+    local lowest = 1
+    for i = 2, #selected do
+      if selected[i].priority < selected[lowest].priority then
+        lowest = i
+      end
+    end
+    table.remove(selected, lowest)
+  end
+
+  if status_line_width(selected, true) > width then
+    local rendered = {}
+    for _, item in ipairs(selected) do
+      local text, spans = centered_line(status_parts(item, width), width)
+      rendered[#rendered + 1] = { text, spans }
+    end
+    return rendered
+  end
+
+  local allocations = {}
+  local overflow = status_line_width(selected, false) - width
+  for i, item in ipairs(selected) do
+    allocations[i] = item.value_width
+  end
+
+  while overflow > 0 do
+    local widest
+    for i, item in ipairs(selected) do
+      local reducible = allocations[i] - item.minimum_value_width
+      if reducible > 0 and (not widest or reducible > allocations[widest] - selected[widest].minimum_value_width) then
+        widest = i
+      end
+    end
+    if not widest then
+      break
+    end
+
+    local reducible = allocations[widest] - selected[widest].minimum_value_width
+    local reduction = math.min(overflow, reducible)
+    allocations[widest] = allocations[widest] - reduction
+    overflow = overflow - reduction
+  end
+
+  local parts = {}
+  for i, item in ipairs(selected) do
+    if i > 1 then
+      parts[#parts + 1] = { gap }
+    end
+    vim.list_extend(parts, status_parts(item, item.prefix_width + allocations[i]))
+  end
+
+  local text, spans = centered_line(parts, width)
+  return { { text, spans } }
+end
+
 local function lines(buf, width)
   local name = vim.api.nvim_buf_get_name(buf)
   local path = "Untitled"
@@ -318,19 +424,19 @@ local function lines(buf, width)
     end
   end
 
-  local dap_icon = dap_active and "●" or "○"
-  local lsp_icon = lsp_active and "●" or "○"
-  local formatter_icon = formatter_active and "●" or "○"
-  local lsp_display = lsp_active and truncate(lsp, 12) or "off"
-  local dap_display = dap_active and dap or "off"
-  local formatter_display = formatter_active and formatter or "off"
-  local lsp_parts_width = vim.api.nvim_strwidth("LSP " .. lsp_icon .. " " .. lsp_display)
-  local dap_parts_width = vim.api.nvim_strwidth("DAP " .. dap_icon .. " " .. dap_display)
-  local status_gap = "   "
-  local formatter_prefix = "Formatter " .. formatter_icon .. " "
-  local formatter_prefix_width = vim.api.nvim_strwidth(formatter_prefix)
-  local formatter_width = width - 4 - lsp_parts_width - dap_parts_width - (2 * #status_gap) - formatter_prefix_width
-  formatter_display = truncate(formatter_display, math.max(8, formatter_width))
+  local statuses = render_statuses({
+    status("LSP", lsp_active, lsp_active and lsp or "off", {
+      priority = 100,
+      max_value_width = 12,
+    }),
+    status("DAP", dap_active, dap_active and dap or "off", {
+      priority = 50,
+    }),
+    status("Formatter", formatter_active, formatter_active and formatter or "off", {
+      priority = 80,
+      min_value_width = 8,
+    }),
+  }, width)
 
   local content = {}
   local highlights = {}
@@ -338,25 +444,10 @@ local function lines(buf, width)
   content[1], highlights[1] = centered_line({ { path, "RePeekInfoPath" } }, width)
   content[2], highlights[2] = centered_line(git_parts, width)
   content[3], highlights[3] = "", {}
-  content[4], highlights[4] = centered_line({
-    { "LSP", "RePeekInfoLabel" },
-    { " " },
-    { lsp_icon, lsp_active and "RePeekInfoActive" or "RePeekInfoInactive" },
-    { " " },
-    { lsp_display, lsp_active and "RePeekInfoPrimary" or "RePeekInfoSecondary" },
-    { status_gap },
-    { "DAP", "RePeekInfoLabel" },
-    { " " },
-    { dap_icon, dap_active and "RePeekInfoActive" or "RePeekInfoInactive" },
-    { " " },
-    { dap_display, dap_active and "RePeekInfoPrimary" or "RePeekInfoSecondary" },
-    { status_gap },
-    { "Formatter", "RePeekInfoLabel" },
-    { " " },
-    { formatter_icon, formatter_active and "RePeekInfoActive" or "RePeekInfoInactive" },
-    { " " },
-    { formatter_display, formatter_active and "RePeekInfoPrimary" or "RePeekInfoSecondary" },
-  }, width)
+  for _, rendered in ipairs(statuses) do
+    content[#content + 1] = rendered[1]
+    highlights[#highlights + 1] = rendered[2]
+  end
 
   return content, highlights
 end
@@ -397,6 +488,8 @@ function M.open()
   if not config.enabled then
     return
   end
+
+  M.close()
 
   local buf = vim.api.nvim_get_current_buf()
   local width = config.win.width
