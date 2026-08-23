@@ -26,6 +26,7 @@
     BlinkCmpSignatureHelpBorder.link = "Normal";
     BlinkCmpScrollBarThumb.link = "Normal";
     BlinkCmpScrollBarGutter.link = "Normal";
+    LspInlayHint.link = "Comment";
     SnacksIndentScope.link = "Comment";
     SnacksIndentChunk.link = "Comment";
   };
