@@ -29,16 +29,29 @@
     command = "lldb-dap";
   };
 
-  plugins.dap.configurations.cpp = [
-    {
-      name = "C/C++: Launch file";
-      type = "lldb-dap";
-      request = "launch";
-      program = "\${fileDirname}/\${fileBasenameNoExtension}";
-      cwd = "\${workspaceFolder}";
-      stopOnEntry = false;
-    }
-  ];
+  # ── DAP Launch Configs ──
+  plugins.dap.configurations = {
+    c = [
+      {
+        name = "Launch file";
+        type = "lldb-dap";
+        request = "launch";
+        program = "\${fileDirname}/\${fileBasenameNoExtension}";
+        cwd = "\${workspaceFolder}";
+        stopOnEntry = false;
+      }
+    ];
+    cpp = [
+      {
+        name = "Launch file";
+        type = "lldb-dap";
+        request = "launch";
+        program = "\${fileDirname}/\${fileBasenameNoExtension}";
+        cwd = "\${workspaceFolder}";
+        stopOnEntry = false;
+      }
+    ];
+  };
 
   # ── Treesitter Grammar ──
   plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
