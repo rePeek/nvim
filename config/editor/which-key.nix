@@ -19,14 +19,6 @@
           ];
         }
         {
-          __unkeyed-1 = "<leader>d";
-          group = "diagnostics";
-          mode = [
-            "n"
-            "x"
-          ];
-        }
-        {
           __unkeyed-1 = "<leader>e";
           group = "explorer";
           mode = [

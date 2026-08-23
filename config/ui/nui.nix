@@ -1,6 +1,6 @@
 {
   # ══════════════════════════════════════════════
-  #  NUI — UI Library (required by noice/dap-ui)
+  #  NUI — UI Library (required by noice)
   # ══════════════════════════════════════════════
   plugins.nui = {
     enable = true;

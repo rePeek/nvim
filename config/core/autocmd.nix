@@ -74,7 +74,6 @@
       event = "FileType";
       pattern = [
         "checkhealth"
-        "dap-float"
         "gitsigns-blame"
         "grug-far"
         "help"

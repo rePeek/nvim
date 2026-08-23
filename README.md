@@ -29,7 +29,6 @@ nixvim/
     │   ├── default.nix
     │   ├── completion.nix     # nvim-cmp 补全
     │   ├── conform.nix        # 格式化 (conform.nvim)
-    │   ├── dap.nix            # Debug Adapter Protocol
     │   ├── lsp.nix            # Language Server Protocol
     │   └── treesitter.nix     # 语法高亮 & 解析
     ├── editor/                # 编辑器增强
@@ -58,7 +57,7 @@ nixvim/
         ├── colorscheme.nix    # 配色方案 (tokyonight-storm)
         ├── icons.nix          # mini.icons + web-devicons
         ├── noice.nix          # cmdline & 消息 UI
-        ├── nui.nix            # UI 库 (noice/dap-ui 依赖)
+        ├── nui.nix            # UI 库 (noice 依赖)
         └── statusline.nix     # 状态栏 (lualine)
 ```
 
@@ -96,7 +95,6 @@ nixvim/
 | **键位提示** | [which-key.nvim](https://github.com/folke/which-key.nvim) | 按键分组菜单 |
 | **多光标** | multicursors.nvim | 多光标编辑 |
 | **Markdown 渲染** | render-markdown.nvim | Normal/Command/Terminal 模式渲染 |
-| **调试** | nvim-dap + dap-ui + lldb-dap / codelldb | 断点、单步、变量面板 |
 | **Git 装饰** | gitsigns.nvim | 行内 blame、diff 标记、hunk 操作 |
 | **Git 终端** | lazygit (via snacks) | 浮动 Git TUI |
 | **状态栏** | lualine | `theme = auto`，自动跟随 colorscheme |
@@ -315,42 +313,18 @@ Leader 键为 `Space`。
 
 ## Language Server 配置
 
-| 语言 | Server | Formatter | DAP |
-|------|--------|-----------|-----|
-| **C/C++** | clangd (`--background-index --clang-tidy --header-insertion=never`) | clang-format | lldb-dap |
-| **Rust** | rust-analyzer | rustfmt | codelldb |
-| **Lua** | lua_ls (inlay hints, codeLens) | stylua | — |
-| **Nix** | nil | nixfmt-rfc-style | — |
-| **Python** | pyright | — | — |
-| **Markdown** | marksman | prettierd | — |
-| **Web (JS/TS/JSON/YAML/HTML)** | — | prettierd | — |
-| **Shell (Bash/Fish)** | — | shfmt / fish_indent | — |
+| 语言 | Server | Formatter |
+|------|--------|-----------|
+| **C/C++** | clangd (`--background-index --clang-tidy --header-insertion=never`) | clang-format |
+| **Rust** | rust-analyzer | rustfmt |
+| **Lua** | lua_ls (inlay hints, codeLens) | stylua |
+| **Nix** | nil | nixfmt-rfc-style |
+| **Python** | pyright | — |
+| **Markdown** | marksman | prettierd |
+| **Web (JS/TS/JSON/YAML/HTML)** | — | prettierd |
+| **Shell (Bash/Fish)** | — | shfmt / fish_indent |
 
 > LSP server 均不自动安装，依赖系统 PATH。找不到时 Neovim 跳过该 server，不影响使用。
-
-## Debug 配置
-
-使用 **nvim-dap** + **dap-ui**，调试 adapter 由语言模块选择：
-
-- C/C++：`lldb-dap`，编译后启动，`program = ${fileDirname}/${fileBasenameNoExtension}`
-- Rust：`codelldb`，同上
-
-两个 adapter 均依赖系统 PATH，不由配置自动安装。
-
-DAP UI 会在调试开始时自动打开，结束时自动关闭。
-
-### DAP 键位 (`<leader>d*`)
-
-| 键位 | 动作 |
-|------|------|
-| `<leader>db` | Toggle 断点 |
-| `<leader>dc` | Continue |
-| `<leader>dn` | Step over |
-| `<leader>ds` | Step into |
-| `<leader>do` | Step out |
-| `<leader>dr` | Restart |
-| `<leader>dt` | Terminate |
-| `<leader>du` | Toggle DAP UI |
 
 ## Treesitter 语法支持
 

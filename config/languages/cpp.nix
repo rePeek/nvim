@@ -2,7 +2,7 @@
 {
   # ══════════════════════════════════════════════
   #  C/C++ Language Module
-  #  LSP: clangd  |  Formatter: clang-format  |  DAP: lldb-dap
+  #  LSP: clangd  |  Formatter: clang-format
   # ══════════════════════════════════════════════
 
   # ── LSP Server ──
@@ -22,35 +22,6 @@
   plugins.conform-nvim.settings.formatters_by_ft = {
     c = [ "clang_format" ];
     cpp = [ "clang_format" ];
-  };
-
-  # ── DAP Adapter & Configuration ──
-  plugins.dap.adapters.executables.lldb-dap = {
-    command = "lldb-dap";
-  };
-
-  # ── DAP Launch Configs ──
-  plugins.dap.configurations = {
-    c = [
-      {
-        name = "Launch file";
-        type = "lldb-dap";
-        request = "launch";
-        program = "\${fileDirname}/\${fileBasenameNoExtension}";
-        cwd = "\${workspaceFolder}";
-        stopOnEntry = false;
-      }
-    ];
-    cpp = [
-      {
-        name = "Launch file";
-        type = "lldb-dap";
-        request = "launch";
-        program = "\${fileDirname}/\${fileBasenameNoExtension}";
-        cwd = "\${workspaceFolder}";
-        stopOnEntry = false;
-      }
-    ];
   };
 
   # ── Treesitter Grammar ──
