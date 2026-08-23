@@ -229,7 +229,7 @@ function M.close()
   pending = false
   close_badge()
 
-  pcall(vim.api.nvim_del_augroup_by_name, "repeek_hud")
+  pcall(vim.api.nvim_del_augroup_by_name, "repeek_mod")
 end
 
 function M.setup(opts)
@@ -244,7 +244,7 @@ function M.setup(opts)
   setup_highlights()
   setup_mode_highlights()
 
-  local group = vim.api.nvim_create_augroup("repeek_hud", { clear = true })
+  local group = vim.api.nvim_create_augroup("repeek_mod", { clear = true })
 
   -- refresh badge on mode/window/buffer/resize changes
   vim.api.nvim_create_autocmd({

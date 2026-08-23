@@ -5,7 +5,7 @@
     ./which-key.nix
     ./multicursors.nix
     ./codediff.nix
-    ./hud.nix
+    ./mod.nix
     ./info.nix
   ];
 }
