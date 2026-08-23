@@ -171,28 +171,6 @@ local function lsp_status(buf)
   return "off", false
 end
 
-local function dap_status()
-  local ok, dap = pcall(require, "dap")
-  if not ok then
-    return "inactive", false
-  end
-
-  -- Active session takes priority
-  local session = dap.session()
-  if session then
-    return session.stopped_thread_id and "stopped" or "running", true
-  end
-
-  -- Check if any configured adapter executable is available in PATH
-  for _, adapter in pairs(dap.adapters or {}) do
-    if type(adapter) == "table" and adapter.command and vim.fn.exepath(adapter.command) ~= "" then
-      return "ready", true
-    end
-  end
-
-  return "off", false
-end
-
 local function formatter_status(buf)
   local ok, conform = pcall(require, "conform")
   if not ok then
@@ -420,7 +398,6 @@ local function lines(buf, width)
   end
   local git = git_status(buf)
   local lsp, lsp_active = lsp_status(buf)
-  local dap, dap_active = dap_status()
   local formatter, formatter_active = formatter_status(buf)
 
   path = truncate_middle(path, width - 4)
@@ -457,9 +434,6 @@ local function lines(buf, width)
     status("LSP", lsp_active, lsp_active and lsp or "off", {
       priority = 100,
       max_value_width = 12,
-    }),
-    status("DAP", dap_active, dap_active and dap or "off", {
-      priority = 50,
     }),
     status("Formatter", formatter_active, formatter_active and formatter or "off", {
       priority = 80,
