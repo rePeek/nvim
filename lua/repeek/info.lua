@@ -141,18 +141,34 @@ local function update_git_cache(buf, callback)
 end
 
 local function lsp_status(buf)
+  -- Priority 1: attached clients
   local clients = vim.lsp.get_clients({ bufnr = buf })
-  if #clients == 0 then
-    return "inactive", false
+  if #clients > 0 then
+    local names = {}
+    for _, client in ipairs(clients) do
+      names[#names + 1] = client.name
+    end
+    table.sort(names)
+    return table.concat(names, ", "), true
   end
 
-  local names = {}
-  for _, client in ipairs(clients) do
-    names[#names + 1] = client.name
+  -- Priority 2: configured servers with executable in PATH
+  local config = vim.lsp.config or {}
+  local ready_names = {}
+  for name, cfg in pairs(config) do
+    if cfg.enabled ~= false then
+      local cmd = cfg.cmd
+      if type(cmd) == "table" and cmd[1] and vim.fn.exepath(cmd[1]) ~= "" then
+        ready_names[#ready_names + 1] = name
+      end
+    end
   end
-  table.sort(names)
+  if #ready_names > 0 then
+    table.sort(ready_names)
+    return table.concat(ready_names, ", "), true
+  end
 
-  return table.concat(names, ", "), true
+  return "off", false
 end
 
 local function dap_status()
@@ -161,31 +177,44 @@ local function dap_status()
     return "inactive", false
   end
 
+  -- Active session takes priority
   local session = dap.session()
-  if not session then
-    return "inactive", false
+  if session then
+    return session.stopped_thread_id and "stopped" or "running", true
   end
 
-  return session.stopped_thread_id and "stopped" or "running", true
+  -- Check if any configured adapter executable is available in PATH
+  for _, adapter in pairs(dap.adapters or {}) do
+    if type(adapter) == "table" and adapter.command and vim.fn.exepath(adapter.command) ~= "" then
+      return "ready", true
+    end
+  end
+
+  return "off", false
 end
 
 local function formatter_status(buf)
   local ok, conform = pcall(require, "conform")
   if not ok then
-    return "—", false
+    return "off", false
   end
 
+  -- Get formatters configured for this buffer's filetype
   local listed, formatters, use_lsp = pcall(conform.list_formatters_to_run, buf)
   if not listed then
-    return "—", false
+    return "off", false
   end
 
+  -- Check which formatters have their executable in PATH
   local names = {}
   local seen = {}
   for _, formatter in ipairs(formatters) do
     local name = formatter.name:gsub("_", "-")
-    names[#names + 1] = name
     seen[name] = true
+    local exe = conform.get_formatter_config(formatter.name).command or formatter.name
+    if vim.fn.exepath(exe) ~= "" then
+      names[#names + 1] = name
+    end
   end
   if use_lsp then
     local method = vim.lsp.protocol.Methods.textDocument_formatting or "textDocument/formatting"
@@ -198,7 +227,7 @@ local function formatter_status(buf)
     end
   end
 
-  return #names > 0 and table.concat(names, ", ") or "—", #names > 0
+  return #names > 0 and table.concat(names, ", ") or "off", #names > 0
 end
 
 local function truncate(text, max_width)
