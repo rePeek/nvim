@@ -60,10 +60,11 @@
       key = "<leader>cr";
       mode = "n";
       action = {
-        __raw = "function() vim.cmd('IncRename ' .. vim.fn.expand('<cword>')) end";
+        __raw = "function() return ':IncRename ' .. vim.fn.expand('<cword>') end";
       };
       options = {
         desc = "Rename";
+        expr = true;
       };
     }
     {
