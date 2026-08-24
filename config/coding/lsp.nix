@@ -23,6 +23,17 @@
     inlayHints = true;
   };
 
+  # ── Incremental Rename (live preview) ──
+  plugins.inc-rename = {
+    enable = true;
+    settings = {
+      cmd_name = "IncRename";
+      hl_group = "Substitute";
+      preview_empty_name = false;
+      show_message = true;
+    };
+  };
+
   # ── Additional LSP Keymaps ──
   keymaps = [
     {
@@ -49,7 +60,7 @@
       key = "<leader>cr";
       mode = "n";
       action = {
-        __raw = "function() vim.lsp.buf.rename() end";
+        __raw = "function() vim.cmd('IncRename ' .. vim.fn.expand('<cword>')) end";
       };
       options = {
         desc = "Rename";
