@@ -8,22 +8,128 @@
     # setupLspCapabilities is true by default, handles LSP capabilities automatically
 
     settings = {
-      # ── Keymaps (matching previous nvim-cmp bindings) ──
+      # ── Keymaps (unified: Tab=trigger, ↑↓=navigate, Enter=accept, Esc=cancel) ──
       keymap = {
-        preset = "default";
-        "<C-b>" = [ "scroll_documentation_up" "fallback" ];
-        "<C-f>" = [ "scroll_documentation_down" "fallback" ];
-        "<C-Space>" = [ "show" "show_documentation" "hide_documentation" ];
-        "<CR>" = [ "accept" "fallback" ];
-        "<Tab>" = [ "select_next" "fallback" ];
-        "<S-Tab>" = [ "select_prev" "fallback" ];
-        "<Up>" = [ "select_prev" "fallback" ];
-        "<Down>" = [ "select_next" "fallback" ];
+        preset = "none";
+
+        # ── Tab: trigger / snippet advance (NOT navigate) ──
+        "<Tab>" = [
+          "snippet_forward"
+          {
+            __raw = ''
+              function(cmp)
+                if cmp.is_visible() then
+                  return true
+                end
+
+                return cmp.show()
+              end
+            '';
+          }
+          "fallback"
+        ];
+        "<S-Tab>" = [
+          "snippet_backward"
+          "fallback"
+        ];
+
+        # ── Arrow keys: navigate candidates ──
+        "<Up>" = [
+          "select_prev"
+          "fallback"
+        ];
+        "<Down>" = [
+          "select_next"
+          "fallback"
+        ];
+
+        # ── Enter: accept  /  Esc: cancel ──
+        "<CR>" = [
+          "accept"
+          "fallback"
+        ];
+        "<Esc>" = [
+          "cancel"
+          "fallback"
+        ];
+
+        # ── Documentation scroll ──
+        "<C-b>" = [
+          "scroll_documentation_up"
+          "fallback"
+        ];
+        "<C-f>" = [
+          "scroll_documentation_down"
+          "fallback"
+        ];
+        "<C-Space>" = [
+          "show"
+          "show_documentation"
+          "hide_documentation"
+        ];
+      };
+
+      # ── Cmdline completion: same interaction model ──
+      # (Tab=trigger, ↑↓=navigate, Enter=accept+execute, Esc=cancel)
+      cmdline = {
+        keymap = {
+          preset = "none";
+          "<Tab>" = [
+            {
+              __raw = ''
+                function(cmp)
+                  -- Passing providers makes Blink refresh even if the previous
+                  -- command-line completion menu is still open.
+                  return cmp.show_and_insert({ providers = { "buffer", "cmdline" } })
+                end
+              '';
+            }
+            "fallback"
+          ];
+          "<Up>" = [
+            "select_prev"
+            "fallback"
+          ];
+          "<Down>" = [
+            "select_next"
+            "fallback"
+          ];
+          "<CR>" = [
+            "accept_and_enter"
+            "fallback"
+          ];
+          "<Esc>" = [
+            "cancel"
+            "fallback"
+          ];
+        };
+        sources = [
+          "buffer"
+          "cmdline"
+        ];
+        completion = {
+          # Tab explicitly opens completion and previews its first candidate.
+          # Esc cancels that preview; Enter confirms it and executes the command.
+          menu = {
+            auto_show = false;
+          };
+          ghost_text = {
+            enabled = false;
+          };
+          list.selection = {
+            # `show_and_insert` selects the first item explicitly, which applies
+            # this preview; the default automatic selection remains disabled.
+            preselect = false;
+            auto_insert = true;
+          };
+        };
       };
 
       # ── Completion Menu ──
       completion = {
         menu = {
+          # Tab explicitly starts completion; typing alone does not open a menu.
+          auto_show = false;
           border = "rounded";
           scrollbar = false;
           winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None";
@@ -47,6 +153,11 @@
             winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder";
           };
         };
+        # A candidate is only written after the user selects and accepts it.
+        list.selection = {
+          preselect = false;
+          auto_insert = false;
+        };
       };
 
       # ── Signature Help ──
@@ -59,7 +170,12 @@
       };
 
       # ── Sources ──
-      sources.default = [ "lsp" "path" "snippets" "buffer" ];
+      sources.default = [
+        "lsp"
+        "path"
+        "snippets"
+        "buffer"
+      ];
 
       # ── Snippet Engine (LuaSnip) ──
       snippets.preset = "luasnip";
