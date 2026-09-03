@@ -439,11 +439,17 @@
     # ── Commenting (Ctrl+/ — like VSCode) ──
     {
       key = "<C-/>";
-      mode = [
-        "n"
-        "x"
-      ];
+      mode = "n";
       action = "gcc";
+      options = {
+        desc = "Toggle Comment";
+        remap = true;
+      };
+    }
+    {
+      key = "<C-/>";
+      mode = "x";
+      action = "gc";
       options = {
         desc = "Toggle Comment";
         remap = true;
