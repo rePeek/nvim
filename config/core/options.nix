@@ -106,7 +106,7 @@
     };
 
     # ── List chars (visible whitespace) ──
-    list = true;
+    list = false;
   };
 
   # ══════════════════════════════════════════════
