@@ -133,6 +133,7 @@ Leader 键为 `Space`。
 
 | 键位 | 动作 | 说明 |
 |------|------|------|
+| Visual `<leader>y` | System Clipboard | 复制选区到系统剪贴板 |
 | `<leader>yd` | Directory Path | 复制当前文件所在目录 |
 | `<leader>yn` | File Name | 复制当前文件名 |
 | `<leader>yy` | Absolute Path | 复制当前文件绝对路径 |

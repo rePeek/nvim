@@ -221,6 +221,14 @@
 
     # ── Yank File Paths ──
     {
+      key = "<leader>y";
+      mode = "v";
+      action = "\"+y";
+      options = {
+        desc = "Yank to System Clipboard";
+      };
+    }
+    {
       key = "<leader>yd";
       mode = "n";
       action = {
