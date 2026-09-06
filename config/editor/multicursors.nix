@@ -25,8 +25,8 @@
         "v"
       ];
       key = "<leader>m";
-      action = "<cmd>MCstart<cr>";
-      options.desc = "Start multicursor mode";
+      action = "<cmd>MCunderCursor<cr>";
+      options.desc = "Start multicursor at cursor";
     }
   ];
 }
