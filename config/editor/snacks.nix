@@ -89,6 +89,11 @@
         enabled = true;
         sources = {
           explorer = {
+            # Enable file preview in the main editor window on cursor move
+            layout = {
+              preset = "sidebar";
+              preview = "main";
+            };
             win = {
               input.keys."<Esc>" = "close";
               list.keys."<Esc>" = "close";
