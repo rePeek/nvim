@@ -4,13 +4,18 @@
   # ══════════════════════════════════════════════
   plugins.grug-far = {
     enable = true;
+
+    # The custom <leader>sr mapping below triggers this explicitly.
+    lazyLoad.settings.lazy = true;
     settings = {
       headerMaxWidth = 80;
     };
   };
 
-  keymaps = [
+  # lz-n loads the plugin before running the existing custom keymap action.
+  plugins.lz-n.keymaps = [
     {
+      plugin = "grug-far.nvim";
       key = "<leader>sr";
       mode = [
         "n"

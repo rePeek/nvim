@@ -26,6 +26,9 @@
   # ── Incremental Rename (live preview) ──
   plugins.inc-rename = {
     enable = true;
+
+    # Only needed when :IncRename is invoked.
+    lazyLoad.settings.cmd = "IncRename";
     settings = {
       cmd_name = "IncRename";
       hl_group = "Substitute";

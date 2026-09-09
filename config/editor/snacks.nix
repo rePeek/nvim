@@ -30,10 +30,9 @@
         enabled = true;
       };
 
-      # ── Quick File (fast startup) ──
-      quickfile = {
-        enabled = true;
-      };
+      # Quickfile starts Tree-sitter synchronously before the first UI frame.
+      # Tree-sitter is deferred in coding/treesitter.nix instead.
+      quickfile.enabled = false;
 
       # ── Indent Guides ──
       indent = {

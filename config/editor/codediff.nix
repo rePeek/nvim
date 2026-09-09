@@ -1,7 +1,15 @@
 {
+  # Nixvim's native lazy-load provider.
+  plugins.lz-n.enable = true;
   # ── Code Diff (split-window diff viewer) ──
   plugins.codediff = {
     enable = true;
+
+    # CodeDiff is only needed when its commands are invoked.
+    lazyLoad.settings.cmd = [
+      "CodeDiff"
+      "VscodeDiff"
+    ];
 
     settings = {
       highlights = {

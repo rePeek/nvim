@@ -12,7 +12,30 @@
   };
 
   # ── Auto-close HTML/JSX Tags ──
-  plugins.ts-autotag.enable = true;
+  plugins.ts-autotag = {
+    enable = true;
+    lazyLoad.settings = {
+      ft = [
+        "html"
+        "xml"
+        "javascript"
+        "javascriptreact"
+        "typescript"
+        "typescriptreact"
+        "rust"
+      ];
+      # The FileType event has already started when lz-n loads the plugin.
+      # Attach explicitly so the first matching buffer gets tag support too.
+      after = {
+        __raw = ''
+          function()
+            require("nvim-ts-autotag").setup({})
+            require("nvim-ts-autotag.internal").attach(vim.api.nvim_get_current_buf())
+          end
+        '';
+      };
+    };
+  };
 
   # ── Treesitter Grammars ──
   plugins.treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [

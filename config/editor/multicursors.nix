@@ -2,6 +2,16 @@
   # ── Multicursors ──
   plugins.multicursors = {
     enable = true;
+
+    # Commands are created by the plugin; load it on their first use.
+    lazyLoad.settings.cmd = [
+      "MCstart"
+      "MCvisual"
+      "MCunderCursor"
+      "MCclear"
+      "MCpattern"
+      "MCvisualPattern"
+    ];
     settings.normal_keys = {
       "<Down>" = {
         method = {
