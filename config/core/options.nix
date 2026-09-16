@@ -71,6 +71,7 @@
     foldmethod = "indent";
 
     # ── Format ──
+    textwidth = 80;
     formatoptions = "jcroqlnt";
 
     # ── Conceal ──
