@@ -12,6 +12,16 @@
         quiet = false;
         lsp_format = "fallback";
       };
+      # Format JSON before writing so compact exports stay readable.
+      format_on_save = {
+        __raw = ''
+          function(bufnr)
+            if vim.bo[bufnr].filetype == "json" then
+              return { timeout_ms = 3000, lsp_format = "fallback" }
+            end
+          end
+        '';
+      };
       formatters = {
         injected = {
           options = {
