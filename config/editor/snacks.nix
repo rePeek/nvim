@@ -28,6 +28,9 @@
       # ── Big File Handling ──
       bigfile = {
         enabled = true;
+        # Keep minified JSON's filetype so Conform can format it.
+        # Files over Snacks' 1.5 MiB size limit remain protected.
+        line_length = 1536 * 1024;
       };
 
       # Quickfile starts Tree-sitter synchronously before the first UI frame.
