@@ -1,6 +1,7 @@
 {
   imports = [
     ./cpp.nix
+    ./csharp.nix
     ./rust.nix
     ./lua.nix
     ./vim.nix
